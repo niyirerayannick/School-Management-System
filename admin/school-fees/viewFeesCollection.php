@@ -36,26 +36,52 @@
               <table id="viewStudehtsTable" class="table table-bordered table-hover">
                 <thead>
                 <?php
+<<<<<<< HEAD
                include '../config.php';
 // Attempt select query execution
   $sql = "SELECT * FROM fees_collection";
+=======
+                $con = mysqli_connect("localhost", "root", "","fantastic_school_admin_db");
+ 
+                // Check connection
+                if($con === false){
+                    die("ERROR: Could not connect. " . mysqli_connect_error());
+                } 
+// Attempt select query execution
+  $sql = "SELECT * FROM feescollection";
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";
                 echo "<th>id</th>";
                 echo "<th>Student Name </th>";
+<<<<<<< HEAD
                // echo "<th>Class</th>";
                 echo "<th>Session</th>";
                 echo "<th>Paid Amount</th>";
+=======
+                echo "<th>Class</th>";
+                echo "<th>Session</th>";
+                echo "<th>Paid Amount</th>";
+                echo "<th>Unpaid Amount</th>";
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
             echo "</tr> </thead>";
         while($row = mysqli_fetch_array($result)){
             echo "<tr>                   <tbody>
             ";
                 echo "<td>" . $row['id'] . "</td>";
+<<<<<<< HEAD
                 echo "<td>" . $row['student_id'] . "</td>";
                // echo "<td>" . $row['class_id'] . "</td>";
                 echo "<td>" . $row['session_id'] . "</td>";
                 echo "<td>" . $row['amount_paid'] . "</td>";  
+=======
+                echo "<td>" . $row['Student'] . "</td>";
+                echo "<td>" . $row['Class'] . "</td>";
+                echo "<td>" . $row['Session'] . "</td>";
+                echo "<td>" . $row['PaidAmount'] . "</td>";  
+                echo "<td>" . $row['Balance'] . "</td>";
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
 
             echo "</tr><tbody>";
         }

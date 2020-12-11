@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 <?php
 include("config.php")
 ?>
+=======
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
 <div  id="view">
 <!-- Content Header (Page header) -->
 <div class="content-header" >
@@ -31,6 +34,7 @@ include("config.php")
               <div class="info-box-content">
                 <span class="info-box-text" id="listStudents">Students</span>
                 <span class="info-box-number">
+<<<<<<< HEAD
                 <?php
  // Attempt select query execution
    $sql = "SELECT * FROM students";
@@ -41,6 +45,9 @@ include("config.php")
     echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
 }
 ?>
+=======
+                  10
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
                 </span>
               </div>
               <!- /.info-box-content -->
@@ -55,6 +62,7 @@ include("config.php")
 
               <div class="info-box-content">
                 <span class="info-box-text" id="listTeachers">Teachers</span>
+<<<<<<< HEAD
                 <span class="info-box-number">  <?php
  // Attempt select query execution
    $sql = "SELECT * FROM teachers";
@@ -66,6 +74,9 @@ include("config.php")
 }
 
 ?></span>
+=======
+                <span class="info-box-number">23</span>
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
               </div>
               <!-- /.info-box-content --> 
             </div>
@@ -82,6 +93,7 @@ include("config.php")
 
               <div class="info-box-content">
                 <span class="info-box-text" id="listClasses">Classes</span>
+<<<<<<< HEAD
                 <span class="info-box-number"> <?php
  // Attempt select query execution
    $sql = "SELECT * FROM classes";
@@ -93,6 +105,9 @@ include("config.php")
 }
 
 ?></span>
+=======
+                <span class="info-box-number">6</span>
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -105,6 +120,7 @@ include("config.php")
 
               <div class="info-box-content">
                 <span class="info-box-text" id="listbanks">Banks</span>
+<<<<<<< HEAD
                 <span class="info-box-number"> <?php
  // Attempt select query execution
    $sql = "SELECT * FROM banks";
@@ -116,6 +132,9 @@ include("config.php")
 }
 
 ?></span>
+=======
+                <span class="info-box-number">4</span>
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -129,6 +148,7 @@ include("config.php")
 
               <div class="info-box-content">
                 <span class="info-box-text" id="listEmployees">Employees</span>
+<<<<<<< HEAD
                 <span class="info-box-number"> <?php
  // Attempt select query execution
    $sql = "SELECT * FROM hr";
@@ -140,6 +160,9 @@ include("config.php")
 }
 
 ?></span>
+=======
+                <span class="info-box-number">40</span>
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -153,6 +176,7 @@ include("config.php")
 
               <div class="info-box-content">
                 <span class="info-box-text" id="listHostels">Hostels</span>
+<<<<<<< HEAD
                 <span class="info-box-number"> <?php
  // Attempt select query execution
    $sql = "SELECT * FROM hostels";
@@ -164,6 +188,9 @@ include("config.php")
 }
 
 ?></span>
+=======
+                <span class="info-box-number">2</span>
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -187,14 +214,29 @@ include("config.php")
               <table id="viewStudehtsTable" class="table table-bordered table-hover">
                 <thead>
               <?php
+<<<<<<< HEAD
               
 // Attempt select query execution
   $sql = "SELECT * FROM fees_collection limit 0,9";
+=======
+                $con = mysqli_connect("localhost", "root", "","fantastic_school_admin_db");
+ 
+                // Check connection
+                if($con === false){
+                    die("ERROR: Could not connect. " . mysqli_connect_error());
+                } 
+// Attempt select query execution
+  $sql = "SELECT * FROM feescollection limit 0,9";
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";
                 echo "<th>Student Name</th>";
+<<<<<<< HEAD
                // echo "<th>Class</th>";
+=======
+                echo "<th>Class</th>";
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
                 echo "<th>Paid Amount</th>";
                 echo "<th>Date</th>";
 
@@ -203,10 +245,17 @@ include("config.php")
         while($row = mysqli_fetch_array($result)){
             echo "<tr>                   <tbody>
             ";
+<<<<<<< HEAD
                 echo "<td>" . $row['student_id'] . "</td>";
                // echo "<td> " . $row[''] . "</td>";
                 echo "<td> " . $row['amount_paid'] . "</td>";
                 echo "<td> " . $row['payment_date'] . "</td>";
+=======
+                echo "<td>" . $row['Student'] . "</td>";
+                echo "<td> " . $row['Class'] . "</td>";
+                echo "<td> " . $row['PaidAmount'] . "</td>";
+                echo "<td> " . $row['Date'] . "</td>";
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
             echo "</tr><tbody>";
         }
         echo "</table>";
@@ -214,7 +263,11 @@ include("config.php")
         mysqli_free_result($result);
     } else{
         echo "<div class='alert alert-danger' role='alert'>
+<<<<<<< HEAD
         No fees Collected Recently
+=======
+        There are no students currently in the database!
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
       </div>";
     }
 } else{
@@ -241,8 +294,19 @@ include("config.php")
               <table id="viewStudehtsTable" class="table table-bordered table-hover">
                 <thead>
               <?php
+<<<<<<< HEAD
 // Attempt select query execution
   $sql = "SELECT * FROM students,classes where classes.id = students.class_id limit 1,9";
+=======
+                $con = mysqli_connect("localhost", "root", "","fantastic_school_admin_db");
+ 
+                // Check connection
+                if($con === false){
+                    die("ERROR: Could not connect. " . mysqli_connect_error());
+                } 
+// Attempt select query execution
+  $sql = "SELECT * FROM students limit 1,9";
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";
@@ -256,7 +320,11 @@ include("config.php")
             ";
                 echo "<td>" . $row['id'] . "</td>";
                 echo "<td>" . $row['FullName'] . "</td>";
+<<<<<<< HEAD
                 echo "<td> " . $row['class_name'] . "</td>";
+=======
+                echo "<td> " . $row['Class'] . "</td>";
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
             echo "</tr><tbody>";
         }
         echo "</table>";
@@ -275,6 +343,7 @@ include("config.php")
                   </tbody>
                 </table>
               </div>
+<<<<<<< HEAD
 
 
               <div class="overlay dark hidden" style="display:none" id="loading">  
@@ -283,6 +352,8 @@ include("config.php")
 ```
 
 
+=======
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
             </div>
             <!-- /.card -->
       </div>
@@ -299,8 +370,19 @@ include("config.php")
               <table id="viewStudehtsTable" class="table table-bordered table-hover">
                 <thead>
                 <?php
+<<<<<<< HEAD
 // Attempt select query execution
   $sql = "SELECT * FROM calendar";
+=======
+                $con = mysqli_connect("localhost", "root", "","fantastic_school_admin_db");
+ 
+                // Check connection
+                if($con === false){
+                    die("ERROR: Could not connect. " . mysqli_connect_error());
+                } 
+// Attempt select query execution
+  $sql = "SELECT * FROM calendarinnocent";
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";
@@ -322,7 +404,11 @@ include("config.php")
         mysqli_free_result($result);
     } else{
         echo "<div class='alert alert-danger' role='alert'>
+<<<<<<< HEAD
         There are no Events currently
+=======
+        There are no students currently in the database!
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
       </div>";
     }
 } else{

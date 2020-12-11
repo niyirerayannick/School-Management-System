@@ -26,6 +26,7 @@
                 <h3 class="card-title">Add New Class</h3>
               </div>
               <!-- /.card-header -->
+<<<<<<< HEAD
               <div class="card-body table-responsive p-0" style="min-height:600px">
               <div class="row">
           <!-- left column -->
@@ -39,11 +40,21 @@
             <div class="card mt-2 ml-2">
               <!-- /.card-header -->
               <div class="card-body">
+=======
+              <div class="card-body table-responsive p-0">
+              <div class="row">
+          <!-- left column -->
+          <div class="col-md-6">
+            <!-- general form elements -->
+             <form >
+                <div class="card-body">
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
                  <div class="form-group">
                     <label name="class-name">Class Name</label>
                     <input type="hidden" id="addNewClassForm" name="formId" value ="addNewClass">
                     <input type="text" class="form-control" id="className" placeholder="Enter The Class Name" name="class-name">
                  </div>
+<<<<<<< HEAD
 
                  <div class="form-group" style= "display:none" id="optionDiv">
                   <label>Option</label>
@@ -75,13 +86,19 @@ data-dropdown-css-class="select2-info" style="width: 100%;">
                     <label name="class-name">Stream <spam class="text-info"> E.g A,B,C </spam></label>
                     <input type="text" class="form-control"  placeholder="Enter The Stream Name" name="stream_name">
                  </div>
+=======
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
                 </div>
                 <!-- /.card-body -->
   
                 <div class="card-footer">
+<<<<<<< HEAD
                   <button type="submit" class="btn btn-success" id="addClassBtn">Add Class</button>
                   <button type="reset" class="btn btn-danger float-right" >Cancel</button>
 
+=======
+                  <button type="submit" class="btn btn-primary" id="addClassBtn">Add Class</button>
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
                 </div>
               </form>
             </div>

@@ -33,7 +33,11 @@
               <table id="viewStudehtsTable" class="table table-bordered table-hover">
                 <thead>
                 <?php
+<<<<<<< HEAD
                 $con = mysqli_connect("localhost", "root", "","student_management_system");
+=======
+                $con = mysqli_connect("localhost", "root", "","fantastic_school_admin_db");
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
  
                 // Check connection
                 if($con === false){

@@ -21,7 +21,11 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
+<<<<<<< HEAD
             <div class="card card-outline card-info">
+=======
+            <div class="card">
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
               <div class="card-header">
                 <h3 class="card-title">Add New Student</h3>
               </div>
@@ -34,6 +38,7 @@
               <!-- /.card-header -->
               <div class="card-body">
             <!-- general form elements -->
+<<<<<<< HEAD
               <form  id="form">
                 <div class="card-body">
                 <div class="form-group">
@@ -56,12 +61,43 @@
                     <option selected="selected" disabled>Select Student's Class </option>
                     <?php
                 include '../config.php';
+=======
+              <form>
+                <div class="card-body">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Student's Full Name</label>
+                    <input type="text" class="form-control form-control-sm" id="fullName" name="fullName" placeholder="Enter The Student's Full Name">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control form-control-sm" name ="email" id="email" placeholder="Enter email">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Registration Number</label>
+                    <input type="number" class="form-control form-control-sm" id="RegNo" placeholder="Enter the Registration Number" name="RegNo">
+                  </div>
+                  <div class="form-group">
+                  <label>Class</label>
+<select id='studentClass' name ="studentClass" class="form-control form-control-sm select2 select2-info" data-dropdown-css-class="select2-info" style="width: 100%;" >
+                    <option selected="selected" disabled>Select Student's Class</option>
+                    <?php
+                $con = mysqli_connect("localhost", "root", "","fantastic_school_admin_db");
+ 
+                // Check connection
+                if($con === false){
+                    die("ERROR: Could not connect. " . mysqli_connect_error());
+                } 
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
 // Attempt select query execution
   $sql = "SELECT * FROM classes";
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
         while($row = mysqli_fetch_array($result)){
+<<<<<<< HEAD
                 echo "<option name='className' value =" . $row['id']  . ">" . $row['class_name']  . "</option>";
+=======
+                echo "<option name='className' value =" . $row['id']  . ">" . $row['Name']  . "</option>";
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
         }
         // Free result set
     } else{
@@ -74,6 +110,7 @@
  ?>
                   </select>
                 </div>
+<<<<<<< HEAD
                 <div class="form-group" style= "display:none" id="optionDiv">
                   <label>Option <span class="text-danger">*</span> </label>
 <select id='optionSelect' name= "studentStream" class="form-control form-control-sm select2 select2-info"
@@ -90,6 +127,61 @@ data-dropdown-css-class="select2-info" style="width: 100%;">
                 </div>
                 <div class="form-group">
                   <label>Academic Year <span class="text-danger">*</span></label>
+=======
+                <div class="form-group">
+                  <label>Option</label>
+<select name= "studentOption" class="form-control form-control-sm select2 select2-info" data-dropdown-css-class="select2-info" style="width: 100%;">
+                    <option selected="selected" disabled>Select Student's Option</option>
+                    <?php
+                $con = mysqli_connect("localhost", "root", "","fantastic_school_admin_db");
+ 
+                // Check connection
+                if($con === false){
+                    die("ERROR: Could not connect. " . mysqli_connect_error());
+                } 
+// Attempt select query execution
+  $sql = "SELECT * FROM classes";
+      if($result = mysqli_query($con, $sql)){
+    if(mysqli_num_rows($result) > 0){
+        while($row = mysqli_fetch_array($result)){
+                echo "<option name='className' value =" . $row['id']  . ">" . $row['Name']  . "</option>";
+        }
+        // Free result set
+    } else{
+        echo "<option disabled selected >No Classes Currently</option>
+        ";
+    }
+} else{
+    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+}
+ ?>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Stream</label>
+      <select name="studentStream" id="studentStream" class="form-control form-control-sm select2 select2-info" data-dropdown-css-class="select2-info" style="width: 100%;">
+                    <option selected="selected" disabled>Select Student's Stream</option>
+                    <?php
+// Attempt select query execution
+  $sql = "SELECT * FROM streams";
+      if($result = mysqli_query($con, $sql)){
+    if(mysqli_num_rows($result) > 0){
+        while($row = mysqli_fetch_array($result)){
+                echo "<option name='streamName' value =" . $row['id']  . ">" . $row['Name']  . "</option>";
+        }
+        // Free result set
+    } else{
+        echo "<option disabled selected >No Streams Currently</option>";
+    }
+} else{
+    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+}
+ ?>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Academic Year</label>
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
 <select name="academicYear" class="form-control form-control-sm select2 select2-info" data-dropdown-css-class="select2-info" style="width: 100%;">
                     <option selected="selected" disabled>Select Current Academic Year</option>
                     <?php
@@ -112,7 +204,11 @@ data-dropdown-css-class="select2-info" style="width: 100%;">
                 </div>
 
                 <div class="form-group">
+<<<<<<< HEAD
                   <label>Hostel <span class="text-danger">*</span></label>
+=======
+                  <label>Hostel</label>
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
 <select name="studentHostel" class="form-control form-control-sm select2 select2-info" data-dropdown-css-class="select2-info" style="width: 100%;">
                     <option selected="selected" disabled>Select Student's Hostel</option>
                     <?php
@@ -121,7 +217,11 @@ data-dropdown-css-class="select2-info" style="width: 100%;">
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
         while($row = mysqli_fetch_array($result)){
+<<<<<<< HEAD
                 echo "<option name='hostel' value =" . $row['id']  . ">" . $row['hostel_name']  . "</option>";
+=======
+                echo "<option name='hostel' value =" . $row['id']  . ">" . $row['Name']  . "</option>";
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
         }
         // Free result set
     } else{
@@ -135,6 +235,7 @@ data-dropdown-css-class="select2-info" style="width: 100%;">
                 </div>
 
                 <div class="form-group">
+<<<<<<< HEAD
                   <label>Student  Category <span class="text-danger">*</span></label>
   <select name="studentCategory" class="form-control form-control-sm select2 select2-info" data-dropdown-css-class="select2-info" style="width: 100%;">
                     <option selected="selected" disabled="selected">Select Category</option>
@@ -145,6 +246,18 @@ data-dropdown-css-class="select2-info" style="width: 100%;">
     if(mysqli_num_rows($result) > 0){
         while($row = mysqli_fetch_array($result)){
                 echo "<option name='category' value =" . $row['id']  . ">". $row['category_name']  . "</option>";
+=======
+                  <label>Student Performance Category</label>
+  <select name="studentCategory" class="form-control form-control-sm select2 select2-info" data-dropdown-css-class="select2-info" style="width: 100%;">
+                    <option selected="selected" disabled="selected">Select Performance</option>
+                    <?php
+// Attempt select query execution
+  $sql = "SELECT * FROM studentcategories";
+      if($result = mysqli_query($con, $sql)){
+    if(mysqli_num_rows($result) > 0){
+        while($row = mysqli_fetch_array($result)){
+                echo "<option name='category' value =" . $row['id']  . ">". $row['Name']  . "</option>";
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
         }
         // Free result set
     } else{
@@ -157,6 +270,7 @@ data-dropdown-css-class="select2-info" style="width: 100%;">
                   </select>
                 </div>
                 <div class="form-group">
+<<<<<<< HEAD
                     <label for="exampleInputEmail1">Date Of Birth <span class="text-danger">*</span></label>
                     <input type="date" class="form-control form-control-sm" name ="dob" id="dob">
                   </div>
@@ -179,11 +293,56 @@ data-dropdown-css-class="select2-info" style="width: 100%;">
                   </div>
                     <div class="form-group clearfix">
                       <div class="icheck-primary d-inline">
+=======
+                    <label for="exampleInputEmail1">Date Of Birth</label>
+                    <input type="date" class="form-control form-control-sm" name ="dob" id="dob">
+                  </div>
+                <div class="form-group">
+                  <label>Hostel</label>
+                  <select class="form-control select2 select2-info" data-dropdown-css-class="select2-info" style="width: 100%;">
+                    <option selected="selected" disabled>Select Student's Hostel</option>
+                    <?php
+// Attempt select query execution
+  $sql = "SELECT * FROM hostels";
+      if($result = mysqli_query($con, $sql)){
+    if(mysqli_num_rows($result) > 0){
+        while($row = mysqli_fetch_array($result)){
+                echo "<option value =" . $row['id']  . ">" . $row['Name']  . "</option>";
+        }
+        // Free result set
+    } else{
+        echo "<option disabled selected >No Hostels Currently</option>";
+    }
+} else{
+    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+}
+ ?>
+                  </select>
+                </div>
+                  <div class="form-group">
+                    <label for="exampleInputFile">Student Photo</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input " id="exampleInputFile" name ='studentPhoto'>
+                        <label class="custom-file-label" for="studentPhoto" >Choose file</label>
+                      </div>
+                      <div class="input-group-append">
+                        <span class="input-group-text">Upload</span>
+                      </div>
+                    </div>
+                  </div>
+                    <div class="form-group clearfix">
+                      <div class="icheck-info d-inline">
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
                         <input type="radio" id="male" name="gender" value='male'>
                         <label for="male"> Male
                         </label>
                       </div>
+<<<<<<< HEAD
                       <div class="icheck-primary d-inline">
+=======
+                      <div class="icheck-info d-inline">
+>>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
                         <input type="radio" id="female" name="gender" value="female">
                         <label for="female"> Female
                         </label>
