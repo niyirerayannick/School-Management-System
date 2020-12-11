@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="dist/css/adminlte.min.css">
+      <!-- jQuery UI 1.11.4 -->
+  <link rel="stylesheet" href="plugins/jquery-ui/jquery-ui.min.css">
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <link rel="stylesheet" href="dist/css/style.css">
+    <!-- Toastr -->
+  <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
+</head>
+<body>
+  <div class="container" id="container">
+      <div class="form-container sign-up-container">
+          <form action="#">
+              <h1>Create Account</h1>
+              <input type="text" name="username" id="login_username" placeholder="Enter the username">
+              <input type="password" name="password" id="login_password" placeholder="Enter the password">
+              <button class="btn btn-info">Sign Up</button>
+
+          </form>
+      </div>
+      <div class="form-container sign-in-container">
+        <form action="login.php" method="POST">
+            <h1>Sign In</h1>
+            <input type="text" name="username" id="userName" placeholder="Enter the username">
+            <input type="password" name="password" id="passWord" placeholder="Enter the password">
+            <a href="#">Forgot password</a>
+            <button class=" btn btn-info" id="signInBtn">Sign In</button>
+        </form>
+    </div>
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-left">
+                <h1>Welcome Back</h1>
+                <p>
+                    To Keep Using SMS please login with your credentials.
+                </p>
+                <button class="ghost" id="signIn">Sign In</button>
+            </div>
+            <div class="overlay-panel overlay-right">
+                <h1>Hello, Friend</h1>
+                <p>
+                    Enter your personal details to start journey with us.
+                </p>
+                <button class="ghost" id="signUp">Sign Up</button>
+            </div>
+        </div>
+    </div>
+  </div>  
+<script src="dist/js/utilities.js"></script>
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Toastr -->
+<script src="plugins/toastr/toastr.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="plugins/jquery-ui/jquery-ui.min.js"></script>
+</body>
+</html>
