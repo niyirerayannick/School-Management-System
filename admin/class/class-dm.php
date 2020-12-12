@@ -1,6 +1,5 @@
 <?php
 include("../config.php");
-<<<<<<< HEAD
   if($_POST["formId"] == 'addNewClass'){
     if(!isset($_POST["class-name"])){
       addNewClass($_POST["class-name"],$_POST['option_name'],$_POST['stream_name']);
@@ -59,42 +58,12 @@ include("../config.php");
     include("../config.php");
  
        $sql = "DELETE  FROM classes where id = '$id'";
-=======
-$class = $_POST["class-name"];
-
-  if($_POST["formId"] == 'addNewClass'){
-  addNewClass($class);
-   }
-elseif($_POST["formId"] == 'deleteStudent'){
-  deleteClass($class);
-   }
-   function deleteClass($id){
-    include("../config.php");
-    $sql = "DELETE  FROM classes WHERE id = '$id'";
-  
-     if($res = mysqli_query($con,$sql)){
-         echo "1";
-       }
-      else{
-         echo "<div class='alert alert-danger' role='alert'>
-         There are was a problem performing the operation!
-       </div>" ;
-        echo "Error: " . $sql . "<br>" . mysqli_error($con);
-  
-       }
-  }
-
-function addNewClass($var){
-    include("../config.php");
-       $sql = "INSERT INTO `classes` (`id`, `Name`) VALUES (NULL, '$var');";
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
     
         if($res = mysqli_query($con,$sql)){
             echo "1";
           }
          else{
             echo "<div class='alert alert-danger' role='alert'>
-<<<<<<< HEAD
             There are was a problem performing the operation! 
           </div>";
          }
@@ -190,10 +159,4 @@ function addNewClass($var){
   }
 
   
-=======
-            There are was a problem performing the operation!
-          </div>";
-         }
-        }
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
 ?>

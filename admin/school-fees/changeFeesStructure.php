@@ -26,7 +26,6 @@
                 <h3 class="card-title">Change Fees Structure</h3>
               </div>
               <!-- /.card-header -->
-<<<<<<< HEAD
               <div class="card-body table-responsive p-0" style="min-height:600px">
               <div class="row">
           <!-- left column -->
@@ -86,54 +85,13 @@ data-dropdown-css-class="select2-info" style="width: 100%;">
                     placeholder="Enter Fees Amount">
                   </div>
                  
-=======
-              <div class="card-body table-responsive p-0">
-              <div class="row">
-          <!-- left column -->
-          <div class="col-md-6">
-            <!-- general form elements -->
-              <form action=>
-                <div class="card-body">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Student's Full Name</label>
-                    <input type="text" class="form-control" id="fullName" placeholder="Enter The Student's Full Name">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputFile">File input</label>
-                    <div class="input-group">
-                      <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="exampleInputFile">
-                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                      </div>
-                      <div class="input-group-append">
-                        <span class="input-group-text">Upload</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                  </div>
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-<<<<<<< HEAD
                 <input type="hidden" id="changeFeeStructureForm" name="formId" value ="changeFeeStructure">
                   <button class="btn btn-success"  id="changeFeeStructure">Submit</button>
                   <button type="reset" class="btn btn-danger float-right">Cancel</button>
-=======
-                  <button type="submit" class="btn btn-primary">Submit</button>
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
                 </div>
               </form>
             </div>

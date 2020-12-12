@@ -21,11 +21,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-<<<<<<< HEAD
             <div class="card card-outline card-info">
-=======
-            <div class="card">
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
               <div class="card-header">
                 <h3 class="card-title">View List Of Students</h3>
               </div>
@@ -40,18 +36,13 @@
               <table id="viewStudehtsTable" class="table table-bordered table-hover">
                 <thead>
                 <?php
-<<<<<<< HEAD
                 $con = mysqli_connect("localhost", "root", "","student_management_system");
-=======
-                $con = mysqli_connect("localhost", "root", "","fantastic_school_admin_db");
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
  
                 // Check connection
                 if($con === false){
                     die("ERROR: Could not connect. " . mysqli_connect_error());
                 } 
 // Attempt select query execution
-<<<<<<< HEAD
   $sql = "SELECT 
   students.id,FullName,DOB,DOJ,RegNo,Photo,class_name, hostel_name ,parent_name ,
   category_name ,sessions.Year FROM 
@@ -62,13 +53,6 @@
     $total = 32423;
     $balance  =2345;
     $unpaid = 324;
-=======
-  $sql = "SELECT students.id,FullName,DOB,DOJ,RegNo,Photo,classes.Name as class_name,hostels.Name as hostel_name ,streams.Name as stream_name,parents.Name as parent_name,Balance,TotalFees,AdvanceFees,studentcategories.Name 
-  as category_name,sessions.Year
-   FROM students,classes,sessions,streams,studentcategories,hostels,parents
-    where students.Class =classes.id and students.Hostel = hostels.id and students.Stream = streams.id 
-  and students.Parent = parents.id and students.AcademicYear = sessions.id and students.Category = studentcategories.id";
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";
@@ -94,11 +78,7 @@
             echo "<tr>                   <tbody>
             ";
                 echo "<td>" . $row['id'] . "</td>";
-<<<<<<< HEAD
                 echo "<td><button id='viewStudentDetails' class='btn btn-outline-secondary btn-xs' value=" . $row['id'] . ">" . $row['FullName'] . "</td></button>";
-=======
-                echo "<td>" . $row['FullName'] . "</td>";
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
                 echo "<td>" . $row['DOB'] . "</td>";
                 echo "<td><img src=" . $row['Photo'] . " class ='img img-thumbnail img-sm'></td>";
                 echo "<td>" . $row['RegNo'] . "</td>";
@@ -107,15 +87,9 @@
                 echo "<td>" . $row['DOJ'] . "</td>";
                 echo "<td>" . $row['category_name'] . "</td>";
                 echo "<td>" . $row['Year'] . "</td>";
-<<<<<<< HEAD
                 echo "<td>" . $total . "</td>";
                 echo "<td>" . $unpaid . "</td>";
                 echo "<td>" . $balance . "</td>";
-=======
-                echo "<td>" . $row['TotalFees'] . "</td>";
-                echo "<td>" . $row['AdvanceFees'] . "</td>";
-                echo "<td>" . $row['Balance'] . "</td>";
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
                 echo "<td>" . $row['parent_name'] . "</td>";
                 echo "<td><button id='updateStudent' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
                 echo "<td><button id='deleteStudent' class='btn btn-danger btn-sm' value=" . $row['id'] . ">Delete</button></td>";

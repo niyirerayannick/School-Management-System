@@ -2,7 +2,6 @@
 include("../config.php");
 //$filename = $_FILES["studentPhoto"]["name"];
 if($_POST["formId"] == 'addNewStudent'){
-<<<<<<< HEAD
 
   $img = $_FILES["image"]["name"];// stores the original filename from the client
   $tmp = $_FILES["image"]["tmp_name"];// stores the name of the designated temporary file
@@ -35,18 +34,12 @@ if($_POST["formId"] == 'addNewStudent'){
 }
 
 
-=======
- addNewStudent($_POST['fullName'],$_POST['studentClass'],$_POST['gender'],'1999-11-01',$_POST['academicYear'],$_POST['RegNo'],
- $_POST['studentStream'],$_POST['studentHostel'],'2020-11-04',$_POST['studentCategory']);
-   }
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
  elseif ($_POST["formId"] == 'selectUpdateStudent') {
      selectUpdateStudent($_POST['value']);
 }
 elseif ($_POST["formId"] == 'deleteStudentBtn') {
   deleteStudent($_POST['value']);
 }
-<<<<<<< HEAD
 
 elseif ($_POST["formId"] == 'viewStudentDetailsBtn') {
   viewStudentDetails($_POST['value']);
@@ -59,15 +52,6 @@ function addNewStudent($name,$class,$gender,$dob,$academicYear,$regno,$stream,$h
          `student_category`, `AcademicYear`, `parent_id`,`sibling`) VALUES
         (NULL,'$name','$gender','$dob', '$path', '$regno', '$class', '$stream','$hostel', 'current_timestamp()','$category','$academicYear', 
           NULL,'$sibling');";
-=======
-   
-function addNewStudent($name,$class,$gender,$dob,$academicYear,$regno,$stream,$hostel,$doj,$category){
-    include("../config.php");
-       $sql = "INSERT INTO
-        `students` (`id`, `FullName`, `Gender`, `DOB`, `Photo`, `RegNo`, `Class`, `Stream`, `Hostel`, `DOJ`,
-         `Category`, `AcademicYear`, `TotalFees`, `AdvanceFees`, `Balance`, `Parent`) VALUES
-        (NULL,'$name','$gender','$dob', NULL, $regno, $class, $stream, $hostel, '$doj',$category, $academicYear, '110000', '40000', NULL, NULL);";
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
     
         if($res = mysqli_query($con,$sql)){
             echo "1";
@@ -97,7 +81,6 @@ function deleteStudent($id){
      }
 }
 
-<<<<<<< HEAD
 function viewStudentDetails($id){
   include("../config.php");
   $sql = "SELECT * FROM students WHERE id = '$id'";
@@ -339,11 +322,6 @@ $sql = "SELECT * FROM fees_collection,students where fees_collection.student_id 
 function selectUpdateStudent($id){
     include("../config.php");
        $sql = "SELECT students.id,FullName,DOB,DOJ,RegNo,Photo,classes.Name as class_name,hostels.Name as hostel_name ,stream_name,parents.Name as parent_name,Balance,TotalFees,AdvanceFees,studentcategories.Name 
-=======
-  function selectUpdateStudent($id){
-    include("../config.php");
-       $sql = "SELECT students.id,FullName,DOB,DOJ,RegNo,Photo,classes.Name as class_name,hostels.Name as hostel_name ,streams.Name as stream_name,parents.Name as parent_name,Balance,TotalFees,AdvanceFees,studentcategories.Name 
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
        as category_name,sessions.Year
         FROM students,classes,sessions,streams,studentcategories,hostels,parents
          where students.Class =classes.id and students.Hostel = hostels.id and students.Stream = streams.id 
@@ -392,11 +370,7 @@ function selectUpdateStudent($id){
                           <div class='card-body'>
                           <div class='form-group'>
                               <label for='exampleInputEmail1'>Student's Full Name</label>
-<<<<<<< HEAD
                               <input type='text' class='form-control form-control-sm' id='fullName' name='fullName' value= ";  echo $row["FullName"]; echo">
-=======
-                              <input type='text' class='form-control form-control-sm' id='fullName' name='fullName' value= " . $row['FullName'] .">
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
                             </div>
                             <div class='form-group'>
                               <label for='exampleInputEmail1'>Email address</label>

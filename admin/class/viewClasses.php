@@ -32,43 +32,28 @@
               <div class="col-md-9">
             <div class="card mt-2 ml-2">
             <div class="card-header">
-<<<<<<< HEAD
                 <button class="btn btn-info card-title" id="newClass"> <i class="fa fa-plus"></i>  Add New Class</button>
-=======
-                <button class="btn btn-primary card-title" id="newClass"> <i class="fa fa-plus"></i>  Add New Class</button>
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
               </div>
               <!-- /.card-header -->
               <div class="card-body">
               <table id="viewStudehtsTable" class="table table-bordered table-hover">
                 <thead>
                 <?php
-<<<<<<< HEAD
                 $con = mysqli_connect("localhost", "root", "","student_management_system");
-=======
-                $con = mysqli_connect("localhost", "root", "","fantastic_school_admin_db");
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
  
                 // Check connection
                 if($con === false){
                     die("ERROR: Could not connect. " . mysqli_connect_error());
                 } 
 // Attempt select query execution
-<<<<<<< HEAD
   $sql = "SELECT * FROM classes,options WHERE classes.id = options.class_id";
-=======
-  $sql = "SELECT * FROM classes";
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";
                 echo "<th>id</th>";
                 echo "<th>Class Name </th>";
-<<<<<<< HEAD
                 echo "<th>Combination </th>";
                 echo "<th>Stream Name </th>";
-=======
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
                 echo "<th>Edit</th>";
                 echo "<th>Delete</th>";
 
@@ -77,13 +62,9 @@
             echo "<tr>                   <tbody>
             ";
                 echo "<td>" . $row['id'] . "</td>";
-<<<<<<< HEAD
                 echo "<td>" . $row['class_name'] . "</td>";
                 echo "<td>" . $row['option_name'] . "(" . $row['abbreviation'] . ")</td>";
                 echo "<td>" . $row['stream_name'] . "</td>";
-=======
-                echo "<td>" . $row['Name'] . "</td>";
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
                 echo "<td><button id='updateClass' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
                 echo "<td><button id='deleteClass' class='btn btn-danger btn-sm' value=" . $row['id'] . ">Delete</button></td>";
             echo "</tr><tbody>";

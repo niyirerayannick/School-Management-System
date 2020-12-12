@@ -26,12 +26,9 @@
                 <h3 class="card-title">View List Of Subjects</h3>
               </div>
               <!-- /.card-header -->
-<<<<<<< HEAD
               <div class="card-header">
                 <button class="btn btn-info card-title" id="newSubject"> <i class="fa fa-plus"></i>  Add New Subject</button>
               </div>
-=======
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
               <div class="row">
@@ -40,70 +37,30 @@
               <table id="viewStudehtsTable" class="table table-bordered table-hover">
                 <thead>
                 <?php
-<<<<<<< HEAD
                 $con = mysqli_connect("localhost", "root", "","student_management_system");
-=======
-                $con = mysqli_connect("localhost", "root", "","fantastic_school_admin_db");
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
  
                 // Check connection
                 if($con === false){
                     die("ERROR: Could not connect. " . mysqli_connect_error());
                 } 
 // Attempt select query execution
-<<<<<<< HEAD
   $sql = "SELECT * FROM subjects";
-=======
-  $sql = "SELECT * FROM teachers";
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";
                 echo "<th>id</th>";
-<<<<<<< HEAD
                 echo "<th>Subject Name </th>";
                 echo "<th>Edit </th>";
                 echo "<th>Delete </th>";
-=======
-                echo "<th>Full Name </th>";
-                echo "<th>Birth Date</th>";
-                echo "<th>Registration Number</th>";
-                echo "<th>Class</th>";
-                echo "<th>Hostel</th>";
-                echo "<th>Entry Date</th>";
-                echo "<th>Category</th>";
-                echo "<th>Academic year</th>";
-                echo "<th>Total Fees</th>";
-                echo "<th>Paid Fees</th>";
-                echo "<th>Unpaid Fees</th>";
-                echo "<th>Parent</th>";
-
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
 
             echo "</tr> </thead>";
         while($row = mysqli_fetch_array($result)){
             echo "<tr>                   <tbody>
             ";
                 echo "<td>" . $row['id'] . "</td>";
-<<<<<<< HEAD
                 echo "<td>" . $row['subject_name'] . "</td>";
                 echo "<td><button id='updateSubject' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
                 echo "<td><button id='deleteSubject' class='btn btn-danger btn-sm' value=" . $row['id'] . ">Delete</button></td>";
-=======
-                echo "<td>" . $row['Name'] . "</td>";
-                echo "<td>" . $row['Gender'] . "</td>";
-                echo "<td>" . $row['Age'] . "</td>";
-                echo "<td>" . $row['Phone'] . "</td>";
-                echo "<td>" . $row['Email'] . "</td>";
-                echo "<td>" . $row['StaffNumber'] . "</td>";
-                echo "<td>" . $row['nationality'] . "</td>";
-                echo "<td>" . $row['subject'] . "</td>";
-                echo "<td>" . $row['responsability'] . "</td>";
-                echo "<td>" . $row['martial_status'] . "</td>";
-                echo "<td>" . $row['degree'] . "</td>";
-                echo "<td>" . $row['entry_date'] . "</td>";
-
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
 
             echo "</tbody></tr>";
         }
@@ -111,11 +68,7 @@
         mysqli_free_result($result);
     } else{
         echo "<div class='alert alert-danger' role='alert'>
-<<<<<<< HEAD
         There are no Subjects currently in the database!
-=======
-        There are no students currently in the database!
->>>>>>> a6ffe9e8baf19f0c6227b86d1776178860c7e09e
       </div>";
     }
 } else{
