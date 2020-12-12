@@ -46,12 +46,13 @@
                     die("ERROR: Could not connect. " . mysqli_connect_error());
                 } 
 // Attempt select query execution
-  $sql = "SELECT 
-  examresults.id,FullName,RegNo,class_name,exam_category, subject_name,examresults.Marks, sessions.Year,sessions.Term,options.stream_name 
-  FROM 
-  examresults,classes,students,subjects,options,sessions
-   WHERE examresults.student_id = students.id and examresults.subject_id = subjects.id 
-   and examresults.session_id = sessions.id AND options.id = students.option_id and students.class_id = classes.id";
+  $sql = "SELECT
+   students.FullName,RegNo,examresults.id, subject_name,Marks,class_name,Year,stream_name,Term,exam_category
+    FROM 
+  examresults,students,classes,subjects,streams,options,sessions
+   WHERE
+  examresults.student_id = students.id and students.stream_id = streams.id and streams.class_id = classes.id
+   and streams.option_id = options.id and subjects.id = examresults.subject_id";
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";

@@ -43,12 +43,11 @@
                     die("ERROR: Could not connect. " . mysqli_connect_error());
                 } 
 // Attempt select query execution
-  $sql = "SELECT 
-  students.id,FullName,DOB,DOJ,RegNo,Photo,class_name, hostel_name ,parent_name ,
-  category_name ,sessions.Year FROM 
-  students,classes,sessions,student_category,hostels,parents
-   where
-    students.class_id =classes.id and students.hostel_id = hostels.id and students.parent_id = parents.id 
+  $sql = "SELECT
+   students.id,FullName,DOB,DOJ,RegNo,Photo,class_name, hostel_name ,parent_name , category_name ,sessions.Year 
+   FROM
+    students,classes,sessions,student_category,hostels,parents 
+    WHERE students.class_id = classes.id and students.hostel_id = hostels.id and students.parent_id = parents.id 
     and students.student_category = student_category.id";
     $total = 32423;
     $balance  =2345;

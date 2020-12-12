@@ -11,13 +11,16 @@ let contentWrapper = document.querySelector('#content-wrapper'),
  timetable = document.querySelector("#timeTable");
 
 navbar.addEventListener("click",function(e){
-  //console.log(e.target.parentNode.id)
+  console.log(e.target.parentNode.id)
   if(e.target.parentNode.id == 'addhostel') {
 		  getAddHostel();
       }
      else if(e.target.parentNode.id == 'viewHostels'){
       viewAllHostels();
       }
+      else if(e.target.parentNode.id == 'libraryStatus'){
+        getLibraryStatus();
+        }
      else if(e.target.parentNode.id == 'calendar'){
       getCalendar();
       }  
@@ -245,9 +248,6 @@ contentWrapper.addEventListener('click', function(e) {
     }
     else if(e.target.id == 'updateLibraryBtn') {
       updateLibrary();
-    }
-    else if(e.target.id == 'libraryStatus') {
-      getLibraryStatus();
     }
  
     

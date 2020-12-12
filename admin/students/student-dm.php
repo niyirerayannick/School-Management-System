@@ -83,7 +83,13 @@ function deleteStudent($id){
 
 function viewStudentDetails($id){
   include("../config.php");
-  $sql = "SELECT * FROM students WHERE id = '$id'";
+  $sql = "SELECT * 
+  FROM 
+  students,classes,sessions,student_category,hostels,parents,streams,options 
+  WHERE 
+  students.class_id = classes.id and students.hostel_id = hostels.id and students.parent_id = parents.id 
+  and students.student_category = student_category.id and streams.class_id = students.class_id and streams.option_id = options.id 
+  and students.id ='$id'";
 
   if($res = mysqli_query($con,$sql)){
     $row = mysqli_fetch_array($res);
@@ -144,17 +150,17 @@ function viewStudentDetails($id){
                   </li>
                   <li class="list-group-item">
                     <b>Class</b> <a class="float-right"><?php 
-                           echo $row["class_id"];
+                           echo $row["class_name"];
                     ?></a></a>
                   </li>
                   <li class="list-group-item">
                     <b>Option</b> <a class="float-right"><?php 
-                           echo $row["option_id"];
+                           echo $row["option_name"];
                     ?></a></a>
                   </li>
                   <li class="list-group-item">
                     <b>Hostel</b> <a class="float-right"><?php 
-                           echo $row["hostel_id"];
+                           echo $row["hostel_name"];
                     ?></a></a>
                   </li>
                   <li class="list-group-item">
@@ -164,12 +170,12 @@ function viewStudentDetails($id){
                   </li>
                   <li class="list-group-item">
                     <b>Parent</b> <a class="float-right"><?php 
-                           echo $row["parent_id"];
+                           echo $row["parent_name"];
                     ?></a></a>
                   </li>
                 </ul>
 
-                <button class="btn btn-primary btn-block" id="updateStudent"  value="<?php echo $row['id']  ?>">
+                <button class="btn btn-primary btn-block" id="updateStudent"  value="<?php echo $id  ?>">
                   Edit Student Details</button>
               </div>
               <!-- /.card-body -->
@@ -201,10 +207,15 @@ function viewStudentDetails($id){
                   <div class="tab-pane" id="timeline" style="min-height:550px">
                   <?php
 include("../config.php");
-$sql = "SELECT * FROM examresults,students where examresults.student_id = students.id";
+$sql = "SELECT 
+examresults.id, teacher_name,Marks,subject_name 
+FROM examresults,students,teachers,subjects,teacher_subjects 
+WHERE
+ examresults.student_id = students.id and subjects.id = teacher_subjects.subject_id and teachers.id = teacher_subjects.teacher_id 
+ and examresults.subject_id = subjects.id and examresults.student_id = '$id'";
 
      if($res = mysqli_query($con,$sql)){
-     $row = mysqli_fetch_array($res);
+      if(mysqli_num_rows($res) > 0){
            ?>
             <table class='table table-striped'>
             <thead>
@@ -215,17 +226,18 @@ $sql = "SELECT * FROM examresults,students where examresults.student_id = studen
                 <th >Marks</th>
               </tr>
             </thead>
+            <?php
+      while($row = mysqli_fetch_array($res)){
+            ?>
             <tbody>
               <tr>
                 <td>1.</td>
-                <td><?php echo $row["subject_id"];  ?></td>
+                <td><?php echo $row["subject_name"];  ?></td>
                 <td>
-                  <div class='progress progress-xs'>
-                    <div class='progress-bar progress-bar-danger' style='width: 55%'></div>
-                  </div>
+                  <?php echo $row["teacher_name"];  ?>
                 </td>
                 <td>
-                <?php if($row["Marks"] > 60){
+                <?php if($row["Marks"] > 70){
                   ?>
                 <span class='btn btn-success btn-xs'>
                 <?php
@@ -233,23 +245,43 @@ $sql = "SELECT * FROM examresults,students where examresults.student_id = studen
                  ?>%
                 </span>
                 <?php
-                } elseif($row["Marks"] <60){
+                } elseif($row["Marks"] <70 && $row["Marks"] >= 50 ){
                   ?>
-                <span class='btn btn-danger'>
+                <span class='btn btn-primary btn-xs'>
                 <?php
                   echo $row['Marks'];
                  ?>%
                 </span>
                 <?php
                 }
-                ?></td>
+                  elseif($row["Marks"] <50 && $row["Marks"] > 40 ){
+                  ?>
+                <span class='btn btn-warning btn-xs'>
+                <?php
+                  echo $row['Marks'];
+                 ?>%
+                </span>
+                <?php
+                }
+                else{?>
+                  <span class='btn btn-danger btn-xs'>
+                  <?php
+                    echo $row['Marks'];
+                   ?>%
+                  </span>
+                  <?php
+                }
+                ?>
+                </td>
               </tr>
               
             </tbody>
-          </table><?php
-               
+         <?php
+      }
+    }
      }
                 ?>
+                 </table>
                   </div>
                   <!-- /.tab-pane -->
 
@@ -260,8 +292,7 @@ $sql = "SELECT * FROM fees_collection,students where fees_collection.student_id 
 ";
 
      if($res = mysqli_query($con,$sql)){
-     $row = mysqli_fetch_array($res);
-           ?>
+        ?>
             <table class='table table-hover table-bordered'>
             <thead>
               <tr>
@@ -273,6 +304,9 @@ $sql = "SELECT * FROM fees_collection,students where fees_collection.student_id 
                 <th >Payment Date</th>
               </tr>
             </thead>
+            <?php
+      while($row = mysqli_fetch_array($res)){
+            ?>
             <tbody>
               <tr>
                 <td>1.</td>
@@ -289,10 +323,10 @@ $sql = "SELECT * FROM fees_collection,students where fees_collection.student_id 
               </tr>
               
             </tbody>
-          </table><?php
-               
+          <?php
+      }
      }
-                ?>
+                ?></table>
                   </div>
                   <!-- /.tab-pane -->
                 </div>
@@ -309,6 +343,7 @@ $sql = "SELECT * FROM fees_collection,students where fees_collection.student_id 
             
        <?php
      }
+     
     else{
        echo "<div class='alert alert-danger' role='alert'>
        There are was a problem performing the operation!
@@ -321,16 +356,19 @@ $sql = "SELECT * FROM fees_collection,students where fees_collection.student_id 
 
 function selectUpdateStudent($id){
     include("../config.php");
-       $sql = "SELECT students.id,FullName,DOB,DOJ,RegNo,Photo,classes.Name as class_name,hostels.Name as hostel_name ,stream_name,parents.Name as parent_name,Balance,TotalFees,AdvanceFees,studentcategories.Name 
-       as category_name,sessions.Year
-        FROM students,classes,sessions,streams,studentcategories,hostels,parents
-         where students.Class =classes.id and students.Hostel = hostels.id and students.Stream = streams.id 
-       and students.Parent = parents.id and students.AcademicYear = sessions.id and students.Category = studentcategories.id and students.id = '$id'";
+       $sql = "SELECT * 
+       FROM 
+       students,classes,sessions,student_category,hostels,parents,streams,options 
+       WHERE 
+       students.class_id = classes.id and students.hostel_id = hostels.id and students.parent_id = parents.id 
+       and students.student_category = student_category.id and streams.class_id = students.class_id and streams.option_id = options.id 
+       and students.id ='$id'
+       ";
     
         if($res = mysqli_query($con,$sql)){
           $row = mysqli_fetch_array($res);
-
-          echo" <div id='view'>
+                 ?>
+          <div id='view'>
     
           <section class='content-header'>
                 <div class='container-fluid'>
@@ -341,7 +379,7 @@ function selectUpdateStudent($id){
                     <div class='col-sm-6'>
                       <ol class='breadcrumb float-sm-right'>
                         <li class='breadcrumb-item'><a href='#'>Home</a></li>
-                        <li class='breadcrumb-item active'>Add new student</li>
+                        <li class='breadcrumb-item active'>Update Student Info</li>
                       </ol>
                     </div>
                   </div>
@@ -370,7 +408,7 @@ function selectUpdateStudent($id){
                           <div class='card-body'>
                           <div class='form-group'>
                               <label for='exampleInputEmail1'>Student's Full Name</label>
-                              <input type='text' class='form-control form-control-sm' id='fullName' name='fullName' value= ";  echo $row["FullName"]; echo">
+                              <input type='text' class='form-control form-control-sm' id='fullName' name='fullName' value = "<?php echo htmlentities($row['FullName']) ?>">
                             </div>
                             <div class='form-group'>
                               <label for='exampleInputEmail1'>Email address</label>
@@ -378,85 +416,42 @@ function selectUpdateStudent($id){
                             </div>
                             <div class='form-group'>
                               <label for='exampleInputPassword1'>Registration Number</label>
-                              <input type='number' class='form-control form-control-sm' id='RegNo' value= " . $row['RegNo'] ." name='RegNo'>
+                              <input type='number' class='form-control form-control-sm' id='RegNo' value = "<?php echo htmlentities($row['RegNo']) ?>">
                             </div>
                             <div class='form-group'>
-                            <label>Current Class :</label>  <span> " . $row['class_name'] ."</span>
+                              <label for='exampleInputPassword1'>Class</label>
+                              <input type='text' class='form-control form-control-sm' id='RegNo' value = "<?php echo htmlentities($row['class_name']) ?>">
+                            </div>
+                          
+                            <div class='form-group'>
+                              <label for='exampleInputPassword1'>Student Option (Combination)</label>
+                              <input type='text' class='form-control form-control-sm' id='RegNo' value = "<?php echo htmlentities($row['option_name']) ?>">
                             </div>
                             <div class='form-group'>
-                            <label>Change Class</label>
-          <select id='studentClass' name ='studentClass' class='form-control form-control-sm select2 select2-info' data-dropdown-css-class='select2-info' style='width: 100%;' >
-                              <option selected='selected' disabled>Select Student's Class</option>
-                             
-                        
-                            </select>
-                          </div>
-                          <div class='form-group'>
-                            <label>Option</label>
-          <select name= 'studentOption' class='form-control form-control-sm select2 select2-info' data-dropdown-css-class='select2-info' style='width: 100%;'>
-                              <option selected='selected' disabled>Select Student's Option</option>
-                            </select>
-                          </div>
-                          <div class='form-group'>
-                          <div class='form-group'>
-                            <label>Current Stream :</label>  <span> " . $row['stream_name'] ."</span>
+                              <label for='exampleInputPassword1'>Stream</label>
+                              <input type='text' class='form-control form-control-sm' id='RegNo' value = "<?php echo htmlentities($row['stream_name']) ?>">
                             </div>
-                            <label>Change Stream</label>
-                <select name='studentStream' id='studentStream' class='form-control form-control-sm select2 select2-info' data-dropdown-css-class='select2-info' style='width: 100%;'>
-                              <option selected='selected' disabled>Select Student's Stream</option>
                          
-                            </select>
-                          </div>
-                          <div class='form-group'>
-                            <label>Current Academic year :</label>  <span> " . $row['Year'] ."</span>
+                            <div class='form-group'>
+                              <label for='exampleInputPassword1'>Academic year</label>
+                              <input type='text' class='form-control form-control-sm' id='RegNo' value = "<?php echo htmlentities($row['Year']) ?>">
                             </div>
-                          <div class='form-group'>
-                            <label>Academic Year</label>
-          <select name='academicYear' class='form-control form-control-sm select2 select2-info' data-dropdown-css-class='select2-info' style='width: 100%;'>
-                              <option selected='selected' disabled>Select Current Academic Year</option>
-                             
-                            </select>
-                          </div>
           
-                          <div class='form-group'>
-                          <div class='form-group'>
-                            <label>Current Hostel :</label>  <span> " . $row['hostel_name'] ."</span>
+                            <div class='form-group'>
+                              <label for='exampleInputPassword1'>Student Hostel</label>
+                              <input type='text' class='form-control form-control-sm' id='RegNo' value = "<?php echo htmlentities($row['hostel_name']) ?>">
                             </div>
-                            <label>Change Student Hostel</label>
-          <select name='studentHostel' class='form-control form-control-sm select2 select2-info' data-dropdown-css-class='select2-info' style='width: 100%;'>
-                              <option selected='selected' disabled>Select Student's Hostel</option>
-                              
-                            </select>
-                          </div>
           
-                          <div class='form-group'>
-                          <div class='form-group'>
-                            <label>Current Student Perfomance :</label>  <span> " . $row['category_name'] ."</span>
+                            <div class='form-group'>
+                              <label for='exampleInputPassword1'>Student Category</label>
+                              <input type='text' class='form-control form-control-sm' id='RegNo' value = "<?php echo htmlentities($row['category_name']) ?>">
                             </div>
-                            <label>New Student Performance Category</label>
-            <select name='studentCategory' class='form-control form-control-sm select2 select2-info' data-dropdown-css-class='select2-info' style='width: 100%;'>
-                              <option selected='selected' disabled='selected'>Select Performance</option>
-                              
-                            </select>
-                          </div>
-                          <div class='form-group'>
-                            <label>Date Of Birth :</label>  <span> " . $row['DOB'] ."</span>
+                         
+                            <div class='form-group'>
+                              <label for='exampleInputPassword1'>Date Of Birth</label>
+                              <input type='text' class='form-control form-control-sm' id='RegNo' value = "<?php echo htmlentities($row['DOB']) ?>">
                             </div>
-                          <div class='form-group'>
-                              <label for='exampleInputEmail1'>Change Date Of Birth</label>
-                              <input type='date' class='form-control form-control-sm' name ='dob' id='dob'>
-                              <div class='form-group'>
-                              <label for='exampleInputFile'>Student Photo</label>
-                              <div class='input-group'>
-                                <div class='custom-file'>
-                                  <input type='file' class='custom-file-input ' id='exampleInputFile' name ='studentPhoto'>
-                                  <label class='custom-file-label' for='studentPhoto' >Choose file</label>
-                                </div>
-                                <div class='input-group-append'>
-                                  <span class='input-group-text'>Upload</span>
-                                </div>
-                              </div>
-                            </div>
+
                               <div class='form-group clearfix'>
                                 <div class='icheck-info d-inline'>
                                   <input type='radio' id='male' name='gender' value='male'>
@@ -476,9 +471,9 @@ function selectUpdateStudent($id){
                             <button type='submit' class='btn btn-success' id='addStudentBtn'>Update Student Info</button>
                             <button type='reset' class='btn btn-danger float-right'>Cancel</button>
                           </div>
-                        </form>"
-                              ;
- 
+                        </form>
+
+ <?php
          }
         }
 ?>

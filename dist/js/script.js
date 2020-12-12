@@ -833,12 +833,12 @@ function lendNewBook(){
 }
 
 function deleteLibrary(value,classId){
-  $.post("Librarys/Library-dm.php", {
+  $.post("library/library-dm.php", {
     value: value,
     formId: classId
   },
   function(data){
-
+console.log(data);
     if(data == 1){
                   
       var Toast = Swal.mixin({
@@ -849,9 +849,9 @@ function deleteLibrary(value,classId){
         });
               Toast.fire({
       icon: 'error',
-      title: 'Library Deleted Successfully'
+      title: 'One book Deleted From Library Deleted Successfully'
                });
-       viewLibrarys();
+       viewBookSubmission();
        }   
       })
 }
@@ -884,7 +884,7 @@ event.preventDefault();
 /* Serialize the submitted form control values to be sent to the web server with the request */
 let formValues = $(this).serialize();
 // Send the form data using post
-  $.post("librarys/library-dm.php",formValues,function(data){
+  $.post("library/library-dm.php",formValues,function(data){
 // Display the returned data in browser
 console.log(formValues);
  if(data == 1){
