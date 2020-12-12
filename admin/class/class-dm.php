@@ -1,7 +1,7 @@
 <?php
 include("../config.php");
   if($_POST["formId"] == 'addNewClass'){
-    if(!isset($_POST["class-name"])){
+    if(isset($_POST["option_name"])){
       addNewClass($_POST["class-name"],$_POST['option_name'],$_POST['stream_name']);
     }
     else{
@@ -22,12 +22,34 @@ include("../config.php");
   
   function addNewClass($var,$option,$stream){
     include("../config.php");
-      if($option !== 'NULL'){
-       $sql = "INSERT INTO `classes` (`id`, `class_name`,`option_id`,`stream_name`) 
-       VALUES (NULL, '$var','$option','$stream');";
-      }else{
-        $sql = "INSERT INTO `classes` (`id`, `class_name`,`option_id`,`stream_name`) 
-        VALUES (NULL, '$var',NULL,'$stream');";
+      if(isset($option)){
+       $sql = "INSERT INTO 
+       classes (id, class_name)
+        SELECT * FROM (SELECT NULL as id , '$var' as class_id) AS tmp
+         WHERE NOT EXISTS ( SELECT class_name FROM classes WHERE class_name = '$var' )
+       ";
+
+        if (!mysqli_query($con,"INSERT INTO 
+        `streams` (`id`, `class_id`,`option_id`,`stream_name`) 
+        VALUES 
+        (NULL, (SELECT id FROM classes WHERE class_name = '$var' limit 1 ),'$option','$stream')")) {
+          
+          $sql2= "INSERT INTO 
+          `streams` (`id`, `class_id`,`option_id`,`stream_name`) 
+          VALUES 
+          (NULL, (SELECT id FROM classes WHERE class_name = '$var' limit 1 ),'$option','$stream')";
+
+        echo("Error description: " . mysqli_error($con));
+         //handle erro
+        }
+        else{
+          //handle success
+        }
+      }
+      else{
+        $sql = "INSERT INTO `classes` (`id`, `class_name`) 
+        VALUES (NULL, '$var');";
+       
       }
         if($res = mysqli_query($con,$sql)){
             echo "1";
