@@ -119,6 +119,8 @@ function viewStudentDetails($id){
         <div class="row">
           <div class="col-md-3">
 
+
+
             <!-- Profile Image -->
             <div class="card card-primary card-outline">
               <div class="card-body box-profile">
@@ -183,6 +185,8 @@ function viewStudentDetails($id){
             <!-- /.card -->
 
 
+
+
           </div>
           <!-- /.col -->
           <div class="col-md-9">
@@ -203,6 +207,9 @@ function viewStudentDetails($id){
                 </div>
               </div>
                   </div>
+
+
+
                   <!-- /.tab-pane -->
                   <div class="tab-pane" id="timeline" style="min-height:550px">
                   <?php
@@ -285,6 +292,8 @@ WHERE
                   </div>
                   <!-- /.tab-pane -->
 
+
+
                   <div class="tab-pane" id="settings" style="min-height:550px">
                   <?php
 include("../config.php");
@@ -354,6 +363,8 @@ $sql = "SELECT * FROM fees_collection,students where fees_collection.student_id 
 }
 
 
+
+
 function selectUpdateStudent($id){
     include("../config.php");
        $sql = "SELECT * 
@@ -420,6 +431,7 @@ function selectUpdateStudent($id){
                             </div>
                             <div class='form-group'>
                               <label for='exampleInputPassword1'>Class</label>
+                                 
                               <input type='text' class='form-control form-control-sm' id='RegNo' value = "<?php echo htmlentities($row['class_name']) ?>">
                             </div>
                           

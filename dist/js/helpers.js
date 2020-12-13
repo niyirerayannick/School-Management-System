@@ -15,15 +15,9 @@ contentWrapper.addEventListener('change', function(e) {
  
        }
      }
-     else if(e.target.id == 'className'){
-        if(e.target.value == 's4' || e.target.value == 's5' || e.target.value == 's6'
-        || e.target.value == 'S4'||e.target.value == 'S5'||e.target.value == 'S6'){
-          document.querySelector("#optionDiv").style.display = 'block';
-        }else{
-          document.querySelector("#optionDiv").style.display = 'none';
-  
-        }
-      }
+     else if(e.target.id == 'classNameUpdate'){
+       getOption(e.target);
+     }
  });
 
 

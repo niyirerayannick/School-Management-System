@@ -60,6 +60,9 @@ include("config.php");
   <link rel="stylesheet" href="../plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
  <!-- BS Stepper -->
  <link rel="stylesheet" href="../plugins/bs-stepper/css/bs-stepper.min.css">
+<!-- ChartJs -->
+ <link rel="stylesheet" type="text/css" href="../plugins/chart.js/Chart.min.css">
+
   
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed text-sm" onload= "fetch('index2.php')
@@ -80,7 +83,7 @@ include("config.php");
       <li class="nav-item d-none d-sm-inline-block" id="homeDashboard">
         <a href="#" class="nav-link">Home</a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block" id="homeDashboard">
+      <li class="nav-item d-none d-sm-inline-block" id="classAttendanceHome">
         <a href="#" class="nav-link">Class Attendance</a>
       </li>
     </ul>
@@ -238,12 +241,6 @@ include("config.php");
                   <p>List All Teachers</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Boxed</p>
-                </a>
-              </li>
               
             </ul>
           </li>
@@ -374,12 +371,6 @@ include("config.php");
                   <p>View All Hostels</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Editors</p>
-                </a>
-              </li>
             </ul>
           </li>
           <li class="nav-item">
@@ -438,12 +429,6 @@ include("config.php");
                 <a href="#" class="nav-link" id="addSubject">
                   <i class="fa fa-plus nav-icon"></i>
                   <p>Add Subjects</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Read</p>
                 </a>
               </li>
             </ul>
@@ -508,12 +493,6 @@ include("config.php");
                 <a href="#" class="nav-link" id="addNewBank">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add New bank</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Blank Page</p>
                 </a>
               </li>
               

@@ -94,8 +94,8 @@ include("../config.php");
   function selectUpdateClass($var){
     include("../config.php");
 
-             $sql = "SELECT classes.id as classid,options.id as optionid,class_name FROM classes,options
-              WHERE classes.id = '$var'
+             $sql = "SELECT * FROM classes,streams,options WHERE classes.id = streams.class_id 
+             and streams.option_id = options.id and streams.id = '$var'
              ";
           
               if($res = mysqli_query($con,$sql)){
@@ -127,16 +127,22 @@ include("../config.php");
                                   <h3 class='card-title'>Update Class Details</h3>
                                 </div>
                                 <!-- /.card-header -->
-                                <div class='card-body table-responsive p-0'>
-                                <div class='row'>
-                            <!-- left column -->
-                            <div class='col-md-6'>
-                              <!-- general form elements -->
-                               <form >
-                                  <div class='card-body' style='min-height:550px'>
+                                <div class="card-body table-responsive p-0" style="min-height:600px">
+              <div class="row">
+          <!-- left column -->
+          <div class="col-md-9">
+            <!-- general form elements -->
+             <form >
+                <div class="card-body">
+                <div class="row">
+           <div class="col-md-1"></div>
+              <div class="col-md-9">
+            <div class="card mt-2 ml-2">
+              <!-- /.card-header -->
+              <div class="card-body">
                                   
                                    <div class='form-group'>
-                                      <label name='class-name'>New Class Name</label>
+                                      <label name='class-name'> Class Name</label>
                                       <input type='hidden' id='addNewClassForm' name='formId' value ='updateClass'>
                                       <input type='hidden' id='addNewClassId' name='id' 
                                       value= "<?php echo htmlentities($row['id']) ?>">
@@ -145,6 +151,32 @@ include("../config.php");
                                        value= "<?php echo $row['class_name']; ?>"
                                       name='class-name' >
                                    </div>
+                                   <div class='form-group'>
+                                     <label for="Stream">Option(Combination) Name</label>
+                                      <input type='text' class='form-control' id='className'
+                                       value= "<?php echo $row['option_name']; ?>"
+                                      name='class-name' >
+                                   </div>
+                                   <div class='form-group'>
+                                     <label for="Stream">Stream Name</label>
+                                      <input type='text' class='form-control' id='className'
+                                       value= "<?php echo $row['stream_name']; ?>"
+                                      name='class-name' >
+                                   </div>
+                                   <div class="form-group" style= "display:none" id="optionDiv">
+                  <label>Option <span class="text-danger">*</span> </label>
+<select id='optionSelect' name= "studentStream" class="form-control form-control-sm select2 select2-info"
+data-dropdown-css-class="select2-info" style="width: 100%;">
+                    
+                  </select>
+                </div>
+                <div class="form-group" id="streamDiv"> 
+                  <label>Stream <span class="text-danger">*</span></label>
+      <select name="studentStream" id="streamSelect" class="form-control form-control-sm select2 select2-info" data-dropdown-css-class="select2-info" style="width: 100%;">
+                    <option selected="selected" disabled>Select Student's Stream</option>
+                   
+                  </select>
+                </div>
                                    <button type='submit' class='btn btn-success' id='updateClassBtn'>Update Class</button>
 
                                   </div>

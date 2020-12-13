@@ -275,3 +275,5 @@ timetable.addEventListener("click",getTimeTable)
 dashboard.addEventListener("click",loadDashboard)
 Homedashboard.addEventListener("click",loadDashboard)
 
+document.getElementById('classAttendanceHome').addEventListener("click",getClassAttendance)
+

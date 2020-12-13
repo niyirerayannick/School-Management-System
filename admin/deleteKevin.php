@@ -2,7 +2,7 @@
 /****************************************************************************/
 // Database Connection
 /****************************************************************************/
-$connectionPDO= new PDO('mysql:host=localhost;dbname=fantastic_school_admin_db', 'root', '');
+$connectionPDO= new PDO('mysql:host=localhost;dbname=student_management_system', 'root', '');
 
 /****************************************************************************/
 // FullCalender.io Delete Function

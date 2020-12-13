@@ -321,6 +321,122 @@ function viewAllClasses(){
         })
     }
 
+   
+function getClassAttendance(){
+  fetch('class_attendance.php')
+  .then(response => response.text())
+  .then(html =>{
+      let parser = new DOMParser();
+      let doc = (parser.parseFromString(html, 'text/html')).querySelector('#myChart');
+
+      var ctx = doc.getContext('2d');
+      var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our  dataset
+    data: {
+        labels: [1,6,67,4], //the variable we created ealier,
+        datasets: [{
+            label: '',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [1,6,67,4] //the variable we created ealier
+        }]
+    },
+
+    // Configuration options go here
+    options: {
+        title: {
+            display: true,
+            text: 'STUDENT ATTANDANCE'
+        },
+        tooltips: {
+            // Disable the on-canvas tooltip
+            enabled: true,
+      
+        },
+        scales: {
+        yAxes: [{
+            display: true,
+            ticks: {
+                beginAtZero: true,
+                min: 0
+            }
+        }]
+    }
+    }
+
+   });
+  
+      contentWrapper.innerHTML = chart;
+  })
+}
+
+
+function getClassAttendance1(){
+  fetch('class_attendance.php')
+  .then(response => response.text())
+  .then(html =>{
+      let parser = new DOMParser();
+      let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
+
+       //decraring x,y axis valiables
+       var dates = new Array();
+       var num =new Array();
+      contentWrapper.innerHTML = doc.innerHTML;
+ /*converting php data to json 
+var name = <?php echo json_encode($row['Date']); ?>;
+var numb = <?php echo json_encode($row['N_O_attendance']); ?>;*/
+      dates.push(name);
+      num.push(numb);
+      
+
+      var ctx = document.getElementById('myChart').getContext('2d');
+    
+    
+      var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our  dataset
+    data: {
+        labels: dates, //the variable we created ealier,
+        datasets: [{
+            label: '',
+            borderColor: 'rgb(255, 99, 132)',
+            data: num //the variable we created ealier
+        }]
+    },
+
+    // Configuration options go here
+    options: {
+        title: {
+            display: true,
+            text: 'STUDENT ATTANDANCE'
+        },
+        tooltips: {
+            // Disable the on-canvas tooltip
+            enabled: true,
+      
+        },
+        scales: {
+        yAxes: [{
+            display: true,
+            ticks: {
+                beginAtZero: true,
+                min: 0
+            }
+        }]
+    }
+    }
+
+   });
+
+  })
+}
+
+
+
 //get list of Hostels
 function viewAllHostels(){
   fetch('hostels/viewHostels.php')

@@ -46,7 +46,8 @@
                     die("ERROR: Could not connect. " . mysqli_connect_error());
                 } 
 // Attempt select query execution
-  $sql = "SELECT * FROM classes,options WHERE classes.id = options.class_id";
+  $sql = "SELECT streams.id, class_name,stream_name,option_name,abbreviation FROM classes,streams,options 
+  WHERE classes.id = streams.class_id and streams.option_id = options.id";
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";

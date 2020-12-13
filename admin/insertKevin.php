@@ -2,7 +2,7 @@
 
 //insert.php
 
-$connect = new PDO('mysql:host=localhost;dbname=fantastic_school_admin_db', 'root', '');
+$connect = new PDO('mysql:host=localhost;dbname=student_management_system', 'root', '');
 
 if(isset($_POST["title"]))
 {
