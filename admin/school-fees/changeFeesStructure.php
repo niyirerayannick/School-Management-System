@@ -45,12 +45,7 @@
  data-dropdown-css-class="select2-info" style="width: 100%;" >
                     <option selected="selected" disabled>Select Class</option>
                     <?php
-                $con = mysqli_connect("localhost", "root", "","student_management_system");
- 
-                // Check connection
-                if($con === false){
-                    die("ERROR: Could not connect. " . mysqli_connect_error());
-                } 
+             include("../config.php");
 // Attempt select query execution
   $sql = "SELECT * FROM classes";
       if($result = mysqli_query($con, $sql)){
@@ -90,7 +85,7 @@ data-dropdown-css-class="select2-info" style="width: 100%;">
 
                 <div class="card-footer">
                 <input type="hidden" id="changeFeeStructureForm" name="formId" value ="changeFeeStructure">
-                  <button class="btn btn-success"  id="changeFeeStructure">Submit</button>
+                  <button class="btn btn-success"  id="changeFeeStructureBtn">Submit</button>
                   <button type="reset" class="btn btn-danger float-right">Cancel</button>
                 </div>
               </form>

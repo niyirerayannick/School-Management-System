@@ -44,10 +44,13 @@
                 } 
 // Attempt select query execution
   $sql = "SELECT
-   students.id,FullName,DOB,DOJ,RegNo,Photo,class_name, hostel_name ,parent_name , category_name ,sessions.Year 
-   FROM
-    students,classes,sessions,student_category,hostels,parents 
-    WHERE students.class_id = classes.id and students.hostel_id = hostels.id and students.parent_id = parents.id 
+   students.id,FullName,DOB,DOJ,RegNo,Photo,class_name, hostel_name ,parent_name , category_name ,
+   sessions.Year,option_name,stream_name
+   FROM 
+   students,classes,sessions,student_category,hostels,parents,streams 
+   LEFT JOIN options on options.id = streams.option_id 
+   WHERE
+    students.hostel_id = hostels.id and students.parent_id = parents.id AND students.stream_id = streams.id AND streams.class_id = classes.id 
     and students.student_category = student_category.id";
     $total = 32423;
     $balance  =2345;
@@ -61,13 +64,13 @@
                 echo "<th>Photo</th>";
                 echo "<th>Registration Number</th>";
                 echo "<th>Class</th>";
+                echo "<th>Combination</th>";
+                echo "<th>Stream</th>";
                 echo "<th>Hostel</th>";
                 echo "<th>Entry Date</th>";
                 echo "<th>Category</th>";
                 echo "<th>Academic year</th>";
                 echo "<th>Total Fees</th>";
-                echo "<th>Paid Fees</th>";
-                echo "<th>Unpaid Fees</th>";
                 echo "<th>Parent</th>";
                 echo "<th>Edit</th>";
                 echo "<th>Delete</th>";
@@ -82,13 +85,17 @@
                 echo "<td><img src=" . $row['Photo'] . " class ='img img-thumbnail img-sm'></td>";
                 echo "<td>" . $row['RegNo'] . "</td>";
                 echo "<td>" . $row['class_name'] . "</td>";
-                echo "<td>" . $row['hostel_name'] . "</td>";
+                if($row['option_name'] == NULL){
+                  echo "<td>  - </td>";
+                  }else{
+                echo "<td>" . $row['option_name'] . "</td>";
+                  }               
+                  echo "<td>" . $row['stream_name'] . "</td>";
+                  echo "<td>" . $row['hostel_name'] . "</td>";
                 echo "<td>" . $row['DOJ'] . "</td>";
                 echo "<td>" . $row['category_name'] . "</td>";
                 echo "<td>" . $row['Year'] . "</td>";
                 echo "<td>" . $total . "</td>";
-                echo "<td>" . $unpaid . "</td>";
-                echo "<td>" . $balance . "</td>";
                 echo "<td>" . $row['parent_name'] . "</td>";
                 echo "<td><button id='updateStudent' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
                 echo "<td><button id='deleteStudent' class='btn btn-danger btn-sm' value=" . $row['id'] . ">Delete</button></td>";

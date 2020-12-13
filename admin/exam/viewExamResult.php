@@ -4,90 +4,92 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Human Resources</h1>
+            <h1>examresults</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">View Employees</li>
+              <li class="breadcrumb-item active"> View Exam Result</li>
             </ol>
           </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
-
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <div class="card">
+            <div class="card" style="min-height:550px">
               <div class="card-header">
-                <h3 class="card-title"> List Of Employees</h3>
+                <h3 class="card-title">View Exam Results</h3>
               </div>
               <!-- /.card-header -->
-              <div class="card-header">
-                <button class="btn btn-info card-title" id="newEmployee"> <i class="fa fa-plus"></i>  Add New Employee</button>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body table-responsive p-0" style="min-height:550px">
+              <div class="card-body table-responsive p-0" style="min-height:650px">
               <div class="row">
+          
+              <div class="col-md-12">
+            <div class="card mt-2 ml-2">
+            <div class="card-header">
+                <button class="btn btn-outline btn-secondary float-right card-title" onclick = "window.print()">
+                  <i class="fa fa-print"></i> Print Report
+                </button>
+              </div>
               <!-- /.card-header -->
               <div class="card-body">
               <table id="viewStudehtsTable" class="table table-bordered table-hover">
                 <thead>
                 <?php
-               include '../config.php';
+                $con = mysqli_connect("localhost", "root", "","student_management_system");
+ 
+                // Check connection
+                if($con === false){
+                    die("ERROR: Could not connect. " . mysqli_connect_error());
+                } 
 // Attempt select query execution
-  $sql = "SELECT * FROM hr";
+  $sql = "SELECT
+   students.FullName,RegNo,examresults.id, subject_name,Marks,class_name,Year,stream_name,Term,category_name,option_name,
+   students.id as student_id
+    FROM 
+  examresults,students,classes,subjects,streams streams LEFT JOIN options on options.id = streams.option_id,sessions,exam_categories
+   WHERE
+  examresults.student_id = students.id AND students.stream_id = streams.id AND streams.class_id = classes.id
+  AND subjects.id = examresults.subject_id AND
+ examresults.exam_category = exam_categories.id ORDER BY class_name ";
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";
                 echo "<th>id</th>";
-                echo "<th>Employee Name </th>";
-                echo "<th>Gender</th>";
-                echo "<th>Salary</th>";
-                echo "<th>Date Of Birth</th>";
-                echo "<th>Title </th>";
-                echo "<th>Qualifications</th>";
-                echo "<th>Experience </th>";
-                echo "<th>Email</th>";
-                echo "<thAddress </th>";
-                echo "<th>Previous Salary Increase</th>";
-                echo "<th>Employee Status</th>";
-                echo "<th>Edit</th>";
-                echo "<th> Delete </th>";
+                echo "<th>Student Name</th>";
+                echo "<th>Registration Number</th>";
+                echo "<th>Class  </th>";
+                echo "<th>Combination  </th>";
+                echo "<th>Stream</th>";
+                echo "<th>Exam Category</th>";
+                echo "<th>Subject</th>";
+                echo "<th>Marks</th>";
+                echo "<th>Year</th>";
+                echo "<th>Term</th>";
             echo "</tr> </thead>";
         while($row = mysqli_fetch_array($result)){
             echo "<tr>                   <tbody>
             ";
                 echo "<td>" . $row['id'] . "</td>";
-                echo "<td>" . $row['employee_name'] . "</td>";
-                echo "<td>" .  $row['gender'] . "</td>";
-                echo "<td>" . $row['salary'] . "</td>";
-                echo "<td>" .  $row['DOB'] . "</td>";
-                echo "<td>" .  $row['title'] . "</td>";
-                echo "<td>" . $row['qualification'] . "</td>";
-                echo "<td>" .  $row['experience'] . "</td>";
-                echo "<td>" . $row['email'] . "</td>";
-                echo "<td>" .  $row['previous_salary_increase'] . "</td>";
-                echo "<td style='width:280px'>";
-                if($row['status'] == 'active'){        
-                          echo"<button class='btn btn-primary btn-xs' > " .  $row['status'] . " </button></td>";
-                }
-                elseif($row['status'] == 'suspended'){
-                  echo"<button class='btn btn-warning btn-xs'  disabled > " .  $row['status'] . " </button></td>";
-                }
-                elseif($row['status'] == 'on leave'){
-                  echo"<button class='btn btn-info btn-xs'>" .  $row['status'] . " </button></td>";
+                echo "<td><button id='viewStudentDetails' class='btn btn-outline-secondary btn-xs' value=" . $row['student_id'] . ">" . $row['FullName'] . "</td></button>";
+                echo "<td>" . $row['RegNo'] . "</td>";
+                echo "<td>" . $row['class_name'] . "</td>";
+                if($row['option_name'] == NULL){
+                  echo "<td>  - </td>";
+                  }else{
+                echo "<td>" . $row['option_name'] . "</td>";
+                  }
+                echo "<td>" . $row['stream_name'] . "</td>";
+                echo "<td>" . $row['category_name'] . "</td>";
+                echo "<td>" . $row['subject_name'] . "</td>";
+                echo "<td>" . $row['Marks'] . "</td>";
+                echo "<td>" . $row['Year'] . "</td>";
+                echo "<td>" . $row['Term'] . "</td>";
 
-                }
-                else{
-                  echo"<button class='btn btn-secondary btn-xs disabled'>" .  $row['status'] . " </button></td>";
-
-                }
-                echo "<td><button id='updateEmployee' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
-                echo "<td><button id='deleteEmployee' class='btn btn-danger btn-xs' value=" . $row['id'] . ">Delete</button></td>";
             echo "</tr><tbody>";
         }
         echo "</table>";

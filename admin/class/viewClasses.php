@@ -46,8 +46,12 @@
                     die("ERROR: Could not connect. " . mysqli_connect_error());
                 } 
 // Attempt select query execution
-  $sql = "SELECT streams.id, class_name,stream_name,option_name,abbreviation FROM classes,streams,options 
-  WHERE classes.id = streams.class_id and streams.option_id = options.id";
+  $sql = "SELECT 
+  class_name,option_name,stream_name,classes.id,abbreviation
+  FROM classes,streams streams LEFT JOIN options on options.id = streams.option_id,sessions 
+  WHERE
+   streams.class_id = classes.id
+   ORDER BY class_name";
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";
@@ -64,8 +68,16 @@
             ";
                 echo "<td>" . $row['id'] . "</td>";
                 echo "<td>" . $row['class_name'] . "</td>";
-                echo "<td>" . $row['option_name'] . "(" . $row['abbreviation'] . ")</td>";
-                echo "<td>" . $row['stream_name'] . "</td>";
+                if($row['option_name'] == NULL){
+                  echo "<td>  - </td>";
+                  }else{
+                    echo "<td>" . $row['option_name'] . "(" . $row['abbreviation'] . ")</td>";
+                  } 
+                 if($row['stream_name'] == NULL){
+                  echo "<td>  - </td>";
+                  }else{
+                    echo "<td>" . $row['stream_name'] . "</td>";
+                  } 
                 echo "<td><button id='updateClass' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
                 echo "<td><button id='deleteClass' class='btn btn-danger btn-sm' value=" . $row['id'] . ">Delete</button></td>";
             echo "</tr><tbody>";

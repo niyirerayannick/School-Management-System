@@ -11,7 +11,7 @@ let contentWrapper = document.querySelector('#content-wrapper'),
  timetable = document.querySelector("#timeTable");
 
 navbar.addEventListener("click",function(e){
-  console.log(e.target.parentNode.id)
+  //console.log(e.target.parentNode.id)
   if(e.target.parentNode.id == 'addhostel') {
 		  getAddHostel();
       }
@@ -35,7 +35,11 @@ navbar.addEventListener("click",function(e){
       } 
       else if(e.target.parentNode.id == 'viewExamResult'){
         viewExamResult();
-      }  
+      } 
+      else if(e.target.parentNode.id == 'viewExamCategories'){
+        getExamCategories();
+      } 
+      
       else if(e.target.parentNode.id == 'viewBookSubmission'){
         viewBookSubmission();
       } 
@@ -61,7 +65,7 @@ navbar.addEventListener("click",function(e){
         viewFeesCollection();
       }
       else if(e.target.parentNode.id == 'changeFeesStructure'){
-        changeFeeStructure();
+        getChangeFeeStructure();
       }
       else if(e.target.parentNode.id == 'viewFeesStructure'){
         viewFeesStructure();
@@ -217,16 +221,22 @@ contentWrapper.addEventListener('click', function(e) {
 
 
     else if(e.target.id == 'changeFeeStructure') {
+      getChangeFeeStructure();
+    }
+    else if(e.target.id == 'changeFeeStructureBtn') {
+      //console.log(e.target);
       changeFeesStructure();
     }
-
     else if(e.target.id == 'newFees') {
       addNewFees();
     }
-    else if(e.target.id == 'updateFees') {
+    else if(e.target.id == 'newFeeStructure') {
+      addNewFees();
+    }
+    else if(e.target.id == 'updateFeeStructure') {
       selectUpdateFees(e.target.value,'selectUpdateFees');
     }
-    else if(e.target.id == 'deleteFees') {
+    else if(e.target.id == 'deleteFeeStructure') {
       deleteFees(e.target.value,'deleteFeesBtn');
     }
     else if(e.target.id == 'updateFeesBtn') {
@@ -250,7 +260,23 @@ contentWrapper.addEventListener('click', function(e) {
       updateLibrary();
     }
  
-    
+    else if(e.target.id == 'addTimeTable') {
+      addTimeTable();
+    }
+    else if(e.target.id == 'viewTimeTables') {
+      getViewTimeTables();
+    }
+    /*else if(e.target.id == 'updateTimeTable') {
+      selectUpdateLibrary(e.target.value,'selectUpdateBook');
+    }
+    else if(e.target.id == 'deleteLibrary') {
+      deleteLibrary(e.target.value,'deleteLibraryBtn');
+    }
+    else if(e.target.id == 'updateLibraryBtn') {
+      updateLibrary();
+    }
+*/
+
     else if( e.target.id == 'select2-studentClass-container') {
      //console.log(document.getElementById("select2-studentStream-container"));
      console.log(e.type);

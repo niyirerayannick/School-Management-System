@@ -89,7 +89,7 @@ function addNewStudent(){
           viewAllStudents();
         }
         else{
-        alert(data)
+       // alert(data)
         }
       },
       error: function(r) {
@@ -572,7 +572,7 @@ function viewFeesCollection(){
   })
 }
 
-function changeFeeStructure(){
+function getChangeFeeStructure(){
   fetch("school-fees/changeFeesStructure.php")
   .then(response => response.text())
   .then(html =>{
@@ -604,7 +604,7 @@ function addNewFees(){
 
  
 function changeFeesStructure(){
-  console.log('here we are');
+  //console.log('here we are');
   $("form").submit(function(event){
    // Stop form from submitting normally
    event.preventDefault();
@@ -627,13 +627,14 @@ function changeFeesStructure(){
         icon: 'success',
         title: 'Fees Structure Changed Successfully'
                  });
-         viewAllFeess();
+         viewFeesCollection();
          }  
 
    });
 });
 }
-//get list of Feess
+
+//get list of leaves
 function viewAllLeaves(){
   fetch('hr/viewFeess.php')
   .then(response => response.text())
@@ -681,7 +682,7 @@ function deleteFees(value,classId){
 
 function selectUpdateFees(value,classId){
 
-  $.post("hr/hr-dm.php", {
+  $.post("school-fees/fees-dm.php", {
     value: value,
     formId: classId
   },
@@ -844,6 +845,59 @@ function getCalendar(){
   
     })
 }
+ 
+function addTimeTable(){
+    $( '#form' )
+    .submit( function( e ) {
+      $.ajax( {
+        url: 'timetable-dm.php',
+        type: 'POST',
+        data: new FormData( this ),
+        processData: false,
+        contentType: false,
+        success:function(data){
+          console.log(data);
+
+          if(data == 1){
+            var Toast = Swal.mixin({
+              toast: true,
+              position: 'top',
+              showConfirmButton: false,
+              timer: 3000
+            });
+                        Toast.fire({
+                icon: 'success',
+                title: 'New Time Table Added Successfully'
+            });
+         console.log(data);
+         }
+          else{
+        //  alert(data)
+          }
+        },
+        error: function(r) {
+        console.log(r);
+        }
+      } );
+      e.preventDefault();
+    } );
+}
+
+  //get time table
+  function getViewTimeTables(){
+    
+    fetch('timetable.php')
+    .then(response => response.text())
+    .then(html =>{
+        let parser = new DOMParser();
+        let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
+        contentWrapper.innerHTML = doc.innerHTML;
+          //Initialize Select2 Elements
+  
+    })
+}
+ 
+
 
 //load the homepage after clicking dashboard
 function loadDashboard(){
@@ -857,7 +911,7 @@ function loadDashboard(){
 }
 
 function viewExamResult(){
-  fetch("viewExamResult.php")
+  fetch("exam/viewExamResult.php")
   .then(response => response.text())
   .then(html =>{
       let parser = new DOMParser();
@@ -866,6 +920,19 @@ function viewExamResult(){
       contentWrapper.innerHTML = doc.innerHTML;
   })
 }
+
+
+function getExamCategories(){
+  fetch("exam/viewExamCategories.php")
+  .then(response => response.text())
+  .then(html =>{
+      let parser = new DOMParser();
+      let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
+      console.log(doc);
+      contentWrapper.innerHTML = doc.innerHTML;
+  })
+}
+
 
 function viewBookSubmission(){
   fetch("library/viewBookSubmission.php")

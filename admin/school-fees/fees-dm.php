@@ -8,13 +8,11 @@ include("../config.php");
       addNewFees($_POST["class_name"],'NULL',$_POST['amount']);
     }
    }
-
-
   elseif($_POST["formId"] == 'deleteFeesBtn'){
     deleteFees($_POST['value']);
    }
   elseif($_POST["formId"] == 'selectUpdateFees'){
-    selectUpdateFees($_POST['value']);
+    selectUpdateFeeStructure($_POST['value']);
   }
   elseif($_POST["formId"] == 'updateFees'){
     updateFees($_POST["fees-name"],$_POST["id"]);
@@ -27,8 +25,8 @@ include("../config.php");
        $sql = "INSERT INTO `fees_structure` (`id`, `class_id`,`option_id`,`amount`) 
        VALUES (NULL, '$class','$option','$amount');";
       }else{
-        $sql = "INSERT INTO `Feeses` (`id`, `Fees_name`,`option_id`,`stream_name`) 
-        VALUES (NULL, '$var',NULL,'$stream');";
+        $sql = "INSERT INTO `fees_structure` (`id`, `class_id`,`option_id`,`amount`) 
+        VALUES (NULL, '$class','$option','$amount');";
       }
         if($res = mysqli_query($con,$sql)){
             echo "1";
@@ -70,7 +68,7 @@ include("../config.php");
          }
   }
 
-  function selectUpdateClass($var){
+  function sel($var){
     include("../config.php");
 
              $sql = "SELECT classes.id as classid,options.id as optionid,class_name FROM classes,options

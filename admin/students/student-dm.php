@@ -65,6 +65,7 @@ function addNewStudent($name,$class,$gender,$dob,$academicYear,$regno,$stream,$h
           }
   }
 
+  
 function deleteStudent($id){
   include("../config.php");
   $sql = "DELETE  FROM students WHERE id = '$id'";

@@ -18,11 +18,14 @@ contentWrapper.addEventListener('change', function(e) {
      else if(e.target.id == 'classNameUpdate'){
        getOption(e.target);
      }
+     else if(e.target.id =='classNameTimeTable'){
+      getOptionTimeTable(e.target);
+         }
  });
 
 
  function getOption(target){
-  console.log(target)
+  //console.log(target)
     let option = target.childNodes;
     for (let index = 3; index < option.length-1; index++) {
        if(option[index].value == target.value){
@@ -57,7 +60,60 @@ contentWrapper.addEventListener('change', function(e) {
                        
                 
                  //  handle errors from the server
+                }
+                
+                  else {
+                 document.querySelector("#streamSelect").innerHTML = data;
+                }
+             });
+            }
+       }
+      
+    }
+ }
+
+ function getOptionTimeTable(target){
+  //console.log(target)
+    let option = target.childNodes;
+    for (let index = 3; index < option.length-1; index++) {
+       if(option[index].value == target.value){
+            let val = option[index].innerHTML;
+            if (val == 's4' || val == 's5' || val == 's6') {
+              document.querySelector("#optionDiv").style.display = 'block';
+              $.post("helpers.php",{
+                  class_id: target.value,
+                  formId:'getOption'
+              }
+                   , function(data){
+                 // Display the returned data in browser
+                if(data == 1){
+                       
+                
+                 //  handle errors from the server
                 }else {
+                 document.querySelector("#optionSelect").innerHTML = data;
+                 document.querySelector("#streamDiv").style.display = 'none';
+                }
+             });
+            }else{
+              document.querySelector("#optionDiv").style.display = 'none';
+              document.querySelector("#streamDiv").style.display = 'block';
+              $.post("helpers.php",{
+                  class_id: target.value,
+                  formId:'getStream'
+              }
+                   , function(data){
+                     console.log(data);
+                 // Display the returned data in browser
+                if(data == 1){
+                       
+                
+                 //  handle errors from the server
+                }
+                else if(data == 0){
+                  document.querySelector("#streamDiv").style.display = 'none';
+              }
+                else {
                  document.querySelector("#streamSelect").innerHTML = data;
                 }
              });

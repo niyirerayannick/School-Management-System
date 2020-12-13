@@ -300,10 +300,10 @@ include("config.php");
                   <p>Exam Results</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
+              <li class="nav-item" >
+                <a href="#" class="nav-link" id='viewExamCategories'>
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Flot</p>
+                  <p>View Exam Categories</p>
                 </a>
               </li>
             </ul>

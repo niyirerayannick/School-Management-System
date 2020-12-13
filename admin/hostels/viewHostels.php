@@ -59,9 +59,13 @@
                 echo "<td>" . $row['id'] . "</td>";
                 echo "<td>" . $row['hostel_name'] . "</td>";
                 echo "<td>"  . $row['capacity']   ."</td>";
-                echo "<td>"  . $row['status']   ."</td>";
-                echo "<td><button id='updateHostel' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
-                echo "<td><button id='deleteHostel' class='btn btn-danger btn-sm' value=" . $row['id'] . ">Delete</button></td>";
+                if ( $row['status'] == 'available') {
+                  echo "<td> <span class='btn btn-xs btn-outline-primary'>"  . $row['status']   ."</td>";
+                }else{
+                  echo "<td> <span class='btn btn-xs btn-danger'>"  . $row['status']   ."</td>";
+                }
+                echo "<td><button id='updateHostel' class='btn btn-success btn-xs' value=" . $row['id'] . "><i class='far fa-edit-alt'></i> Edit</button></td>";
+                echo "<td><button id='deleteHostel' class='btn btn-outline-danger btn-sm' value=" . $row['id'] . "><i class='far fa-trash-alt'></i> Delete</button></td>";
             echo "</tr><tbody>";
         }
         echo "</table>";

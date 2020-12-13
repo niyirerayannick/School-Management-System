@@ -14,7 +14,8 @@ include("config.php");
 function getOption($id){
     include("config.php");
 
-    $sql = "SELECT * FROM options where options.class_id = $id";
+    $sql = "SELECT option_name,streams.id ,stream_name FROM options,streams WHERE
+     streams.option_id = options.id AND streams.class_id = $id";
  
      if($res = mysqli_query($con,$sql)){
          ?> <option selected="selected" disabled>Select Option</option>
@@ -34,19 +35,27 @@ else{
 function getStream($id){
     include("config.php");
 
-    $sql = "SELECT options.id,stream_name FROM classes,options where options.class_id = classes.id and classes.class_name = 's1'
+    $sql = "SELECT streams.id,stream_name,class_name 
+    FROM 
+    classes, streams WHERE streams.class_id = classes.id and classes.id = '$id'
+
 ";
  
      if($res = mysqli_query($con,$sql)){
-         ?> <option selected="selected" disabled>Select Stream</option>
+         ?> <!--<option selected="selected" disabled>Select Stream</option>
          <?php
         while($row = mysqli_fetch_array($res)){
-            echo "<option name='stream_name' value =" . $row['id']  . ">" . $row['stream_name']  . "</option>";
+            if(isset($row['stream_name'])){
+            echo "<option name='stream_name' value =" . $row['id']  . ">" . $row['stream_name']  ."</option>";
+            }
+            else{
+                echo "0";
+            }
     }
     // Free result set
 } else{
-    echo "<option disabled selected >No Streams Currently</option>
-    ";
+    echo "1";
+
 }
  }
   ?>
