@@ -66,10 +66,7 @@ function addTimeTable($class,$stream,$timetable){
          //handle erro
         }
         else{
-          //handle success
-   
-      echo $stream;
-      echo $timetable;
+  echo"1";
       }
     }
 }

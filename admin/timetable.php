@@ -4,12 +4,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Students</h1>
+            <h1>Time Table</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Add new student</li>
+              <li class="breadcrumb-item active">Change Time Table</li>
             </ol>
           </div>
         </div>
@@ -21,32 +21,34 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <div class="card card-outline card-info">
+            <div class="card card-info card-outline">
               <div class="card-header">
-                <h3 class="card-title">Add New Student</h3>
+                <h3 class="card-title">Add Time Table</h3>
               </div>
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
+              <div class="card-body table-responsive p-0" style="min-height:600px">
               <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+          <div class="card-header">
+                <button class="btn btn-secondary card-title" id="viewTimeTables"> <i class="fa fa-eye"></i> View Class Time Tables</button>
+              </div>
+            <!-- general form elements -->
+             <form id="form">
+                <div class="card-body">
+                <div class="row">
            <div class="col-md-1"></div>
               <div class="col-md-9">
             <div class="card mt-2 ml-2">
               <!-- /.card-header -->
               <div class="card-body">
-            <!-- general form elements -->
-              <form  id="form">
-                <div class="card-body">
-                <div class="form-group">
-                    <label for="exampleInputEmail1"> <span class="text-danger">*</span> Fields Must Be Filled</label>
-                  </div>
-
-                  <div class="form-group">
-                  <label>Class <span class="text-danger">*</span></label>
-<select id='classTimeTable' name ="studentClass" class="form-control form-control-sm "
+                 <div class="form-group">
+                  <label>Class</label>
+<select id='classNameTimeTable' name ="class_name" class="form-control form-control-sm select2 select2-info"
  data-dropdown-css-class="select2-info" style="width: 100%;" >
-                    <option selected="selected" disabled>Select Student's Class </option>
+                    <option selected="selected" disabled>Select Class</option>
                     <?php
-                include 'config.php';
+             include("config.php");
 // Attempt select query execution
   $sql = "SELECT * FROM classes";
       if($result = mysqli_query($con, $sql)){
@@ -65,32 +67,33 @@
  ?>
                   </select>
                 </div>
-                <div class="form-group" style= "display:none" id="optionDiv">
-                  <label>Option <span class="text-danger">*</span> </label>
-<select id='optionSelect' name= "studentStream" class="form-control form-control-sm select2 select2-info"
+
+                <div class="form-group" style= "display:none" id='optionDiv'>
+                  <label>Option</label>
+<select name= "option_name" class="form-control form-control-sm select2 select2-info" id="optionSelect"
 data-dropdown-css-class="select2-info" style="width: 100%;">
-                    
                   </select>
                 </div>
                 <div class="form-group" id="streamDiv"> 
                   <label>Stream <span class="text-danger">*</span></label>
-      <select name="studentStream" id="streamSelect" class="form-control form-control-sm select2 select2-info" data-dropdown-css-class="select2-info" style="width: 100%;">
-                    <option selected="selected" disabled>Select Student's Stream</option>
-                   
+      <select name="stream_name" id="streamSelect" class="form-control form-control-sm select2 select2-info" data-dropdown-css-class="select2-info" style="width: 100%;">
+      <option selected="selected" disabled>Select Stream</option>                   
                   </select>
                 </div>
-                  <div class="form-group">
-                    <label for="exampleInputFile">Class Time Table <span class="text-danger">*</span></label>
+                <div class="form-group">
+                    <label for="exampleInputFile">Time Table<span class="text-danger">*</span></label>
                     <div class="input-group">
-                    <input id="file" type="file" accept="image/*" name="image" />
+                    <input id="file" type="file" accept="image/*" name="timetable" />
                     <div id="error"></div>
                     </div>
                   </div>
+                 
                 </div>
                 <!-- /.card-body -->
-                <input type="hidden" id="addNewStudentForm" name="formId" value ="addNewStudent">
+
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-success" id="addStudentBtn">Add New Student</button>
+                <input type="hidden" id="AddTimeTable" name="formId" value ="addTimeTable">
+                  <button class="btn btn-success"  id="addTimeTable">Submit</button>
                   <button type="reset" class="btn btn-danger float-right">Cancel</button>
                 </div>
               </form>

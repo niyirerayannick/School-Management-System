@@ -33,7 +33,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body" style='min-height:450px'>
-              <table id="viewStudehtsTable" class="table table-bordered table-hover">
+              <table id="myTable" class="table table-bordered table-hover">
                 <thead>
                 <?php
                 $con = mysqli_connect("localhost", "root", "","student_management_system");

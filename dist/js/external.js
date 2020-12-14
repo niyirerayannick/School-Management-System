@@ -266,6 +266,9 @@ contentWrapper.addEventListener('click', function(e) {
     else if(e.target.id == 'viewTimeTables') {
       getViewTimeTables();
     }
+    else if(e.target.id == 'newTimeTable') {
+      getTimeTable();
+    }
     /*else if(e.target.id == 'updateTimeTable') {
       selectUpdateLibrary(e.target.value,'selectUpdateBook');
     }

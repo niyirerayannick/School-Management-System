@@ -110,6 +110,7 @@ function viewAllStudents(){
         let parser = new DOMParser();
         let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
         contentWrapper.innerHTML = doc.innerHTML;
+          $('#myTable').DataTable();
   })
   }
   
@@ -856,9 +857,7 @@ function addTimeTable(){
         processData: false,
         contentType: false,
         success:function(data){
-          console.log(data);
 
-          if(data == 1){
             var Toast = Swal.mixin({
               toast: true,
               position: 'top',
@@ -869,11 +868,7 @@ function addTimeTable(){
                 icon: 'success',
                 title: 'New Time Table Added Successfully'
             });
-         console.log(data);
-         }
-          else{
-        //  alert(data)
-          }
+            getViewTimeTables();          
         },
         error: function(r) {
         console.log(r);
@@ -886,7 +881,7 @@ function addTimeTable(){
   //get time table
   function getViewTimeTables(){
     
-    fetch('timetable.php')
+    fetch('viewAllTimeTables.php')
     .then(response => response.text())
     .then(html =>{
         let parser = new DOMParser();
