@@ -157,46 +157,54 @@ function viewStudentDetails(value,studentId){
 
 
 //teachers handling methods
-function viewAllTeachers(){
-    fetch("teachers/viewTeachers.php")
-    .then(response =>  response.text())
-    .then(html => {
-        //contentWrapper.innerHTML = html
-        let parser = new DOMParser();
-        let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
-        contentWrapper.innerHTML = doc.innerHTML;
-  })
+  function viewAllTeachers(){
+    getContents("teachers/viewTeachers.php");
   }
-  
-function addNewTeacher(){
-    fetch("teachers/addTeacher.php")
-    .then(response =>  response.text())
-    .then(html => {
-        //contentWrapper.innerHTML = html
-        let parser = new DOMParser();
-        let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
-        contentWrapper.innerHTML = doc.innerHTML;
-  })
+  "teachers/viewTeachers.php"
+function getAddNewTeacher(){
+  getContents("teachers/addTeacher.php");
   }
+
+
+  function addNewTeacher(){
+    $("form").submit(function(event){
+     // Stop form from submitting normally
+     event.preventDefault();
+     
+     /* Serialize the submitted form control values to be sent to the web server with the request */
+     let formValues = $(this).serialize();
+     // Send the form data using post
+     $.post("teachers/teacher-dm.php", formValues, function(data){
+         // Display the returned data in browser
+         //console.log(formValues);
+         contentWrapper.innerHTML = data;
+
+        if(data == 1){
+               
+         var Toast = Swal.mixin({
+           toast: true,
+           position: 'top',
+           showConfirmButton: false,
+           timer: 3000
+         });
+                     Toast.fire({
+             icon: 'success',
+             title: 'Teacher Added Successfully'
+         });
+           viewAllTeachers();
+        }
+     });
+ });
+}
+
 //classes handling methods
 function viewAllClasses(){
-    fetch("class/viewClasses.php")
-    .then(response =>  response.text())
-    .then(html => {
-        //contentWrapper.innerHTML = html
-        let parser = new DOMParser();
-        let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
-        contentWrapper.innerHTML = doc.innerHTML;
-  })
+   getContents("class/viewClasses.php");
   }
-  function getAddClass(){
-    fetch("class/addClass.php")
-    .then(response =>  response.text())
-    .then(html => {
-        //contentWrapper.innerHTML = html
-        let parser = new DOMParser();
-        let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
-        contentWrapper.innerHTML = doc.innerHTML;
+
+
+function getAddClass(){
+   getContents("class/addClass.php");
          //Initialize Select2 Elements
          $('.select2').select2()
     
@@ -204,8 +212,9 @@ function viewAllClasses(){
          $('.select2bs4').select2({
            theme: 'bootstrap4'
          })
-  })
   }
+
+
   function addNewClass(){
          $("form").submit(function(event){
           // Stop form from submitting normally
@@ -216,7 +225,7 @@ function viewAllClasses(){
           // Send the form data using post
           $.post("class/class-dm.php", formValues, function(data){
               // Display the returned data in browser
-              console.log(formValues);
+              //console.log(formValues);
               contentWrapper.innerHTML = data;
 
              if(data == 1){
@@ -239,14 +248,7 @@ function viewAllClasses(){
   }
 
   function viewClassStream(){
-    fetch("class/viewStreams.php")
-    .then(response =>  response.text())
-    .then(html => {
-        //contentWrapper.innerHTML = html
-        let parser = new DOMParser();
-        let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
-        contentWrapper.innerHTML = doc.innerHTML;
-  })
+ getContents("class/viewStreams.php");
   }
 
   function selectUpdateClass(value,classId){
@@ -277,7 +279,7 @@ function viewAllClasses(){
       // Send the form data using post
         //let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
         $.post("class/class-dm.php",formValues,function(data){
-  // Display the returned data in browser
+  /* Display the returned data in browser */  
        if(data == 1){
                     
         var Toast = Swal.mixin({
@@ -291,7 +293,7 @@ function viewAllClasses(){
         title: 'Class Updated Successfully'
     });
       viewAllClasses();
-   }           })
+   }        })
          
   })
   }
@@ -594,7 +596,7 @@ function viewFeesStructure(){
 }
   
 function addNewFees(){
-  fetch("hr/addNewFees.php")
+  fetch("school-fees/changeFeesStructure.php")
   .then(response => response.text())
   .then(html =>{
       let parser = new DOMParser();
@@ -628,7 +630,7 @@ function changeFeesStructure(){
         icon: 'success',
         title: 'Fees Structure Changed Successfully'
                  });
-         viewFeesCollection();
+         viewFeesStructure();
          }  
 
    });
@@ -681,6 +683,31 @@ function deleteFees(value,classId){
       })
 }
 
+function deleteFeesStructure(value,classId){
+  $.post("school-fees/fees-dm.php", {
+    value: value,
+    formId: classId
+  },
+  function(data){
+
+    if(data == 1){
+                  
+      var Toast = Swal.mixin({
+      toast: true,
+       position: 'top',
+      showConfirmButton: false,
+      timer: 3000
+        });
+              Toast.fire({
+      icon: 'error',
+      title: 'Fees Structure Deleted Successfully'
+               });
+       viewFeesStructure();
+       }   
+      })
+}
+
+
 function selectUpdateFees(value,classId){
 
   $.post("school-fees/fees-dm.php", {
@@ -730,6 +757,40 @@ contentWrapper.innerHTML = data;
    
 })
 }
+
+function updateFeesStructure(){
+  $("form").submit(function(event){
+  // Stop form from submitting normally
+  event.preventDefault();
+  
+  /* Serialize the submitted form control values to be sent to the web server with the request */
+  let formValues = $(this).serialize();
+  // Send the form data using post
+    $.post("school-fees/fees-dm.php",formValues,function(data){
+  // Display the returned data in browser
+  console.log(formValues);
+   if(data == 1){
+                
+    var Toast = Swal.mixin({
+    toast: true,
+     position: 'top',
+    showConfirmButton: false,
+    timer: 3000
+      });
+            Toast.fire({
+    icon: 'success',
+    title: 'Fees Structure Updated Successfully'
+  });
+  viewFeesStructure();
+  }     
+  contentWrapper.innerHTML = data;
+  
+  })
+     
+  })
+  }
+
+
 
 //get calendar
   
@@ -1157,6 +1218,31 @@ function getLeaveManagement(){
       contentWrapper.innerHTML = doc.innerHTML;
   })
 }
+
+  function acceptLeave(value,classId){
+    $.post("hr/hr-dm.php", {
+      value: value,
+      formId: classId
+    },
+    function(data){
+  
+      if(data == 1){
+                    
+        var Toast = Swal.mixin({
+        toast: true,
+         position: 'left',
+        showConfirmButton: false,
+        timer: 3000
+          });
+                Toast.fire({
+        icon: 'success',
+        title: 'Employee Leave Accepted'
+                 });
+         getLeaveManagement();
+         }   
+        })
+  }
+
 
 function deleteEmployee(value,classId){
   $.post("hr/hr-dm.php", {

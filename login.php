@@ -5,7 +5,7 @@
    $msg = '';
             
    if (isset($_POST['username']) && !empty($_POST['password']) ) {
-    $con = mysqli_connect("localhost", "root", "","sms");
+    $con = mysqli_connect("localhost", "root", "","student_management_system");
 
     // Check connection
     if($con === false){
@@ -22,12 +22,24 @@ $sql = "SELECT * FROM users WHERE member_name = '$username' and password = '$pas
     $_SESSION['password'] = $res['password'];
     $_SESSION['username'] = $res['member_name'];
     if ($res['type'] == 'admin') {
+      $_SESSION['user_id'] = $res['id'];
+      $_SESSION['user_type'] = 'admin';
       header('location:admin/index.php');   
      }
      elseif ($res['type'] == 'staff') {
-      header('location:staff/index.php');   
+      $sql2 = "SELECT teachers.id FROM users,teachers WHERE teachers.teacher_name = '$username' and users.member_name ='$username'";
+      $result2 = mysqli_query($con, $sql2);
+      $res2 = mysqli_fetch_array($result2);
+      $_SESSION['user_id'] = $res2['id'];
+      $_SESSION['user_type'] = 'staff';
+        header('location:staff/index.php');   
      }
      else if ($res['type'] == 'parent') {
+      $sql2 = "SELECT parents.id FROM users,parents WHERE parents.parent_name = '$username' and users.member_name ='$username'";
+      $result2 = mysqli_query($con, $sql2);
+      $res2 = mysqli_fetch_array($result2);
+      $_SESSION['user_id'] = $res2['id'];
+      $_SESSION['user_type'] = 'parent';
       header('location:parent/index.php');   
      }
   }
@@ -36,9 +48,6 @@ $sql = "SELECT * FROM users WHERE member_name = '$username' and password = '$pas
   else{
 echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
   }
-
-
-    
       echo "1";
    }
 ?>

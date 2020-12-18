@@ -137,8 +137,6 @@ include("../config.php");
                              </div>
                                  <button type='submit' class='btn btn-success' id='updateHostelBtn'>Update Hostel</button>
                                  <button type='reset' class='btn btn-danger float-right' > Cancel</button>
-
-
                               </div>
                                 <!-- /.card-body -->
                   

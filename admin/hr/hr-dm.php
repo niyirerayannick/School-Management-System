@@ -16,7 +16,9 @@ elseif($_POST["formId"] == 'updateEmployee'){
   updateEmployee($_POST["employee_name"],$_POST['email'],$_POST["status"],$_POST['salary'], $_POST['next_of_keen'],$_POST['qualification'],
   $_POST['dob'], $_POST["address"],$_POST["id"]);
 }
-
+elseif($_POST["formId"] == 'approveLeave'){
+  approveLeave($_POST["value"]);
+}
 
 function updateEmployee($name,$email,$status,$salary,$next_of_keen,$qualification,$dob,$address,$id){
   include("../config.php");
@@ -35,6 +37,22 @@ There was a problem performing the operation      </div>".mysql_error($con);
     }
 }
  
+
+function approveLeave($id){
+  include("../config.php");
+
+     $sql = "UPDATE `hr` SET `status` = 'on leave' WHERE `hr`.`id` = '$id'";
+  
+      if($res = mysqli_query($con,$sql)){
+          echo "1";
+        }
+       else{
+          echo "<div class='alert alert-danger' role='alert'>
+There was a problem performing the operation      </div>".mysql_error($con);
+    }
+}
+ 
+
 
 function addNewEmployee($name,$email,$gender,$experience,$salary_increase_date,$next_of_keen,$qualification,$address,
 $dob,$title,$salary){
@@ -154,6 +172,7 @@ function deleteEmployee($id){
                                   <label for='leave'> On Leave
                                   </label>
                                 </div>
+                                
                               </div>
                               <div class='form-group'>
                               <label for='exampleInputPassword1'>Address</label>

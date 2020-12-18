@@ -23,6 +23,8 @@
 <script src="../dist/js/script.js"></script>
 <script src="../dist/js/external.js"></script>
 <script src="../dist/js/helpers.js"></script>
+<script src="../dist/js/utilities.js"></script>
+
 <!-- jQuery -->
 <script src="../plugins/jquery/jquery.min.js"></script>
 <!-- Select2 -->

@@ -26,23 +26,18 @@
                 <h3 class="card-title">View List Of Subjects</h3>
               </div>
               <!-- /.card-header -->
-              <div class="card-header">
-                <button class="btn btn-info card-title" id="newSubject"> <i class="fa fa-plus"></i>  Add New Subject</button>
-              </div>
+              
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
-              <div class="row">
+             
               <!-- /.card-header -->
-              <div class="card-body">
+              <div class="card-body" style="min-height:650px">
+              <div class="row">
+              <div class="col-8"></div>
               <table id="viewStudehtsTable" class="table table-bordered table-hover">
                 <thead>
                 <?php
-                $con = mysqli_connect("localhost", "root", "","fantastic_school_admin_db");
- 
-                // Check connection
-                if($con === false){
-                    die("ERROR: Could not connect. " . mysqli_connect_error());
-                } 
+              include("../config.php");
 // Attempt select query execution
   $sql = "SELECT * FROM subjects";
       if($result = mysqli_query($con, $sql)){
@@ -50,17 +45,14 @@
             echo "<tr>";
                 echo "<th>id</th>";
                 echo "<th>Subject Name </th>";
-                echo "<th>Edit </th>";
-                echo "<th>Delete </th>";
-
+                
             echo "</tr> </thead>";
         while($row = mysqli_fetch_array($result)){
             echo "<tr>                   <tbody>
             ";
                 echo "<td>" . $row['id'] . "</td>";
                 echo "<td>" . $row['subject_name'] . "</td>";
-                echo "<td><button id='updateSubject' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
-                echo "<td><button id='deleteSubject' class='btn btn-danger btn-sm' value=" . $row['id'] . ">Delete</button></td>";
+              
 
             echo "</tbody></tr>";
         }

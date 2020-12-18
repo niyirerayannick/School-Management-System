@@ -2,7 +2,7 @@
 <?php
 /* Attempt MySQL server connection. Assuming you are running MySQL
 server with default setting (user 'root' with no password) */
-$con = mysqli_connect("localhost", "root", "","sms");
+$con = mysqli_connect("localhost", "root", "","student_management_system");
  
 // Check connection
 if($con === false){

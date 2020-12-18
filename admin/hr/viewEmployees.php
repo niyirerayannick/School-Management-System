@@ -82,9 +82,11 @@
                   echo"<button class='btn btn-info btn-xs'>" .  $row['status'] . " </button></td>";
 
                 }
+                elseif($row['status'] == 'inactive'){
+                  echo"<button class='btn btn-danger btn-xs disabled'>" .  $row['status'] . " </button></td>";
+                }
                 else{
-                  echo"<button class='btn btn-secondary btn-xs disabled'>" .  $row['status'] . " </button></td>";
-
+                  echo"<button class='btn btn-secondary btn-xs '>" .  $row['status'] . " </button></td>";
                 }
                 echo "<td><button id='updateEmployee' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
                 echo "<td><button id='deleteEmployee' class='btn btn-danger btn-xs' value=" . $row['id'] . ">Delete</button></td>";

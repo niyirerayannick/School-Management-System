@@ -8,14 +8,14 @@ include("../config.php");
       addNewFees($_POST["class_name"],'NULL',$_POST['amount']);
     }
    }
-  elseif($_POST["formId"] == 'deleteFeesBtn'){
-    deleteFees($_POST['value']);
+  elseif($_POST["formId"] == 'deleteFeesStructureBtn'){
+    deleteFeesStructure($_POST['value']);
    }
   elseif($_POST["formId"] == 'selectUpdateFees'){
     selectUpdateFeeStructure($_POST['value']);
   }
-  elseif($_POST["formId"] == 'updateFees'){
-    updateFees($_POST["fees-name"],$_POST["id"]);
+  elseif($_POST["formId"] == 'updateFeeStructureBtn'){
+    updateFees($_POST["amount"],$_POST["id"]);
   }
 
   
@@ -38,10 +38,10 @@ include("../config.php");
          }
   }
     
-  function updateClass($var,$id){
+  function updateFees($var,$id){
     include("../config.php");
 
-       $sql = "UPDATE classes SET Name = '$var' where id = '$id'";
+       $sql = "UPDATE fees_structure SET amount = '$var' where id = '$id'";
     
         if($res = mysqli_query($con,$sql)){
             echo "1";
@@ -53,10 +53,10 @@ include("../config.php");
          }
   }
    
-  function deleteClass($id){
+  function deleteFeesStructure($id){
     include("../config.php");
  
-       $sql = "DELETE  FROM classes where id = '$id'";
+       $sql = "DELETE  FROM fees_structure where id = '$id'";
     
         if($res = mysqli_query($con,$sql)){
             echo "1";
@@ -68,85 +68,102 @@ include("../config.php");
          }
   }
 
-  function sel($var){
+  function selectUpdateFeeStructure($var){
     include("../config.php");
 
-             $sql = "SELECT classes.id as classid,options.id as optionid,class_name FROM classes,options
-              WHERE classes.id = '$var'
+             $sql = "SELECT class_name,option_name,amount,fees_structure.id
+             FROM classes,fees_structure
+            LEFT JOIN options on fees_structure.option_id = options.id WHERE fees_structure.class_id = classes.id 
+              AND fees_structure.id = '$var'
              ";
           
               if($res = mysqli_query($con,$sql)){
                 $row = mysqli_fetch_array($res);?>
                  <div id='view'>
-                  <section class='content-header'>
-                        <div class='container-fluid'>
-                          <div class='row mb-2'>
-                            <div class='col-sm-6'>
-                              <h1>Class</h1>
-                            </div>
-                            <div class='col-sm-6'>
-                              <ol class='breadcrumb float-sm-right'>
-                                <li class='breadcrumb-item'><a href='#'>Home</a></li>
-                                <li class='breadcrumb-item active'>Update Class Details</li>
-                              </ol>
-                            </div>
-                          </div>
-                        </div><!-- /.container-fluid -->
-                      </section>
-                  
-                      <!-- Main content -->
-                      <section class='content'>
-                        <div class='container-fluid'>
-                          <div class='row'>
-                            <div class='col-12'>
-                              <div class='card'>
-                                <div class='card-header'>
-                                  <h3 class='card-title'>Update Class Details</h3>
-                                </div>
-                                <!-- /.card-header -->
-                                <div class='card-body table-responsive p-0'>
-                                <div class='row'>
-                            <!-- left column -->
-                            <div class='col-md-6'>
-                              <!-- general form elements -->
-                               <form >
-                                  <div class='card-body' style='min-height:550px'>
-                                  
-                                   <div class='form-group'>
-                                      <label name='class-name'>New Class Name</label>
-                                      <input type='hidden' id='addNewClassForm' name='formId' value ='updateClass'>
-                                      <input type='hidden' id='addNewClassId' name='id' 
-                                      value= "<?php echo htmlentities($row['id']) ?>">
-                                      
-                                      <input type='text' class='form-control' id='className'
-                                       value= "<?php echo $row['class_name']; ?>"
-                                      name='class-name' >
-                                   </div>
-                                   <button type='submit' class='btn btn-success' id='updateClassBtn'>Update Class</button>
+                 <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>School Fees</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Change Fees Structure</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
 
-                                  </div>
-                                  <!-- /.card-body -->
-                    
-                                </form>
-                              </div>
-                              <!-- /.card -->
-                  
-                                </div>
-                                <!-- /.card-body -->
-                              </div>
-                              <!-- /.card -->
-                            </div>
-                          </div>
-                          <!-- /.row -->
-                  
-                              <!-- /.card -->
-                            </div>
-                          </div>
-                          <!-- /.row -->
-                        </div><!-- /.container-fluid -->
-                      </section>
-                      <!-- /.content -->
-                      </div>
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card card-info card-outline">
+              <div class="card-header">
+                <h3 class="card-title">Change Fees Structure</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0" style="min-height:600px">
+              <div class="row">
+          <!-- left column -->
+          <div class="col-md-9">
+            <!-- general form elements -->
+             <form >
+                <div class="card-body">
+                <div class="row">
+           <div class="col-md-1"></div>
+              <div class="col-md-9">
+            <div class="card mt-2 ml-2">
+              <!-- /.card-header -->
+              <div class="card-body">
+                 <div class="form-group">
+                  <label>Class</label>
+                  <input type="text" class="form-control"  id="class_name"  value="<?php echo htmlentities($row["class_name"]) ?>" disabled >
+                </div>
+
+                <div class="form-group" id='optionDiv'>
+                  <label>Option</label>
+                  <input type="text" class="form-control" value="<?php echo htmlentities($row["option_name"]) ?>" disabled >
+                </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">School Fees Amount</label>
+                    <input type="text" class="form-control" name="amount" id="amount" 
+                    placeholder="Enter Fees Amount">
+
+                  </div>
+                 
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                <input type="hidden" id="changeFeeStructureForm" name="formId" value ="updateFeeStructureBtn">
+                <input type="hidden" class="form-control"  name="id"  value="<?php echo htmlentities($row["id"]) ?>" >
+                  <button class="btn btn-success"  id="updateFeeStructureBtn">Submit</button>
+                  <button type="reset" class="btn btn-danger float-right">Cancel</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        <!-- /.row -->
+
+            <!-- /.card -->
+          </div>
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+    </div>
                   
                  <?php
                 }

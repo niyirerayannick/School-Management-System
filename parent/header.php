@@ -5,7 +5,14 @@ include("config.php");
    session_start();
  if (!isset($_SESSION['username'])) {
   header('location:../login1.html');
-
+ }
+ if ($_SESSION['user_type'] != 'parent') {
+   ?>
+<script>
+alert("You not Authorized to view this content");
+</script>
+   <?php
+  header('location:../login1.html');
  }
 ?>
 <!DOCTYPE html>
@@ -38,8 +45,7 @@ include("config.php");
   <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Daterange picker -->
   <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
-  <!-- summernote -->
-  <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
+
   <!-- SweetAlert2 -->
   <link rel="stylesheet" href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
   <!-- Toastr -->
@@ -66,7 +72,7 @@ include("config.php");
   <link rel="stylesheet" href="../plugins/dropzone/min/dropzone.min.css">
   
 </head>
-<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed text-sm" onload= "fetch('index2.php')
+<body class="hold-transition sidebar-mini layout-fixed sidebar-collapse layout-navbar-fixed text-sm" onload= "fetch('index2.php')
     .then(response => response.text())
     .then(html =>{
         let parser = new DOMParser();
@@ -75,7 +81,7 @@ include("config.php");
     })">
 <div class="wrapper" id="wrapper">
   <!-- Navbar -->
-  <nav class="main-header navbar nav-flat navbar-expand navbar-info navbar-dark nav-fixed text-sm ">
+  <nav class="main-header navbar nav-flat navbar-expand navbar-lightblue navbar-dark nav-fixed text-sm ">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -83,9 +89,6 @@ include("config.php");
       </li>
       <li class="nav-item d-none d-sm-inline-block" id="homeDashboard">
         <a href="#" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block" id="homeDashboard">
-        <a href="#" class="nav-link">Class Attendance</a>
       </li>
     </ul>
     <!-- SEARCH FORM -->
@@ -110,22 +113,8 @@ include("config.php");
          <span> Sign Out </span> <i class="fa fa-sign-out"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">Notifications</span>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new Leave Request
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 Parent Messages
-            <span class="float-right text-muted text-sm">12 hours</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 recent fee collection
-            <span class="float-right text-muted text-sm">2 days</span>
-          </a>
+          <span class="dropdown-item dropdown-header">You Really Want to Sign Out</span>
+         
           <div class="dropdown-divider"></div>
           <a href="../logout.php" class="dropdown-item dropdown-footer"><i class="far fa-sign-out"> Sign Out </i></a>
         </div>
@@ -169,24 +158,25 @@ include("config.php");
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" id='navBar'> 
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open" id="dashboard">
-            <a href="#" class="nav-link bg-olive active">
+          <li class="nav-item menu-open" >
+            <a href="#" class="nav-link bg-lightblue active" id="dashboard">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Dashboard
+                Home
               </p>
             </a>
             
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link" id= "viewStudents">
               <i class="nav-icon fas fa-user-graduate"></i>
               <p>
                My Students
                 <span class="right badge badge-info">
                 <?php
  // Attempt select query execution
-   $sql = "SELECT * FROM students,parents where parent = parents.id";
+ $username = $_SESSION["username"];
+   $sql = "SELECT id FROM parents WHERE parent_name = '$username'";
    if($result = mysqli_query($con, $sql)){
    $row = mysqli_num_rows($result);
    echo "$row";
@@ -199,27 +189,7 @@ include("config.php");
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>
-                Teachers
-                <span class="badge badge-info right"> 
-                     <?php
- // Attempt select query execution
-   $sql = "SELECT * FROM teachers";
-   if($result = mysqli_query($con, $sql)){
-   $row = mysqli_num_rows($result);
-   echo "$row";
-} else{
-    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
-}
-
-?></span>
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link" id="viewExams">
               <i class="nav-icon fas fa-book-open"></i>
               <p>
                 Exams
@@ -236,7 +206,7 @@ include("config.php");
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link" id="viewSubject">
               <i class="nav-icon far fa-address-book"></i>
               <p>
                Subjects
@@ -244,7 +214,7 @@ include("config.php");
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link" id="viewFees">
               <i class="nav-icon fas fa-donate"></i>
               <p>
                 School Fees
@@ -252,7 +222,7 @@ include("config.php");
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link" id="viewBanks">
               <i class="nav-icon fa fa-comments-dollar"></i>
               <p>
               School Banks Accounts
@@ -271,8 +241,8 @@ include("config.php");
               </p>
             </a>
           </li>
-          <li class="nav-item" id= 'timeTable'>
-            <a href="#" class="nav-link">
+          <li class="nav-item">
+            <a href="#" class="nav-link"  id= 'timetable'>
               <i class="nav-icon fas fa-clock"></i>
               <p>
                 Time Table

@@ -28,7 +28,7 @@
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
               <div class="row">
-          
+              <div class="col-md-1"> </div>
               <div class="col-md-9">
             <div class="card mt-2 ml-2">
             <div class="card-header">
@@ -39,15 +39,10 @@
               <table id="viewStudehtsTable" class="table table-bordered table-hover">
                 <thead>
                 <?php
-                $con = mysqli_connect("localhost", "root", "","student_management_system");
- 
-                // Check connection
-                if($con === false){
-                    die("ERROR: Could not connect. " . mysqli_connect_error());
-                } 
+           include("../config.php");
 // Attempt select query execution
   $sql = "SELECT 
-  class_name,option_name,stream_name,classes.id,abbreviation
+  class_name,option_name,stream_name,streams.id,abbreviation
   FROM classes,streams streams LEFT JOIN options on options.id = streams.option_id,sessions 
   WHERE
    streams.class_id = classes.id

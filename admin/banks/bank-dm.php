@@ -36,15 +36,17 @@ include("../config.php");
   function updateBank($name,$account,$id){
     include("../config.php");
 
-       $sql = "UPDATE `banks` SET `bank_name` = '$name', `account_name` = '$account' WHERE `banks`.`id` = '$id';";
+       $sql = "UPDATE `banks` SET `bank_name` = '$name', `account_number` = '$account' WHERE `banks`.`id` = '$id';";
     
         if($res = mysqli_query($con,$sql)){
             echo "1";
           }
          else{
             echo "<div class='alert alert-danger' role='alert'>
-            There are was a problem performing the operation!
+            There are was a problem performing the operation! 
           </div>";
+         // echo("Error description: " . mysqli_error($con));
+
          }
   }
    

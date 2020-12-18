@@ -28,11 +28,10 @@ include("config.php")
         <div class="row">
         
            <div class="col-lg-6">
-            <div class="card card-info card-outline">
+            <div class="card card-primary ">
               <div class="card-header border-0">
                 <div class="d-flex justify-content-between">
                 <h3 class="card-title">Approve Employee's Leave Request</h3>
-                  <a href="javascript:void(0);"  id="feesReport">View Full Report</a>
                 </div>
               </div>
               <div class="card-body"  style ="min-height:410px;">
@@ -41,7 +40,7 @@ include("config.php")
               <?php
                include '../config.php';
 // Attempt select query execution
-  $sql = "SELECT * FROM hr WHERE status = 'on leave' limit 0,9";
+  $sql = "SELECT * FROM hr WHERE status = 'requested' limit 0,9";
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";
@@ -49,8 +48,9 @@ include("config.php")
                 echo "<th>Salary</th>";
                 echo "<th>Leave Date</th>";
                 echo "<th>Leave Will End On</th>";
+                echo "<th>Approve</th>";
+                echo "<th>Reject</th>";
 
-                
             echo "</tr> </thead>";
         while($row = mysqli_fetch_array($result)){
             echo "<tr>                   <tbody>
@@ -58,7 +58,9 @@ include("config.php")
                 echo "<td>" . $row['employee_name'] . "</td>";
                 echo "<td>" . $row['salary'] . "</td>";
                 echo "<td> " . $row['DOB'] . "</td>";
-                echo "<td> " . $row['salary_increase_date'] . "</td>";
+                echo "<td> " . $row['previous_salary_increase'] . "</td>";
+                echo "<td><button id='approveLeave' class='btn btn-outline-primary btn-xs' value=" . $row['id'] . "><i class='fas fa-emoji'></i>  Approve</button></td>";
+                echo "<td><button id='rejectLeave' class='btn btn-outline-danger btn-xs' value=" . $row['id'] . "><i class='fas fa-times'></i>  Reject</button></td>";
             echo "</tr><tbody>";
         }
         echo "</table>";
@@ -82,11 +84,10 @@ No Employees that has requested a leave recently
       </div>
           <!-- /.col-md-6 -->
           <div class="col-lg-6">
-            <div class="card card-info card-outline">
+            <div class="card card-primary">
               <div class="card-header border-0">
                 <div class="d-flex justify-content-between">
                   <h3 class="card-title">Current Employee On Leave</h3>
-                  <a href="javascript:void(0);"  id="listStudents2">View Whole List</a>
                 </div>
               </div>
               <div class="card-body"  style ="min-height:410px;">
@@ -112,7 +113,7 @@ No Employees that has requested a leave recently
                 echo "<td>" . $row['employee_name'] . "</td>";
                 echo "<td>" . $row['salary'] . "</td>";
                 echo "<td> " . $row['DOB'] . "</td>";
-                echo "<td> " . $row['salary_increase_date'] . "</td>";
+                echo "<td> " . $row['previous_salary_increase'] . "</td>";
             echo "</tr><tbody>";
         }
         echo "</table>";

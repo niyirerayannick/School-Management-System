@@ -5,7 +5,7 @@ include("../config.php");
       addNewClass($_POST["class-name"],$_POST['option_name'],$_POST['stream_name']);
     }
     else{
-      addNewClass($_POST["class-name"],'NULL',$_POST['stream_name']);
+      addNewClass($_POST["class-name"],NULL,$_POST['stream_name']);
     }
    }
 
@@ -16,58 +16,78 @@ include("../config.php");
     selectUpdateClass($_POST['value']);
   }
   elseif($_POST["formId"] == 'updateClass'){
-    updateClass($_POST["class-name"],$_POST["id"]);
+    updateClass($_POST["stream_name"],$_POST["id"]);
+
   }
 
   
   function addNewClass($var,$option,$stream){
     include("../config.php");
+    //check whether options select is set
       if(isset($option)){
+        //adding into the class when it does not exist
        $sql = "INSERT INTO 
        classes (id, class_name)
         SELECT * FROM (SELECT NULL as id , '$var' as class_id) AS tmp
          WHERE NOT EXISTS ( SELECT class_name FROM classes WHERE class_name = '$var' )
        ";
 
+//inserting into the streams table
         if (!mysqli_query($con,"INSERT INTO 
         `streams` (`id`, `class_id`,`option_id`,`stream_name`) 
         VALUES 
         (NULL, (SELECT id FROM classes WHERE class_name = '$var' limit 1 ),'$option','$stream')")) {
-          
-          $sql2= "INSERT INTO 
-          `streams` (`id`, `class_id`,`option_id`,`stream_name`) 
-          VALUES 
-          (NULL, (SELECT id FROM classes WHERE class_name = '$var' limit 1 ),'$option','$stream')";
 
-        echo("Error description: " . mysqli_error($con));
-         //handle erro
+           
+            echo "<div class='alert alert-danger' role='alert'>
+             There are was a problem performing the operation! Try Again 
+              </div>";
+         //handle error
         }
         else{
           //handle success
         }
       }
+      //if the option select is empty
       else{
-        $sql = "INSERT INTO `classes` (`id`, `class_name`) 
-        VALUES (NULL, '$var');";
+        $sql = "INSERT INTO 
+        classes (id, class_name)
+         SELECT * FROM (SELECT NULL as id , '$var' as class_id) AS tmp
+          WHERE NOT EXISTS ( SELECT class_name FROM classes WHERE class_name = '$var' );
+        ";
+         if (!mysqli_query($con,"INSERT INTO 
+          `streams` (`id`, `class_id`,`option_id`,`stream_name`) 
+             VALUES 
+              (NULL, (SELECT id FROM classes WHERE class_name = '$var' limit 1 ),NULL,'$stream')")) {
+
+     
+          echo "<div class='alert alert-danger' role='alert'>
+           There are was a problem performing the operation! Try Again 
+        </div>";
+   //handle error
+  }
+  else{
+    //handle success
+  }
        
       }
         if($res = mysqli_query($con,$sql)){
             echo "1";
           }
          else{
-            echo "<div class='alert alert-danger' role='alert'>
-            There are was a problem performing the operation!
-          </div>";
+          echo("Error description: " . mysqli_error($con));
+
          }
   }
     
+  
   function updateClass($var,$id){
     include("../config.php");
 
-       $sql = "UPDATE classes SET Name = '$var' where id = '$id'";
+       $sql = "UPDATE streams SET stream_name = '$var' where id = '$id'";
     
         if($res = mysqli_query($con,$sql)){
-            echo "1";
+            echo"1";
           }
          else{
             echo "<div class='alert alert-danger' role='alert'>
@@ -76,10 +96,11 @@ include("../config.php");
          }
   }
    
+
   function deleteClass($id){
     include("../config.php");
  
-       $sql = "DELETE  FROM classes where id = '$id'";
+       $sql = "DELETE  FROM streams where id = '$id'";
     
         if($res = mysqli_query($con,$sql)){
             echo "1";
@@ -94,8 +115,8 @@ include("../config.php");
   function selectUpdateClass($var){
     include("../config.php");
 
-             $sql = "SELECT * FROM classes,streams,options WHERE classes.id = streams.class_id 
-             and streams.option_id = options.id and streams.id = '$var'
+             $sql = "SELECT streams.id,stream_name,option_name,class_name FROM classes,streams LEFT JOIN options on streams.option_id = options.id WHERE classes.id = streams.class_id 
+              and streams.id = '$var'
              ";
           
               if($res = mysqli_query($con,$sql)){
@@ -149,35 +170,36 @@ include("../config.php");
                                       
                                       <input type='text' class='form-control' id='className'
                                        value= "<?php echo $row['class_name']; ?>"
-                                      name='class-name' >
+                                      name='class-name' disabled>
                                    </div>
                                    <div class='form-group'>
+                                    <?php    
+                                     if(!empty($row['option_name'])){
+                                     ?>
                                      <label for="Stream">Option(Combination) Name</label>
-                                      <input type='text' class='form-control' id='className'
-                                       value= "<?php echo $row['option_name']; ?>"
-                                      name='class-name' >
+                                      <input type="text" class="form-control" id="className"
+                                      value = "<?php echo htmlentities($row['option_name']) ?>"
+                                      name='option' disabled>
+                                      <?php
+                                    }
+                                    else{
+                                      ?>
+                                      <label for="Stream">Option(Combination) Name</label>
+                                       <input type="text" class="form-control"  disabled>
+                                       <?php
+                                    }
+                                    ?>
                                    </div>
                                    <div class='form-group'>
                                      <label for="Stream">Stream Name</label>
-                                      <input type='text' class='form-control' id='className'
+                                      <input type='text' class='form-control form-disabled' id='className'
                                        value= "<?php echo $row['stream_name']; ?>"
-                                      name='class-name' >
+                                      name="stream_name" >
                                    </div>
-                                   <div class="form-group" style= "display:none" id="optionDiv">
-                  <label>Option <span class="text-danger">*</span> </label>
-<select id='optionSelect' name= "studentStream" class="form-control form-control-sm select2 select2-info"
-data-dropdown-css-class="select2-info" style="width: 100%;">
-                    
-                  </select>
+                                   <input type='hidden' id='addNewClassForm' name='formId' value ='updateClass'>
+                                   <input type='hidden' id='addNewClassId' name='id' value = "<?php echo htmlentities($row['id']) ?>" >
                 </div>
-                <div class="form-group" id="streamDiv"> 
-                  <label>Stream <span class="text-danger">*</span></label>
-      <select name="studentStream" id="streamSelect" class="form-control form-control-sm select2 select2-info" data-dropdown-css-class="select2-info" style="width: 100%;">
-                    <option selected="selected" disabled>Select Student's Stream</option>
-                   
-                  </select>
-                </div>
-                                   <button type='submit' class='btn btn-success' id='updateClassBtn'>Update Class</button>
+               <button type='submit' class='btn btn-success' id='updateClassBtn'>Update Class</button>
 
                                   </div>
                                   <!-- /.card-body -->

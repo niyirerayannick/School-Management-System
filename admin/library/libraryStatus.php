@@ -68,8 +68,12 @@
                 echo "<td>" . $row['bookname'] . "</td>";
                 echo "<td>" . $row['pdate'] . "</td>";
                 echo "<td>" . $row['sdate'] . "</td>";
-                echo "<td>" . $row['status'] . "</td>";
-                echo "<td><button id='updateLibrary' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
+                if ( $row['status'] == 'submitted') {
+                  echo "<td> <span class='btn btn-xs btn-outline-primary'>"  . $row['status']   ."</td>";
+                }else{
+                  echo "<td> <span class='btn btn-xs btn-outline-danger btn-block'>"  . $row['status']   ."</td>";
+                }              
+                  echo "<td><button id='updateLibrary' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
                 echo "<td><button id='deleteLibrary' class='btn btn-danger btn-sm' value=" . $row['id'] . ">Delete</button></td>";
             
 

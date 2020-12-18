@@ -11,72 +11,81 @@ let contentWrapper = document.querySelector('#content-wrapper'),
  timetable = document.querySelector("#timeTable");
 
 navbar.addEventListener("click",function(e){
-  //console.log(e.target.parentNode.id)
-  if(e.target.parentNode.id == 'addhostel') {
-		  getAddHostel();
-      }
-     else if(e.target.parentNode.id == 'viewHostels'){
-      viewAllHostels();
-      }
-      else if(e.target.parentNode.id == 'libraryStatus'){
-        getLibraryStatus();
-        }
-     else if(e.target.parentNode.id == 'calendar'){
-      getCalendar();
-      }  
-      else if(e.target.parentNode.id == 'addTeacher'){
-        addNewTeacher();
-      }
-      else if(e.target.parentNode.id == 'highPerformingStudents'){
-        viewHighperformingStudents();
-      }  
-      else if(e.target.parentNode.id == 'ViewClassStream'){
-        viewClassStream();
-      } 
-      else if(e.target.parentNode.id == 'viewExamResult'){
-        viewExamResult();
-      } 
-      else if(e.target.parentNode.id == 'viewExamCategories'){
-        getExamCategories();
-      } 
-      
-      else if(e.target.parentNode.id == 'viewBookSubmission'){
-        viewBookSubmission();
-      } 
-      else if(e.target.parentNode.id == 'lendNewBook'){
-        getlendNewBook();
-      } 
-      else if(e.target.parentNode.id == 'listEmployee'){
-        viewAllEmployees();
-      }
-      else if(e.target.parentNode.id == 'addEmployee'){
-        addNewEmployee();
-      }
-      else if(e.target.parentNode.id == 'leaveManagement'){
-        getLeaveManagement();
-      }
-      else if(e.target.parentNode.id == 'addSubject'){
-        addNewSubject();
-      }
-      else if(e.target.parentNode.id == 'viewSubjects'){
-        viewSubjects();
-      }
-      else if(e.target.parentNode.id == 'recentFeesCollection'){
-        viewFeesCollection();
-      }
-      else if(e.target.parentNode.id == 'changeFeesStructure'){
-        getChangeFeeStructure();
-      }
-      else if(e.target.parentNode.id == 'viewFeesStructure'){
-        viewFeesStructure();
-      }
-      else if(e.target.parentNode.id == 'addNewBank'){
-        addNewBank();
-      }
-      else if(e.target.parentNode.id == 'viewBanks'){
-        viewBanks();
-      }
+  let target = e.target.parentNode;
+ //console.log(target)
+  switch (target.id) {
+    case 'addhostel':
+        getContents("hostels/addNewHostel.php");
+      break;
+    case 'viewHostels':
+      getContents("hostels/viewHostels.php");
+      break;
+    case 'libraryStatus':
+      getContents("library/libraryStatus.php");
+      break;
+    case 'calendar':
+      getContents("loadKevin.php");
+      break;
+    case 'addTeacher':
+      getContents("teachers/addTeacher.php");
+      break;
+    case  'highPerformingStudents':  
+      getContents("students/viewHighPerformingStudents.php"); 
+      break;
+    case  'ViewClassStream':
+      getContents("class/viewStreams.php");
+      break;
+    case  'viewExamResult':
+      getContents("exam/viewExamResult.php");
+      break;
+    case 'viewExamCategories':
+      getContents("exam/viewExamCategories.php"); 
+      break;
+    case 'viewBookSubmission':
+        getContents("library/viewBookSubmission.php");
+      break;
+    case 'lendNewBook':
+      getContents("library/lendNewBook.php");
+      break;
+    case 'listEmployee':
+      getContents("hr/viewEmployees.php");
+      break;
+    case 'addEmployee':
+      getContents("hr/addNewEmployee.php");
+      break;
+    case 'leaveManagement':
+      getContents("hr/leaveIndex.php");
+      break;
+    case  'addSubject':  
+      getContents("subjects/addSubject.php"); 
+      break;
+    case  'viewSubjects':
+      getContents("subjects/viewSubjects.php");
+      break;
+    case  'recentFeesCollection':
+      getContents("school-fees/viewFeesCollection.php");
+      break;
+    case 'viewFeesStructure':
+      getContents("school-fees/viewFeesStructure.php"); 
+      break;
+    case 'changeFeesStructure':
+      getContents("school-fees/changeFeesStructure.php"); 
+      break; 
+    case  'addNewBank':
+      getContents("banks/addNewBank.php");
+      break;
+    case 'viewBanks':
+      getContents("banks/viewBanks.php"); 
+      break;  
+    case 'changeFeesStructure':
+      getContents("school-fees/changeFeesStructure.php"); 
+      break;           
+    default:
+      break;
+  }
+
 })
+
 
 contentWrapper.addEventListener('click', function(e) {
  // console.log(e.target.value);
@@ -137,7 +146,11 @@ contentWrapper.addEventListener('click', function(e) {
     else if(e.target.id == 'listTeachers') {
 		viewAllTeachers();
     }
-    
+    else if(e.target.id == 'addNewTeacherBtn') {
+      addNewTeacher();
+     }
+
+
     else if(e.target.id == 'listbanks') {
 		viewAllBanks();
     }
@@ -218,7 +231,12 @@ contentWrapper.addEventListener('click', function(e) {
     else if(e.target.id == 'updateEmployeeBtn') {
       updateEmployee();
     }
-
+    else if(e.target.id == 'approveLeave'){
+      acceptLeave(e.target.value,'approveLeave');
+    }
+    else if(e.target.id == 'rejectLeave'){
+      rejectLeave(e.target.value,'rejectLeave');
+    }
 
     else if(e.target.id == 'changeFeeStructure') {
       getChangeFeeStructure();
@@ -236,11 +254,11 @@ contentWrapper.addEventListener('click', function(e) {
     else if(e.target.id == 'updateFeeStructure') {
       selectUpdateFees(e.target.value,'selectUpdateFees');
     }
-    else if(e.target.id == 'deleteFeeStructure') {
-      deleteFees(e.target.value,'deleteFeesBtn');
+    else if(e.target.id == 'deleteFeesStructure') {
+      deleteFeesStructure(e.target.value,'deleteFeesStructureBtn');
     }
-    else if(e.target.id == 'updateFeesBtn') {
-      updateFees();
+    else if(e.target.id == 'updateFeeStructureBtn') {
+      updateFeesStructure();
     }
 
     
@@ -289,7 +307,7 @@ contentWrapper.addEventListener('click', function(e) {
 //adding event listeners
 //student  handling event listeners
 addStudent.addEventListener("click", getAddStudent);
-viewStudents.addEventListener("click", viewAllStudents);
+viewStudents.addEventListener("click", () =>    getContents("teachers/viewTeachers.php"));
 
 //teacher handling event listeners
 viewTeacher.addEventListener('click', viewAllTeachers);
@@ -304,5 +322,5 @@ timetable.addEventListener("click",getTimeTable)
 dashboard.addEventListener("click",loadDashboard)
 Homedashboard.addEventListener("click",loadDashboard)
 
-document.getElementById('classAttendanceHome').addEventListener("click",getClassAttendance)
+document.getElementById('classAttendanceHome').addEventListener("click",getClassAttendance);
 

@@ -5,7 +5,9 @@ include("config.php");
    session_start();
  if (!isset($_SESSION['username'])) {
   header('location:../login1.html');
-
+ }
+ if ($_SESSION['user_type'] != 'admin') {
+  header('location:../login1.html');
  }
 ?>
 <!DOCTYPE html>
