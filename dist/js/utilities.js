@@ -6,7 +6,16 @@ container.classList.add('right-panel-active'));
 
 signInButton.addEventListener("click", () => 
 container.classList.remove('right-panel-active'));
+/*
+$("#signInBtn").click(function(){
+    $("form").submit(function(event){
+        event.preventDefault();
+        let formData = $(this).serialize();
+        $.post("login.php",formData)
+    });
 
+})
+*/
 function getContents(location){
     fetch(location)
     .then(response =>  response.text())

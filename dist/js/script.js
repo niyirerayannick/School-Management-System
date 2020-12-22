@@ -89,7 +89,7 @@ function addNewStudent(){
           viewAllStudents();
         }
         else{
-       // alert(data)
+      console.log(data);
         }
       },
       error: function(r) {

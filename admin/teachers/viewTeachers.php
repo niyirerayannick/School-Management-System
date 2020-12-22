@@ -33,7 +33,7 @@
               <div class="card-body" style='min-height:550px'>
               <div class="card mt-2 ml-2">
             <div class="card-header">
-                <button class="btn btn-info card-title" id="newClass"> <i class="fa fa-plus"></i>  Add New Teacher</button>
+                <button class="btn btn-info card-title" id="newTeacher"> <i class="fa fa-plus"></i>  Add New Teacher</button>
              </div>
               <!-- /.card-header -->
               <div class="card-body">

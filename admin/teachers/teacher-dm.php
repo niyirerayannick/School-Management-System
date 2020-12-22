@@ -24,8 +24,9 @@ if($_POST["formId"] == 'addNewTeacher'){
   if(move_uploaded_file($tmp,$path)) 
    {
     */
-  addNewStudent($_POST['teacher_name'],$_POST['studentClass'],$_POST['gender'],'1999-11-01',$_POST['academicYear'],$_POST['RegNo'],
-  $_POST['studentStream'],$_POST['studentHostel'],$_POST['studentCategory'],$path,$_POST['sibling']);
+    
+  addNewTeacher($_POST['teacher_name'],$_POST['phone'],$_POST['email'],$_POST['martial_status'],$_POST['nationality'],$_POST['qualification'],
+  $_POST['staff'],$_POST['responsability'],$_POST['gender'],$_POST['DOB'],$_POST['subject']);
    /*}
   }
   else{
@@ -46,16 +47,15 @@ elseif ($_POST["formId"] == 'viewStudentDetailsBtn') {
   viewStudentDetails($_POST['value']);
 }
 
-function addNewStudent($name,$class,$gender,$dob,$academicYear,$regno,$stream,$hostel,$category,$path,$sibling){
+function addNewTeacher($name,$phone,$email,$martial_status,$nationality,$qualification,$staff,$responsability,$gender,$dob,$subject){
     include("../config.php");
-       $sql = "INSERT INTO
-        `students` (`id`, `FullName`, `Gender`, `DOB`, `Photo`, `RegNo`, `class_id`, `option_id`, `hostel_id`, `DOJ`,
-         `student_category`, `AcademicYear`, `parent_id`,`sibling`) VALUES
-        (NULL,'$name','$gender','$dob', '$path', '$regno', '$class', '$stream','$hostel', 'current_timestamp()','$category','$academicYear', 
-          NULL,'$sibling');";
+       $sql =  "INSERT INTO
+                       `teachers` (`id`, `teacher_name`, `DOB`, `phone`, `email`, `nationality`, `martial_status`, `entry_date`, `responsability`, `Gender`, `qualification`, `StaffNumber`)
+                         VALUES 
+        (NULL, '$name', '$dob', '$phone', '$email', '$nationality', '$martial_status', '2020-12-01', '$responsability ', '$gender', 'bachelors of education', '$staff');";
     
         if($res = mysqli_query($con,$sql)){
-            echo "1";
+            echo $subject;
           }
          else{
             echo "<div class='alert alert-danger' role='alert'>

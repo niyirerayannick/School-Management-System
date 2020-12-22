@@ -189,6 +189,10 @@ data-dropdown-css-class="select2-info" style="width: 100%;">
                         </label>
                       </div>
                     </div>
+                    <div class="form-group">
+                    <label for="exampleInputEmail1">Student's Parent Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control form-control-sm" id="fullName" name="parent" placeholder="Enter The Student's Full Name">
+                  </div>
                 </div>
                 <!-- /.card-body -->
                 <input type="hidden" id="addNewStudentForm" name="formId" value ="addNewStudent">

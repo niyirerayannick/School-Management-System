@@ -275,14 +275,6 @@ include("config.php")
                   </tbody>
                 </table>
               </div>
-
-
-              <div class="overlay dark hidden" style="display:none" id="loading">  
-  <i class="fas fa-2x fa-sync-alt fa-spin"></i>
-</div>
-```
-
-
             </div>
             <!-- /.card -->
       </div>

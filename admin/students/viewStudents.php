@@ -70,7 +70,7 @@
                 echo "<th>Entry Date</th>";
                 echo "<th>Category</th>";
                 echo "<th>Academic year</th>";
-                echo "<th>Total Fees</th>";
+                //echo "<th>Total Fees</th>";
                 echo "<th>Parent</th>";
                 echo "<th>Edit</th>";
                 echo "<th>Delete</th>";
@@ -95,7 +95,7 @@
                 echo "<td>" . $row['DOJ'] . "</td>";
                 echo "<td>" . $row['category_name'] . "</td>";
                 echo "<td>" . $row['Year'] . "</td>";
-                echo "<td>" . $total . "</td>";
+              //  echo "<td>" . $total . "</td>";
                 echo "<td>" . $row['parent_name'] . "</td>";
                 echo "<td><button id='updateStudent' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
                 echo "<td><button id='deleteStudent' class='btn btn-danger btn-sm' value=" . $row['id'] . ">Delete</button></td>";

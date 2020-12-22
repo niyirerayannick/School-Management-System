@@ -26,67 +26,66 @@
                 <h3 class="card-title">View List Of Students</h3>
               </div>
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
+              <div class="card-body table-responsive p-0" style="min-height:600px">
               <div class="row">
               <!-- /.card-header -->
               <div class="card-body">
               <table id="viewStudehtsTable" class="table table-bordered table-hover">
                 <thead>
                 <?php
-                $con = mysqli_connect("localhost", "root", "","student_management_system");
- 
-                // Check connection
-                if($con === false){
-                    die("ERROR: Could not connect. " . mysqli_connect_error());
-                } 
+               include("../config.php");
 // Attempt select query execution
-  $sql = "SELECT * FROM students,examresults WHERE students.id = examresults.student and marks > 50";
-      if($result = mysqli_query($con, $sql)){
-    if(mysqli_num_rows($result) > 0){
-            echo "<tr>";
-                echo "<th>id</th>";
-                echo "<th>Full Name </th>";
-                echo "<th>Birth Date</th>";
-                echo "<th>Photo</th>";
-                echo "<th>Registration Number</th>";
-                echo "<th>Class</th>";
-                echo "<th>Hostel</th>";
-                echo "<th>Entry Date</th>";
-                echo "<th>Category</th>";
-                echo "<th>Academic year</th>";
-                echo "<th>Total Fees</th>";
-                echo "<th>Paid Fees</th>";
-                echo "<th>Unpaid Fees</th>";
-                echo "<th>Parent</th>";
+$sql = "SELECT
+students.FullName,RegNo,examresults.id, subject_name,Marks,class_name,Year,stream_name,Term,category_name,option_name,
+students.id as student_id
+ FROM 
+examresults,students,classes,subjects,streams streams LEFT JOIN options on options.id = streams.option_id,sessions,exam_categories
+WHERE
+examresults.student_id = students.id AND students.stream_id = streams.id AND streams.class_id = classes.id
+AND subjects.id = examresults.subject_id AND
+examresults.exam_category = exam_categories.id ORDER BY class_name ";
+   if($result = mysqli_query($con, $sql)){
+ if(mysqli_num_rows($result) > 0){
+         echo "<tr>";
+             echo "<th>id</th>";
+             echo "<th>Student Name</th>";
+             echo "<th>Registration Number</th>";
+             echo "<th>Class  </th>";
+             echo "<th>Combination  </th>";
+             echo "<th>Stream</th>";
+             echo "<th>Exam Category</th>";
+             echo "<th>Subject</th>";
+             echo "<th>Marks</th>";
+             echo "<th>Year</th>";
+             echo "<th>Term</th>";
+         echo "</tr> </thead>";
+     while($row = mysqli_fetch_array($result)){
+         echo "<tr>                   <tbody>
+         ";
+             echo "<td>" . $row['id'] . "</td>";
+             echo "<td><button id='viewStudentDetails' class='btn btn-outline-secondary btn-xs' value=" . $row['student_id'] . ">" . $row['FullName'] . "</td></button>";
+             echo "<td>" . $row['RegNo'] . "</td>";
+             echo "<td>" . $row['class_name'] . "</td>";
+             if($row['option_name'] == NULL){
+               echo "<td>  - </td>";
+               }else{
+             echo "<td>" . $row['option_name'] . "</td>";
+               }
+             echo "<td>" . $row['stream_name'] . "</td>";
+             echo "<td>" . $row['category_name'] . "</td>";
+             echo "<td>" . $row['subject_name'] . "</td>";
+             echo "<td>" . $row['Marks'] . "</td>";
+             echo "<td>" . $row['Year'] . "</td>";
+             echo "<td>" . $row['Term'] . "</td>";
 
-            echo "</tr> </thead>";
-        while($row = mysqli_fetch_array($result)){
-            echo "<tr>                   <tbody>
-            ";
-                echo "<td>" . $row['id'] . "</td>";
-                echo "<td>" . $row['FullName'] . "</td>";
-                echo "<td>" . $row['DOB'] . "</td>";
-                echo "<td><img src=" . $row['Photo'] . " class ='img img-thumbnail img-sm'></td>";
-                echo "<td>" . $row['RegNo'] . "</td>";
-                echo "<td>" . $row['Class'] . "</td>";
-                echo "<td>" . $row['Hostel'] . "</td>";
-                echo "<td>" . $row['DOJ'] . "</td>";
-                echo "<td>" . $row['Category'] . "</td>";
-                echo "<td>" . $row['AcademicYear'] . "</td>";
-                echo "<td>" . $row['TotalFees'] . "</td>";
-                echo "<td>" . $row['AdvanceFees'] . "</td>";
-                echo "<td>" . $row['Balance'] . "</td>";
-                echo "<td>" . $row['Parent'] . "</td>";
-
-
-            echo "</tr><tbody>";
-        }
-        echo "</table>";
-        // Free result set
-        mysqli_free_result($result);
+         echo "</tr><tbody>";
+     }
+     echo "</table>";
+     // Free result set
+     mysqli_free_result($result);
     } else{
         echo "<div class='alert alert-danger' role='alert'>
-        There are no students currently in the database!
+        There are no students with more than 80 marks currently in the database!
       </div>";
     }
 } else{

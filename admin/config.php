@@ -1,6 +1,6 @@
 
 <?php
-/* Attempt MySQL server connection. Assuming you are running MySQL
+/* Attempt MySQL server connection. running MySQL
 server with default setting (user 'root' with no password) */
 $con = mysqli_connect("localhost", "root", "","student_management_system");
  

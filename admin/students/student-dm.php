@@ -24,7 +24,7 @@ if($_POST["formId"] == 'addNewStudent'){
   if(move_uploaded_file($tmp,$path)) 
    {
   addNewStudent($_POST['fullName'],$_POST['studentClass'],$_POST['gender'],'1999-11-01',$_POST['academicYear'],$_POST['RegNo'],
-  $_POST['studentStream'],$_POST['studentHostel'],$_POST['studentCategory'],$path,$_POST['sibling']);
+  $_POST['studentStream'],$_POST['studentHostel'],$_POST['studentCategory'],$path,$_POST['sibling'],$_POST['parent']);
    }
   }
   else{
@@ -45,13 +45,13 @@ elseif ($_POST["formId"] == 'viewStudentDetailsBtn') {
   viewStudentDetails($_POST['value']);
 }
 
-function addNewStudent($name,$class,$gender,$dob,$academicYear,$regno,$stream,$hostel,$category,$path,$sibling){
+function addNewStudent($name,$class,$gender,$dob,$academicYear,$regno,$stream,$hostel,$category,$path,$sibling,$parent){
     include("../config.php");
        $sql = "INSERT INTO
-        `students` (`id`, `FullName`, `Gender`, `DOB`, `Photo`, `RegNo`, `class_id`, `option_id`, `hostel_id`, `DOJ`,
+        `students` (`id`, `FullName`, `Gender`, `DOB`, `Photo`, `RegNo`, `class_id`, `stream_id`, `hostel_id`, `DOJ`,
          `student_category`, `AcademicYear`, `parent_id`,`sibling`) VALUES
         (NULL,'$name','$gender','$dob', '$path', '$regno', '$class', '$stream','$hostel', 'current_timestamp()','$category','$academicYear', 
-          NULL,'$sibling');";
+          1,'$sibling');";
     
         if($res = mysqli_query($con,$sql)){
             echo "1";

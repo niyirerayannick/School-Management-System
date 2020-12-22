@@ -146,6 +146,9 @@ contentWrapper.addEventListener('click', function(e) {
     else if(e.target.id == 'listTeachers') {
 		viewAllTeachers();
     }
+    else if(e.target.id == 'newTeacher'){
+      getContents("teachers/addTeacher.php");
+    }
     else if(e.target.id == 'addNewTeacherBtn') {
       addNewTeacher();
      }
@@ -307,7 +310,7 @@ contentWrapper.addEventListener('click', function(e) {
 //adding event listeners
 //student  handling event listeners
 addStudent.addEventListener("click", getAddStudent);
-viewStudents.addEventListener("click", () =>    getContents("teachers/viewTeachers.php"));
+viewStudents.addEventListener("click", () =>    getContents("students/viewStudents.php"));
 
 //teacher handling event listeners
 viewTeacher.addEventListener('click', viewAllTeachers);

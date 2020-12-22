@@ -97,7 +97,7 @@
         mysqli_free_result($result);
     } else{
         echo "<div class='alert alert-danger' role='alert'>
-        There are no students currently in the database!
+        There are no Exam Results  currently in the database!
       </div>";
     }
 } else{

@@ -41,37 +41,37 @@
                   </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Teacher's Full Name <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control form-control-sm" id="teacher_name" name="fullName" placeholder="Enter The Student's Full Name">
+                    <input type="text" class="form-control form-control-sm" id="teacher_name" name="teacher_name" placeholder="Enter The Student's Full Name">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Telephone Number <span class="text-danger">*</span></label>
-                    <input type="number" class="form-control form-control-sm" id="RegNo" placeholder="Enter the Registration Number" name="phone" max=12>
+                    <input type="number" class="form-control form-control-sm" id="telephone" placeholder="Enter the Registration Number" name="phone">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Email <span class="text-danger">*</span></label>
-                    <input type="email" class="form-control form-control-sm" id="RegNo" placeholder="Enter the email" name="email">
+                    <input type="email" class="form-control form-control-sm" id="email" placeholder="Enter the email" name="email">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Martial Status <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control form-control-sm" id="RegNo" placeholder="Enter the Registration Number" name="phone">
+                    <input type="text" class="form-control form-control-sm" id="martial_status" placeholder="Enter the Registration Number" name="martial_status">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Date OF Birth <span class="text-danger">*</span></label>
-                    <input type="date" class="form-control form-control-sm" id="RegNo" name="DOB">
+                    <input type="date" class="form-control form-control-sm" id="DOB" name="DOB">
                   </div>
                   
                 <div class="form-group">
                     <label for="exampleInputPassword1">Nationality <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control form-control-sm" id="RegNo" placeholder="Enter the Nationality" name="nationality">
+                    <input type="text" class="form-control form-control-sm" id="nationality" placeholder="Enter the Nationality" name="nationality">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Qualification<span class="text-danger">*</span></label>
-                    <input type="number" class="form-control form-control-sm" id="RegNo" placeholder="Enter the Teacher's Qualification" name="qualification">
+                    <input type="number" class="form-control form-control-sm" id="qualification" placeholder="Enter the Teacher's Qualification" name="qualification">
                   </div>
                   
                   <div class="form-group">
                     <label for="exampleInputPassword1">Staff Number <span class="text-danger">*</span></label>
-                    <input type="number" class="form-control form-control-sm" id="RegNo" placeholder="Enter the Staff Number" name="staff">
+                    <input type="number" class="form-control form-control-sm" id="staff_number" placeholder="Enter the Staff Number" name="staff">
                   </div>
                   
                 <div class="form-group">
@@ -80,9 +80,41 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Special Responsability<span class="text-danger">*</span></label>
-                    <input type="number" class="form-control form-control-sm" id="RegNo" placeholder="Enter the Teacher's Qualification" name="responsability">
+                    <input type="text" class="form-control form-control-sm" id="special_responsability" placeholder="Enter the Teacher's Qualification" name="responsability">
                   </div>
+                     <div class="form-group clearfix">
+                     <label>Teacher's Subjects</label><br>
+                     <?php
+                     include("../config.php");
+                     $sql = "SELECT * FROM subjects";
+                     if($result = mysqli_query($con,$sql)){
+                        if(mysqli_num_rows($result) > 0){
+                          while($row = mysqli_fetch_array($result)){
+
+                            $color;
+                            if($row['id']  % 2 == 0 && $row['id'] > 4){
+                                $color = 'icheck-primary';
+                            }
+                            elseif($row['id']  % 2 !== 0){
+                              $color = 'icheck-danger';
+                              } 
+                            elseif($row['id']  % 2 == 0 && $row['id'] < 4){
+                                $color = 'icheck-success';
+                            }
+                    
+                            echo"
+                            <div class='" . $color . " d-inline'>
+                            <input type='checkbox' id= " . $row['id'] . " name='subject' value= " . $row['id'] . ">
+                            <label for= " . $row['id'] . "> " . $row['subject_name'] . "
+                            </label>
+                          </div>";
+                          }
+                        }
+                     } 
+                      ?>
+                    </div>
                     <div class="form-group clearfix">
+                     <label>Gender</label><br>
                       <div class="icheck-primary d-inline">
                         <input type="radio" id="male" name="gender" value='male'>
                         <label for="male"> Male
