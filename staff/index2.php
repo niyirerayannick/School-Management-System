@@ -30,7 +30,19 @@ session_start();
             <!-- small card -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                <h3>
+                  <?php
+                  $teacher_id = $_SESSION["user_id"];
+   $sql = "SELECT * FROM classes , teacher_classes,streams WHERE streams.class_id = classes.id AND streams.id = teacher_classes.stream_id 
+   AND teacher_classes.teacher_id = $teacher_id";
+   if($result = mysqli_query($con, $sql)){
+   $row = mysqli_num_rows($result);
+   echo "$row";
+} else{
+    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+}
+?>
+</h3>
 
                 <p>My Classes</p>
               </div>
@@ -47,12 +59,21 @@ session_start();
             <!-- small card -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <h3>     
+                             <?php
+// Attempt select query execution
+$teacher_id = $_SESSION["user_id"];
+  $sql = "SELECT * FROM subjects,teacher_subjects,teachers WHERE subjects.id = teacher_subjects.subject_id AND teachers.id = teacher_subjects.teacher_id and teachers.id = $teacher_id";
+      if($result = mysqli_query($con, $sql)){
+           echo mysqli_num_rows($result);
+      }
+      ?>
+      </h3>
 
                 <p>My Subjects</p>
               </div>
               <div class="icon">
-                <i class="fas fa-user-plus"></i>
+                <i class="fas fa-book-open"></i>
               </div>
               <a href="#" class="small-box-footer">
                 More info <i class="fas fa-arrow-circle-right"></i>
@@ -64,12 +85,22 @@ session_start();
             <!-- small card -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>44</h3>
+                <h3>
+                <?php
+// Attempt select query execution
+$teacher_id = $_SESSION["user_id"];
+  $sql = "SELECT * FROM calendar limit 0,9";
+      if($result = mysqli_query($con, $sql)){
+           echo mysqli_num_rows($result);
+      }
+      ?>
 
-                <p>User Registrations</p>
+                </h3>
+
+                <p>Upcoming Events</p>
               </div>
               <div class="icon">
-                <i class="fas fa-user-plus"></i>
+                <i class="fas fa-calendar"></i>
               </div>
               <a href="#" class="small-box-footer">
                 More info <i class="fas fa-arrow-circle-right"></i>
@@ -81,9 +112,16 @@ session_start();
             <!-- small card -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>65</h3>
+                <h3>       <?php
+// Attempt select query execution
+   $teacher_name = $_SESSION["username"];
+  $sql = "SELECT * FROM hr WHERE  employee_name = '$teacher_name' limit 0,9";
+      if($result = mysqli_query($con, $sql)){
+           echo mysqli_num_rows($result);
+      }
+      ?></h3>
 
-                <p>Unique Visitors</p>
+                <p>Leave Requests</p>
               </div>
               <div class="icon">
                 <i class="fas fa-chart-pie"></i>
@@ -221,11 +259,11 @@ session_start();
                 </div>
               </div>
               <div class="card-body"  style ="min-height:410px;">
-              <table id="viewStudehtsTable" class="table table-bordered table-hover">
+              <table id="viewStudentsTable" class="table table-bordered table-hover">
                 <thead>
                 <?php
 // Attempt select query execution
-  $sql = "SELECT * FROM calendar";
+  $sql = "SELECT * FROM calendar limit 0,9";
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";

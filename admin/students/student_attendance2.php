@@ -1,5 +1,5 @@
 <?php
-include("config.php")
+include("../config.php")
     ?>
    
     <?php
@@ -13,21 +13,16 @@ if($ret=mysqli_query($con,"SELECT
 FullName, Date, count(classattendance.Attended) as N_O_attendance 
 FROM students,classattendance
  WHERE 
- students.id =1 and classattendance.student_id = 1 and classattendance.attended = 1 group by Date")){
-
-while($row=mysqli_fetch_array($ret))
-{
-
-
- 
+ students.id =1 and classattendance.student_id = 1 and classattendance.attended = 1 group by Date"))
+ {
+$row=mysqli_fetch_array($ret);
        //converting php data to json 
- $name = $row['Date'];
+ echo json_encode($name = $row['Date']);
  $numb = $row['N_O_attendance'];
 
-  } 
   ?>
 <!--<div id="view"><canvas id="myChart"></canvas></div> -->
-       <div id ="myChart">
+       <div class="row" id ="myChart">
            <div class="card" >
               <div class="card-header border-0">
                 <div class="d-flex justify-content-between">
@@ -51,7 +46,7 @@ while($row=mysqli_fetch_array($ret))
                 <!-- /.d-flex -->
 
                 <div class="position-relative mb-4">
-                  <canvas id="visitors-chart" height="200"></canvas>
+                  <canvas id="visitors-chart" height="290"></canvas>
                 </div>
 
                 <div class="d-flex flex-row justify-content-end">
@@ -64,8 +59,8 @@ while($row=mysqli_fetch_array($ret))
                   </span>
                 </div>
               </div>
-         </div>
-       </div>
+            </div>
+        </div>
   <?php
   }
 ?>

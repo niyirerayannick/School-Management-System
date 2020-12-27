@@ -74,7 +74,7 @@
                     echo "<td>" . $row['stream_name'] . "</td>";
                   } 
                 echo "<td><button id='updateClass' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
-                echo "<td><button id='deleteClass' class='btn btn-danger btn-sm' value=" . $row['id'] . ">Delete</button></td>";
+                echo "<td><button id='deleteClass' class='btn btn-danger btn-xs' value=" . $row['id'] . "><i class='far fa-trash-alt'></i> Delete</button></td>";
             echo "</tr><tbody>";
         }
         echo "</table>";

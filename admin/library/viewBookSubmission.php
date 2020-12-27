@@ -70,7 +70,7 @@
                 echo "<td>" . $row['sdate'] . "</td>";
                 echo "<td>" . $row['status'] . "</td>";
                 echo "<td><button id='updateLibrary' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
-                echo "<td><button id='deleteLibrary' class='btn btn-danger btn-sm' value=" . $row['id'] . ">Delete</button></td>";
+                echo "<td><button id='deleteLibrary' class='btn btn-danger btn-sm' value=" . $row['id'] . "><i class='far fa-trash-alt'></i> Delete</button></td>";
             
 
             echo "</tr><tbody>";

@@ -98,7 +98,7 @@
               //  echo "<td>" . $total . "</td>";
                 echo "<td>" . $row['parent_name'] . "</td>";
                 echo "<td><button id='updateStudent' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
-                echo "<td><button id='deleteStudent' class='btn btn-danger btn-sm' value=" . $row['id'] . ">Delete</button></td>";
+                echo "<td><button id='deleteStudent' class='btn btn-danger btn-xs' value=" . $row['id'] . "> Delete</button></td>";
 
 
             echo "</tr><tbody>";

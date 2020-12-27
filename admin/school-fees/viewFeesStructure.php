@@ -68,7 +68,7 @@
               
                 echo "<td>" . $row['amount'] . "</td>";
                 echo "<td><button id='updateFeeStructure' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
-                echo "<td><button id='deleteFeesStructure' class='btn btn-danger btn-sm' value=" . $row['id'] . ">Delete</button></td>";
+                echo "<td><button id='deleteFeesStructure' class='btn btn-danger btn-sm' value=" . $row['id'] . "><i class='far fa-trash-alt'></i> Delete</button></td>";
 
 
             echo "</tr><tbody>";

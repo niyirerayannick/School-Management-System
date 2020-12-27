@@ -92,7 +92,7 @@
                 echo "<td>" . $row['qualification'] . "</td>";
                 echo "<td>" . $row['entry_date'] . "</td>";
                 echo "<td><button id='updateTeacher' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
-                echo "<td><button id='deleteTeacher' class='btn btn-danger btn-sm' value=" . $row['id'] . ">Delete</button></td>";
+                echo "<td><button id='deleteTeacher' class='btn btn-danger btn-sm' value=" . $row['id'] . "><i class='far fa-trash-alt'></i> Delete</button></td>";
 
             echo "</tbody></tr>";
         }

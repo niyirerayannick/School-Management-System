@@ -42,7 +42,7 @@ function getStream($id){
 ";
  
      if($res = mysqli_query($con,$sql)){
-         ?> <!--<option selected="selected" disabled>Select Stream</option>
+         ?> <option selected="selected" disabled>Select Stream</option>
          <?php
         while($row = mysqli_fetch_array($res)){
             if(isset($row['stream_name'])){

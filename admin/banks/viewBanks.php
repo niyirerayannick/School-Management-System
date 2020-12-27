@@ -65,7 +65,7 @@
                 echo "<td>" . $row['bank_name'] . "</td>";
                 echo "<td>" . $row["account_number"] . "</td>";
                 echo "<td><button id='updateBank' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
-                echo "<td><button id='deleteBank' class='btn btn-danger btn-sm' value=" . $row['id'] . ">Delete</button></td>";
+                echo "<td><button id='deleteBank' class='btn btn-danger btn-sm' value=" . $row['id'] . "><i class='far fa-trash-alt'></i> Delete</button></td>";
             echo "</tr><tbody>";
         }
         echo "</table>";

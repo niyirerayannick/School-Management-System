@@ -93,6 +93,10 @@ contentWrapper.addEventListener('click', function(e) {
 		getCalendar();
     }
   
+    else if(e.target.id == 'attendance') {
+         getStudentAttendance();
+    }
+       
     else if(e.target.id == 'listStudents') {
 		viewAllStudents();
     }
@@ -141,7 +145,11 @@ contentWrapper.addEventListener('click', function(e) {
     else if(e.target.id == 'deleteClass') {
     deleteClass(e.target.value,'deleteClassBtn');
     } 
-
+    else if(e.target.id == 'viewClassAttendance') {
+      e.preventDefault();
+      getClassAttendance();
+      } 
+  
 
     else if(e.target.id == 'listTeachers') {
 		viewAllTeachers();
@@ -325,5 +333,5 @@ timetable.addEventListener("click",getTimeTable)
 dashboard.addEventListener("click",loadDashboard)
 Homedashboard.addEventListener("click",loadDashboard)
 
-document.getElementById('classAttendanceHome').addEventListener("click",getClassAttendance);
+document.getElementById('classAttendanceHome').addEventListener("click",getClassAttendanceForm);
 

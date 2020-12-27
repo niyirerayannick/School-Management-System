@@ -28,8 +28,6 @@ $(function () {
     zIndex: 999999
   })
 
-  // bootstrap WYSIHTML5 - text editor
-  $('.textarea').summernote()
 
   $('.daterange').daterangepicker({
     ranges: {
@@ -47,8 +45,7 @@ $(function () {
     alert('You chose: ' + start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
   })
 
-  /* jQueryKnob */
-  $('.knob').knob()
+
 
   // jvectormap data
   var visitorsData = {

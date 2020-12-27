@@ -194,7 +194,7 @@ function viewStudentDetails($id){
             <div class="card">
               <div class="card-header p-2">
                 <ul class="nav nav-pills">
-                  <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Class Attendance</a></li>
+                  <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab" id= "attendance"> Class Attendance</a></li>
                   <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Exam Results</a></li>
                   <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Fees Collection</a></li>
                 </ul>
@@ -203,13 +203,11 @@ function viewStudentDetails($id){
                 <div class="tab-content">
                   <div class="active tab-pane" id="activity" style="min-height:550px">
                     <div class="card-body">
-                <div class="chart">
-                  <canvas id="lineChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                </div>
+                <div class="chart" id='studentAttendance'>
+
+              </div>
               </div>
                   </div>
-
-
 
                   <!-- /.tab-pane -->
                   <div class="tab-pane" id="timeline" style="min-height:550px">

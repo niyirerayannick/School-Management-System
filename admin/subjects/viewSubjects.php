@@ -60,7 +60,7 @@
                 echo "<td>" . $row['id'] . "</td>";
                 echo "<td>" . $row['subject_name'] . "</td>";
                 echo "<td><button id='updateSubject' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
-                echo "<td><button id='deleteSubject' class='btn btn-danger btn-sm' value=" . $row['id'] . ">Delete</button></td>";
+                echo "<td><button id='deleteSubject' class='btn btn-danger btn-sm' value=" . $row['id'] . "><i class='far fa-trash-alt'></i> Delete</button></td>";
 
             echo "</tbody></tr>";
         }

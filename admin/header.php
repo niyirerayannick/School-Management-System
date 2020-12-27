@@ -256,7 +256,12 @@ include("config.php");
                 <span class="badge badge-info right"> 
                      <?php
  // Attempt select query execution
-   $sql = "SELECT * FROM classes";
+   $sql = "SELECT 
+   class_name,option_name,stream_name,streams.id,abbreviation
+   FROM classes,streams streams LEFT JOIN options on options.id = streams.option_id,sessions 
+   WHERE
+    streams.class_id = classes.id
+    ORDER BY class_name";
    if($result = mysqli_query($con, $sql)){
    $row = mysqli_num_rows($result);
    echo "$row";
