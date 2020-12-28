@@ -5,7 +5,7 @@ include("../config.php");
       addNewFees($_POST["class_name"],$_POST['option_name'],$_POST['amount']);
     }
     else{
-      addNewFees($_POST["class_name"],'NULL',$_POST['amount']);
+      addNewFees($_POST["class_name"],NULL,$_POST['amount']);
     }
    }
   elseif($_POST["formId"] == 'deleteFeesStructureBtn'){
@@ -23,10 +23,10 @@ include("../config.php");
     include("../config.php");
       if($option !== 'NULL'){
        $sql = "INSERT INTO `fees_structure` (`id`, `class_id`,`option_id`,`amount`) 
-       VALUES (NULL, '$class','$option','$amount');";
+       VALUES (NULL, '$class',(SELECT option_id FROM streams WHERE id = '$option'),'$amount');";
       }else{
         $sql = "INSERT INTO `fees_structure` (`id`, `class_id`,`option_id`,`amount`) 
-        VALUES (NULL, '$class','$option','$amount');";
+        VALUES (NULL, '$class',NULL,'$amount');";
       }
         if($res = mysqli_query($con,$sql)){
             echo "1";

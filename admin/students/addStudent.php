@@ -57,7 +57,9 @@
                     <?php
                 include '../config.php';
 // Attempt select query execution
-  $sql = "SELECT * FROM classes";
+  $sql = "SELECT class_name,classes.id FROM classes,streams streams LEFT JOIN options on options.id = streams.option_id
+  ,sessions
+   WHERE streams.class_id = classes.id GROUP by class_name ORDER BY class_name";
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
         while($row = mysqli_fetch_array($result)){

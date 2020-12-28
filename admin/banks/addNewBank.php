@@ -35,7 +35,7 @@
                 <div class="card-body">
                 <div class="row">
            <div class="col-md-1"></div>
-              <div class="col-md-12">
+              <div class="col-md-9">
             <div class="card mt-2 ml-2">
               <!-- /.card-header -->
               <div class="card-body">
@@ -48,7 +48,7 @@
                     <label for="exampleInputEmail1">Account Number</label>
                     <input type="number" class="form-control" id="acc_no" name = "bank_account" placeholder="Enter Account Number">
                   </div>
-                  <button type="submit" id="addBankBtn" class="btn btn-success">Add Bank</button>
+                  <button type="submit" id="addBankBtn" class="btn btn-success"><i class='fa fa-plus'></i> Add Bank</button>
                   <button type="reset" class="btn btn-danger float-right">Cancel</button>
                 </div>
                 <!-- /.card-body -->

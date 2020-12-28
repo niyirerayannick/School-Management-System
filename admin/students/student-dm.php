@@ -178,7 +178,7 @@ function viewStudentDetails($id){
                   </li>
                 </ul>
 
-                <button class="btn btn-primary btn-block" id="updateStudent"  value="<?php echo $id  ?>">
+                <button class="btn btn-success btn-block" id="updateStudent"  value="<?php echo $id  ?>">
                   Edit Student Details</button>
               </div>
               <!-- /.card-body -->
@@ -191,7 +191,7 @@ function viewStudentDetails($id){
           </div>
           <!-- /.col -->
           <div class="col-md-9">
-            <div class="card">
+            <div class="card card-primary card-outline">
               <div class="card-header p-2">
                 <ul class="nav nav-pills">
                   <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab" id= "attendance"> Class Attendance</a></li>
@@ -221,7 +221,7 @@ WHERE
  and examresults.subject_id = subjects.id and examresults.student_id = '$id'";
 
      if($res = mysqli_query($con,$sql)){
-      if(mysqli_num_rows($res) > 0){
+       if(mysqli_num_rows($res) > 0){
            ?>
             <table class='table table-striped'>
             <thead>
@@ -233,7 +233,7 @@ WHERE
               </tr>
             </thead>
             <?php
-      while($row = mysqli_fetch_array($res)){
+           while($row = mysqli_fetch_array($res)){
             ?>
             <tbody>
               <tr>
@@ -282,10 +282,22 @@ WHERE
               </tr>
               
             </tbody>
-         <?php
+            <?php
+          }
+        }
+      else{
+        echo"
+        <div class='row'>
+        <div class='col-md-6'>
+        <div class='alert alert-danger alert-dismissible'>
+        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+        <h5><i class='icon fas fa-bullhorn'></i> No Results!</h5>
+       There are no exam results in  the database for the selected student currently
+        </div>
+      </div>
+      </div>";
       }
-    }
-     }
+      }
                 ?>
                  </table>
                   </div>

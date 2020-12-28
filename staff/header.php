@@ -77,9 +77,9 @@ include("config.php");
     })">
 <div class="wrapper" id="wrapper">
   <!-- Navbar -->
-  <nav class="main-header navbar nav-flat navbar-expand navbar-info navbar-dark nav-fixed text-sm ">
+  <nav class="main-header navbar nav-flat navbar-expand navbar-info navbar-dark nav-fixed text-sm " id= "top-nav"> 
     <!-- Left navbar links -->
-    <ul class="navbar-nav">
+    <ul class="navbar-nav" >
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
@@ -88,6 +88,9 @@ include("config.php");
       </li>
       <li class="nav-item d-none d-sm-inline-block" id="classAttendanceHome">
         <a href="#" class="nav-link">Class Attendance</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block" >
+        <a href="#" class="nav-link" id="requestLeave">Request leave</a>
       </li>
     </ul>
     <!-- SEARCH FORM -->

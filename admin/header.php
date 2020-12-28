@@ -17,7 +17,7 @@ include("config.php");
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SMS | Dashboard</title>
  <!-- full calendar  -->
- <link rel="stylesheet" href="../plugins/fullcalendar/fullcalendar.css" />
+ <link rel="stylesheet" href="../plugins/fullcalendar/main.css">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -46,12 +46,6 @@ include("config.php");
   <link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
-   <!-- DataTables -->
-   <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-  <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-  <link rel="stylesheet" href="../plugins/datatables/jquery.dataTables.min.css">
-
  
   <link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Bootstrap Color Picker -->
@@ -65,7 +59,11 @@ include("config.php");
  <link rel="stylesheet" href="../plugins/bs-stepper/css/bs-stepper.min.css">
 <!-- ChartJs -->
  <link rel="stylesheet" type="text/css" href="../plugins/chart.js/Chart.min.css">
-
+   <!-- DataTables -->
+   <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables/jquery.dataTables.min.css">
   
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed text-sm" onload= "fetch('index2.php')

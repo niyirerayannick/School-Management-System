@@ -19,100 +19,80 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <div class="card" style="min-height:400px">
-              <div class="card-header">
-                <h3 class="card-title">View List Of Classes</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
               <div class="row">
-              <div class="col-md-1"> </div>
-              <div class="col-md-9">
-            <div class="card mt-2 ml-2">
-            <div class="card-header">
+              <div class="col-md-12">
+              <div class="card">
+              <div class="card-header">
                 <button class="btn btn-info card-title" id="newClass"> <i class="fa fa-plus"></i>  Add New Class</button>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <table id="viewStudehtsTable" class="table table-bordered table-hover">
-                <thead>
-                <?php
-           include("../config.php");
-// Attempt select query execution
-  $sql = "SELECT 
-  class_name,option_name,stream_name,streams.id,abbreviation
-  FROM classes,streams streams LEFT JOIN options on options.id = streams.option_id,sessions 
-  WHERE
-   streams.class_id = classes.id
-   ORDER BY class_name";
-      if($result = mysqli_query($con, $sql)){
-    if(mysqli_num_rows($result) > 0){
-            echo "<tr>";
-                echo "<th>id</th>";
-                echo "<th>Class Name </th>";
-                echo "<th>Combination </th>";
-                echo "<th>Stream Name </th>";
-                echo "<th>Edit</th>";
-                echo "<th>Delete</th>";
-
-            echo "</tr> </thead>";
-        while($row = mysqli_fetch_array($result)){
-            echo "<tr>                   <tbody>
+                <table id="viewClassesTable" class="table table-bordered table-hover">
+                  <thead>
+                  <tr>
+                                              <?php
+                                                 include("../config.php");
+                                                 // Attempt select query execution
+                                                 $sql = "SELECT 
+                                                 class_name,option_name,stream_name,streams.id,abbreviation
+                                                 FROM classes,streams streams LEFT JOIN options on options.id = streams.option_id,sessions 
+                                                 WHERE
+                                                 streams.class_id = classes.id
+                                                 ORDER BY class_name";
+                                              if($result = mysqli_query($con, $sql)){
+                                                   if(mysqli_num_rows($result) > 0){?>
+                                                         <th>id</th>
+                                                         <th>Class Name </th>
+                                                         <th>Combination </th>
+                                                         <th>Stream </th>
+                                                         <th>Edit</th>
+                                                         <th>Delete</th>
+                                                     <?php
+                                                      }}
+            ?>
+                  </tr>
+                  </thead>
+                  <tbody>
+                      <?php
+                  while($row = mysqli_fetch_array($result)){
+            echo "<tr>               
             ";
                 echo "<td>" . $row['id'] . "</td>";
                 echo "<td>" . $row['class_name'] . "</td>";
-                if($row['option_name'] == NULL){
+           if($row['option_name'] == NULL){
                   echo "<td>  - </td>";
                   }else{
                     echo "<td>" . $row['option_name'] . "(" . $row['abbreviation'] . ")</td>";
                   } 
-                 if($row['stream_name'] == NULL){
+                     if($row['stream_name'] == NULL){
                   echo "<td>  - </td>";
                   }else{
                     echo "<td>" . $row['stream_name'] . "</td>";
                   } 
-                echo "<td><button id='updateClass' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
-                echo "<td><button id='deleteClass' class='btn btn-danger btn-xs' value=" . $row['id'] . "><i class='far fa-trash-alt'></i> Delete</button></td>";
-            echo "</tr><tbody>";
+                echo "<td><button id='updateClass' class='btn btn-outline-info btn-xs' value=" . $row['id'] . "><i class='fas fa-pencil-alt'></i> Edit</button></td>";
+                echo "<td><button id='deleteClass' class='btn btn-outline-danger btn-xs' value=" . $row['id'] . "><i class='far fa-trash-alt'></i> Delete</button></td>";
+            echo "</tr>";
         }
-        echo "</table>";
-        // Free result set
-        mysqli_free_result($result);
-    } else{
-        echo "<div class='alert alert-danger' role='alert'>
-        There are no Classes currently in the database!
-      </div>";
-    }
-} else{
-    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
-}
- ?>
-                 
+        ?>
+                  
                   </tbody>
+                  <tfoot>
+                  <tr>
+                                                         <th>id</th>
+                                                         <th>Class Name </th>
+                                                         <th>Combination </th>
+                                                         <th>Stream </th>
+                                                         <th>Edit</th>
+                                                         <th>Delete</th>
+                  </tr>
+                  </tfoot>
                 </table>
               </div>
               <!-- /.card-body -->
-              <div class="card-footer clearfix">
-                <ul class="pagination pagination-sm m-0 float-right">
-                  <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                </ul>
-              </div>
-            </div>
             </div>
             <!-- /.card -->
+            <!-- /.card -->
           </div>
-        </div>
-        <div class='row'>
-            <div class = 'col-md-9'>
-                    
-            </div>
-
         </div>
         <!-- /.row -->
 

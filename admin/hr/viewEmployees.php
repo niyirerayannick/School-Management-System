@@ -34,8 +34,8 @@
               <div class="row">
               <!-- /.card-header -->
               <div class="card-body">
-              <table id="viewStudehtsTable" class="table table-bordered table-hover">
-                <thead>
+              <table id="viewEmployeesTable" class="table table-bordered table-hover">
+                  <thead>
                 <?php
                include '../config.php';
 // Attempt select query execution
@@ -57,9 +57,11 @@
                 echo "<th>Employee Status</th>";
                 echo "<th>Edit</th>";
                 echo "<th> Delete </th>";
-            echo "</tr> </thead>";
+            echo "</tr>
+             </thead>";
         while($row = mysqli_fetch_array($result)){
-            echo "<tr>                   <tbody>
+            echo "<tbody>
+            <tr>                   
             ";
                 echo "<td>" . $row['id'] . "</td>";
                 echo "<td>" . $row['employee_name'] . "</td>";
@@ -90,9 +92,29 @@
                 }
                 echo "<td><button id='updateEmployee' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
                 echo "<td><button id='deleteEmployee' class='btn btn-danger btn-xs' value=" . $row['id'] . ">Delete</button></td>";
-            echo "</tr><tbody>";
+            echo "</tr>
+            </tbody>";
         }
-        echo "</table>";
+        echo "
+        <tfoot>
+        <tr>
+                                               <th>id</th>
+                                               <th>Class Name </th>
+                                               <th>Combination </th>
+                                               <th>Edit</th>
+                                               <th>Delete</th>
+                                               <th>Delete</th>
+                                               <th>Delete</th>
+                                               <th>Delete</th>
+                                               <th>Delete</th>
+                                               <th>Delete</th>
+                                               <th>Delete</th>
+                                               <th>Delete</th>
+                                               <th>Delete</th>
+
+        </tr>
+        </tfoot>
+      </table>";
         // Free result set
         mysqli_free_result($result);
     } else{
@@ -104,29 +126,17 @@
     echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
 }
  ?>
-                 
-                  </tbody>
-                </table>
+                
               </div>
               <!-- /.card-body -->
-              <div class="card-footer clearfix">
-                <ul class="pagination pagination-sm m-0 float-right">
-                  <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                </ul>
+             
               </div>
             </div>
             </div>
             <!-- /.card -->
           </div>
         </div>
-        <div class='row'>
-            <div class = 'col-md-9'>
-                    
-            </div>
+
 
         </div>
         <!-- /.row -->

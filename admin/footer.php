@@ -68,12 +68,10 @@ $.widget.bridge('uibutton', $.ui.button);
 <script src="../plugins/pdfmake/vfs_fonts.js"></script>
 <script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
-<script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>-->
+<script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
  <!-- full calendar -->
  <script src="../plugins/moment/moment.min.js"></script>
-  <script src="../plugins/fullcalendar/fullcalendar.min.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="../dist/js/pages/dashboard.js"></script>
+ <script src="../plugins/fullcalendar/main.js"></script>
 <!-- jQuery -->
 <!-- Select2 -->
 <script src="../plugins/select2/js/select2.full.min.js"></script>
@@ -92,27 +90,16 @@ $.widget.bridge('uibutton', $.ui.button);
 <script src="../plugins/bs-stepper/js/bs-stepper.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../dist/js/demo.js"></script>
 <script src="../plugins/chart.js/Chart.min.js"></script>
 
 <script>
 
   </script>
 <!-- Page specific script -->
-<script>
-new Chart(document.getElementById("chartjs-0"),
-{"type":"line","data":{"labels":["January","February","March","April","May","June","July"],
-"datasets":[{"label":"My First Dataset","data":[65,59,80,81,56,55,40],
-"fill":false,"borderColor":"rgb(75, 192, 192)","lineTension":0.1}]},"options":{}});
-</script></div>
+
 
 <script>
   $(function () {
-    // BS-Stepper Init
-    document.addEventListener('DOMContentLoaded', function () {
-    window.stepper = new Stepper(document.querySelector('.bs-stepper'))
-    });
 
     //Initialize Select2 Elements
     $('.select2').select2()

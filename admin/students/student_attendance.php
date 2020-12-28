@@ -54,7 +54,7 @@ FROM students,classattendance
               <div class="card-body">
                 <div class="d-flex">
                   <p class="d-flex flex-column">
-                    <span>Subject Studied Over Time</span>
+                    <span>N<sup>o</sup> Of Subject Studied Over Time</span>
                   </p>
                   <p class="ml-auto d-flex flex-column text-right">
                     <span class="text-success">

@@ -10,9 +10,12 @@ let contentWrapper = document.querySelector('#content-wrapper'),
  addClass = document.querySelector("#addClass"),
  timetable = document.querySelector("#timeTable");
 
+
+
 navbar.addEventListener("click",function(e){
   let target = e.target.parentNode;
  //console.log(target)
+ 
   switch (target.id) {
     case 'addhostel':
         getContents("hostels/addNewHostel.php");

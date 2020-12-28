@@ -10,6 +10,17 @@ let contentWrapper = document.querySelector('#content-wrapper'),
  addClass = document.querySelector("#addClass"),
  timetable = document.querySelector("#timeTable");
 
+console.log(document.querySelector("#top-nav"));
+
+ document.querySelector("#top-nav").addEventListener("click", e =>{
+  switch(e.target.id){
+    case 'requestLeave':
+      console.log(e.target)
+      getContents("hr/requestLeave.php");
+     break;
+  }
+});
+
 navbar.addEventListener("click",function(e){
   let target = e.target.parentNode;
  //console.log(target)
