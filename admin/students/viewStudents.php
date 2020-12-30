@@ -82,7 +82,25 @@
                 echo "<td>" . $row['id'] . "</td>";
                 echo "<td><button id='viewStudentDetails' class='btn btn-outline-secondary btn-xs' value=" . $row['id'] . ">" . $row['FullName'] . "</td></button>";
                 echo "<td>" . $row['DOB'] . "</td>";
-                echo "<td><img src=" . $row['Photo'] . " class ='img img-thumbnail img-sm'></td>";
+                $photo = $row['Photo'];
+                clearstatcache();
+
+                 if(!file_exists("$photo")){
+                  clearstatcache();
+
+                ?>
+               <td>
+                 <img src="<?php echo htmlentities($row['Photo']) ?>" id='myImg' alt = 'No Photo' class ='img img-thumbnail img-sm'>
+                </td>
+               <?php
+                 }else{
+                  ?>
+                  <td>
+                  <button class='btn btn-secondary btn-sm' > <i class="fas fa-user"></i> </button>
+                   </td>
+                  <?php    
+                 }
+                 
                 echo "<td>" . $row['RegNo'] . "</td>";
                 echo "<td>" . $row['class_name'] . "</td>";
                 if($row['option_name'] == NULL){
@@ -118,17 +136,15 @@
                  
                   </tbody>
                 </table>
+                <!-- The Modal -->
+<div id="myModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+
               </div>
               <!-- /.card-body -->
-              <div class="card-footer clearfix">
-                <ul class="pagination pagination-sm m-0 float-right">
-                  <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                </ul>
-              </div>
             </div>
             </div>
             <!-- /.card -->

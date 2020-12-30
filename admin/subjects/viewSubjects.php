@@ -34,59 +34,55 @@
               <div class="row">
               <!-- /.card-header -->
               <div class="card-body">
-              <table id="viewStudehtsTable" class="table table-bordered table-hover">
+              <table id="viewSubjectsTable" class="table table-bordered table-hover">
                 <thead>
                 <?php
-                $con = mysqli_connect("localhost", "root", "","student_management_system");
- 
-                // Check connection
-                if($con === false){
-                    die("ERROR: Could not connect. " . mysqli_connect_error());
-                } 
-// Attempt select query execution
-  $sql = "SELECT * FROM subjects";
-      if($result = mysqli_query($con, $sql)){
-    if(mysqli_num_rows($result) > 0){
+                include("../config.php");
+                // Attempt select query execution
+                $sql = "SELECT * FROM subjects";
+               if($result = mysqli_query($con, $sql)){
+                 if(mysqli_num_rows($result) > 0){
+                  echo "<tr>";
+                   echo "<th>id</th>";
+                   echo "<th>Subject Name </th>";
+                   echo "<th>Edit </th>";
+                   echo "<th>Delete </th>";
+                  echo "</tr> </thead>
+                  <tbody>";
+                 while($row = mysqli_fetch_array($result)){
+                     echo "<tr>             
+                     ";
+                       echo "<td>" . $row['id'] . "</td>";
+                       echo "<td>" . $row['subject_name'] . "</td>";
+                       echo "<td><button id='updateSubject' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
+                       echo "<td><button id='deleteSubject' class='btn btn-danger btn-sm' value=" . $row['id'] . "><i class='far fa-trash-alt'></i> Delete</button></td>";
+
+                      echo "</tr>";
+                    }
+                  echo "
+                 </tbody>";
+            echo "<tfoot>";
             echo "<tr>";
-                echo "<th>id</th>";
-                echo "<th>Subject Name </th>";
-                echo "<th>Edit </th>";
-                echo "<th>Delete </th>";
-
-            echo "</tr> </thead>";
-        while($row = mysqli_fetch_array($result)){
-            echo "<tr>                   <tbody>
-            ";
-                echo "<td>" . $row['id'] . "</td>";
-                echo "<td>" . $row['subject_name'] . "</td>";
-                echo "<td><button id='updateSubject' class='btn btn-success btn-xs' value=" . $row['id'] . "> Edit</button></td>";
-                echo "<td><button id='deleteSubject' class='btn btn-danger btn-sm' value=" . $row['id'] . "><i class='far fa-trash-alt'></i> Delete</button></td>";
-
-            echo "</tbody></tr>";
-        }
+            echo "<th>id</th>";
+            echo "<th>Subject Name </th>";
+            echo "<th>Edit </th>";
+            echo "<th>Delete </th>";
+            echo "</tr> 
+           </tfoot>
+        </table>";
         // Free result set
         mysqli_free_result($result);
     } else{
         echo "<div class='alert alert-danger' role='alert'>
-        There are no Subjects currently in the database!
+       No recent Book Submission
       </div>";
     }
 } else{
     echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
 }
- ?>    
-                </table>
+ ?>
+                
               </div>
-              <!-- /.card-body 
-              <div class="card-footer clearfix">
-                <ul class="pagination pagination-sm m-0 float-right">
-                  <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                </ul>
-              </div>-->
             </div>
                   </div>
             </div>

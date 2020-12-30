@@ -47,9 +47,6 @@
                                                          <th>Stream </th>
                                                          <th>Edit</th>
                                                          <th>Delete</th>
-                                                     <?php
-                                                      }}
-            ?>
                   </tr>
                   </thead>
                   <tbody>
@@ -73,6 +70,7 @@
                 echo "<td><button id='deleteClass' class='btn btn-outline-danger btn-xs' value=" . $row['id'] . "><i class='far fa-trash-alt'></i> Delete</button></td>";
             echo "</tr>";
         }
+      }}
         ?>
                   
                   </tbody>

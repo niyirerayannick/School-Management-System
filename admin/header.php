@@ -16,8 +16,9 @@ include("config.php");
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SMS | Dashboard</title>
- <!-- full calendar  -->
- <link rel="stylesheet" href="../plugins/fullcalendar/main.css">
+  <link rel="shortcut icon" type="image/jpg" href="../dist/img/favicon.ico"/>
+  <!-- full calendar  -->
+  <link rel="stylesheet" href="../plugins/fullcalendar/main.css">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -57,14 +58,115 @@ include("config.php");
   <link rel="stylesheet" href="../plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
  <!-- BS Stepper -->
  <link rel="stylesheet" href="../plugins/bs-stepper/css/bs-stepper.min.css">
-<!-- ChartJs -->
+ <!-- ChartJs -->
  <link rel="stylesheet" type="text/css" href="../plugins/chart.js/Chart.min.css">
    <!-- DataTables -->
    <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <link rel="stylesheet" href="../plugins/datatables/jquery.dataTables.min.css">
-  
+  <style>
+    /* Background Gradient for Analagous Colors */
+.coral
+{
+    background-color: #FF5078;
+    /* For WebKit (Safari, Chrome, etc) */
+    background: #FF5078 -webkit-gradient(linear, left top, left bottom, from(#f19147), to(#bd7137)) no-repeat;
+    /* Mozilla,Firefox/Gecko */
+    background: #FF5078 -moz-linear-gradient(top, #FF9C50, #FF5078) no-repeat;
+    /* IE 5.5 - 7 */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF9C50, endColorstr=#FF5078) no-repeat;
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF9C50, endColorstr=#FF9C50)" no-repeat;
+}
+
+#myImg {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#myImg:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+/* Caption of Modal Image */
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+
+/* Add Animation */
+.modal-content, #caption {  
+  -webkit-animation-name: zoom;
+  -webkit-animation-duration: 0.6s;
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+  from {-webkit-transform:scale(0)} 
+  to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+  from {transform:scale(0)} 
+  to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 40px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: rgb(196, 40, 40);
+  border-color: rgb(233, 13, 13);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  .modal-content {
+    width: 100%;
+  }
+}
+  </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed text-sm" onload= "fetch('index2.php')
     .then(response => response.text())
@@ -75,7 +177,7 @@ include("config.php");
     })">
 <div class="wrapper" id="wrapper">
   <!-- Navbar -->
-  <nav class="main-header navbar nav-flat navbar-expand navbar-info navbar-dark nav-fixed text-sm ">
+  <nav class="main-header navbar nav-flat navbar-expand navbar-dark nav-fixed text-sm ">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -86,6 +188,9 @@ include("config.php");
       </li>
       <li class="nav-item d-none d-sm-inline-block" id="classAttendanceHome">
         <a href="#" class="nav-link">Class Attendance</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block" id="sms">
+        <a href="#" class="nav-link">SMS</a>
       </li>
     </ul>
     <!-- SEARCH FORM -->
@@ -138,8 +243,8 @@ include("config.php");
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link bg-secondary">
-      <img src="../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">SMS</span>
+      <img src="../dist/img/bigLogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">School Management System</span>
     </a>
 
     <!-- Sidebar -->
@@ -150,7 +255,19 @@ include("config.php");
           <img src="../dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Irakoze Moise   |   Admin</a>
+          <a href="#" class="d-block">
+          <?php
+ // Attempt select query execution
+   $sql = "SELECT * FROM users where member_name like '$_SESSION[username]'";
+   if($result = mysqli_query($con, $sql)){
+   $row = mysqli_fetch_array($result);
+   echo $row['member_name'];
+} else{
+    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+}
+
+?>   
+          |   Admin</a>
         </div>
       </div>
 
@@ -160,7 +277,7 @@ include("config.php");
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open" id="dashboard">
-            <a href="#" class="nav-link bg-olive active">
+            <a href="#" class="nav-link coral active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -185,7 +302,7 @@ include("config.php");
     echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
 }
 ?>
-                </span>
+    </span>
               </p>
             </a>
             <ul class="nav nav-treeview">
@@ -548,7 +665,7 @@ include("config.php");
               
 
               <div class="overlay light hidden" >  
-                 <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                 <i class="fas fa-4x fa-atom fa-spin"></i>
               </div>
              </div>
             <!-- /.card -->

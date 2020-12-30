@@ -8,7 +8,7 @@ if($_POST["formId"] == 'addNewStudent'){
   //$errorimg = $_FILES["image"][“error”];// stores any error code resulting from the transfer
   
   $valid_extensions = array('jpeg', 'jpg', 'png', 'gif', 'bmp' , 'pdf' , 'doc' , 'ppt'); // valid extensions
-  $path = '../../img/'; // upload directory
+  $path = '../../dist/img/'; // upload directory
   if(!empty($_POST['fullName']) || !empty($_POST['gender']) || $_FILES['image'])
   {
   $img = $_FILES['image']['name'];
@@ -16,15 +16,16 @@ if($_POST["formId"] == 'addNewStudent'){
   // get uploaded file's extension
   $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
   // can upload same image using rand function
-  $final_image = rand(1000,1000000).$img;
+  $final_image =$img;
   // check's valid format
   if(in_array($ext, $valid_extensions)) 
   { 
   $path = $path.strtolower($final_image); 
+  $pathInDatabase = '../dist/img/'.strtolower($final_image); 
   if(move_uploaded_file($tmp,$path)) 
    {
   addNewStudent($_POST['fullName'],$_POST['studentClass'],$_POST['gender'],'1999-11-01',$_POST['academicYear'],$_POST['RegNo'],
-  $_POST['studentStream'],$_POST['studentHostel'],$_POST['studentCategory'],$path,$_POST['sibling'],$_POST['parent']);
+  $_POST['studentStream'],$_POST['studentHostel'],$_POST['studentCategory'],$pathInDatabase,$_POST['sibling'],$_POST['parent']);
    }
   }
   else{
@@ -126,9 +127,7 @@ function viewStudentDetails($id){
             <div class="card card-primary card-outline">
               <div class="card-body box-profile">
                 <div class="text-center">
-                  <img class="profile-user-img img-fluid img-circle"
-                       src="../dist/img/avatar.png"
-                       alt="User profile picture">
+                <img src="<?php echo htmlentities($row['Photo']) ?>" id='myImg'  alt="User profile picture" class ='profile-user-img img-fluid img-circle'>   
                 </div>
 
                 <h3 class="profile-username text-center"><?php echo $row["FullName"] ?></h3>
@@ -184,6 +183,12 @@ function viewStudentDetails($id){
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
+                <!-- The Modal -->
+                <div id="myModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
 
 
 
@@ -194,7 +199,10 @@ function viewStudentDetails($id){
             <div class="card card-primary card-outline">
               <div class="card-header p-2">
                 <ul class="nav nav-pills">
-                  <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab" id= "attendance"> Class Attendance</a></li>
+                 
+                 <!--  This allows the tab to fetch chart from student attendance
+                   <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab" id= "attendance"> Class Attendance</a></li> -->
+                  <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab"> Class Attendance</a></li>
                   <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Exam Results</a></li>
                   <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Fees Collection</a></li>
                 </ul>
@@ -203,11 +211,105 @@ function viewStudentDetails($id){
                 <div class="tab-content">
                   <div class="active tab-pane" id="activity" style="min-height:550px">
                     <div class="card-body">
-                <div class="chart" id='studentAttendance'>
+                       <div class="chart" id='studentAttendance'>
+                             <?php
+                              //$sql = mysqli_query($con,"SELECT students.id FROM  students WHERE students.FullName LIKE '$id'");
+                              //$row2 =mysqli_fetch_row($sql);
+                              //$student_id = $row2[0];
+                               if($ret=mysqli_query($con,"SELECT 
+                                      FullName, Date, count(classattendance.Attended) as N_O_attendance 
+                                      FROM students,classattendance
+                                       WHERE 
+                                       students.id =$id and classattendance.student_id = $id and classattendance.attended = 1 group by Date"))
+                                 {
+                                      if(mysqli_num_rows($ret) > 0){
+                                          $row=mysqli_fetch_array($ret);
+                                           //converting php data to json 
+                                           ?> 
+                            <select id="labels">
+                                          <?php
+                                          do {
+                                         echo "<option class='date' value =" . $row['Date']  . ">" . $row['Date']  . "</option>";
+                                         echo "<option class = 'number_of_attendance' value =" . $row['N_O_attendance']  . ">" . $row['N_O_attendance']  . "</option>";
+                                        }
+                                       while($row = mysqli_fetch_array($ret))
+                                          ?>
+                             </select> 
+                                <?php
+                                    $row=mysqli_fetch_array($ret);
+                                   ?>
+                                    <!--<div id="view"><canvas id="myChart"></canvas></div> -->
+                                 <div class="row" id ="myChart">
+                                    <div class="col-12">
+                                      <div class="card" >
+                                          <div class="card-header border-0">
+                                               <div class="d-flex justify-content-between">
+                  <h3 class="card-title text-bold text-lg">
+                    <?php 
+                    $ret=mysqli_query($con,"SELECT 
+                    FullName, Date, count(classattendance.Attended) as N_O_attendance 
+                    FROM students,classattendance
+                     WHERE 
+                     students.id =$id and classattendance.student_id = 1 and classattendance.attended = 1 group by Date");
+                         $row = mysqli_fetch_array($ret);
+                    echo $row['FullName'] 
+                      ?>
+                  </h3>
+                  <a href="javascript:void(0);">View Report</a>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="d-flex">
+                  <p class="d-flex flex-column">
+                    <span>N<sup>o</sup> Of Subject Studied Over Time</span>
+                  </p>
+                  <p class="ml-auto d-flex flex-column text-right">
+                    <span class="text-success">
+                      <i class="fas fa-arrow-up"></i> 12.5%
+                    </span>
+                    <span class="text-muted">Since last Term</span>
+                  </p>
+                </div>
+                <!-- /.d-flex -->
 
+                <div class="position-relative mb-4">
+                  <canvas id="visitors-chart" height="290"></canvas>
+                </div>
+
+                <div class="d-flex flex-row justify-content-end">
+                  <span class="mr-2">
+                    <i class="fas fa-square text-primary"></i> This Week
+                  </span>
+
+                  <span>
+                    <i class="fas fa-square text-gray"></i> Last Week
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  <?php
+   }
+   else{
+?>
+    <div class='row'>
+      <div class='col-md-6'>
+        <div class='alert alert-outline alert-danger alert-dismissible'>
+            <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+            <h5><i class='icon fas fa-bullhorn'></i> No Chart Analytics!</h5>
+            There are Chart Analystics in  the database for the selected student currently
+         </div>
+      </div>
+   </div>
+<?php
+ }
+  }
+?>
               </div>
               </div>
                   </div>
+
 
                   <!-- /.tab-pane -->
                   <div class="tab-pane" id="timeline" style="min-height:550px">
@@ -218,12 +320,12 @@ examresults.id, teacher_name,Marks,subject_name
 FROM examresults,students,teachers,subjects,teacher_subjects 
 WHERE
  examresults.student_id = students.id and subjects.id = teacher_subjects.subject_id and teachers.id = teacher_subjects.teacher_id 
- and examresults.subject_id = subjects.id and examresults.student_id = '$id'";
+ and examresults.subject_id = subjects.id and examresults.student_id = '$id'  GROUP BY teacher_subjects.subject_id";
 
      if($res = mysqli_query($con,$sql)){
        if(mysqli_num_rows($res) > 0){
            ?>
-            <table class='table table-striped'>
+            <table id = "examResultStudent" class='table table-stripped'>
             <thead>
               <tr>
                 <th style='width: 10px'>#</th>
@@ -237,7 +339,7 @@ WHERE
             ?>
             <tbody>
               <tr>
-                <td>1.</td>
+                <td><?php echo $row["id"];  ?></td>
                 <td><?php echo $row["subject_name"];  ?></td>
                 <td>
                   <?php echo $row["teacher_name"];  ?>
@@ -280,17 +382,27 @@ WHERE
                 ?>
                 </td>
               </tr>
-              
-            </tbody>
+             
             <?php
           }
+          ?>
+                 </tbody>
+              <tfoot>
+              <tr>
+                <th style='width: 10px'>#</th>
+                <th>Subject</th>
+                <th>Teacher</th>
+                <th >Marks</th>
+              </tr>
+            </tfoot>
+                 </table>
+          <?php
         }
       else{
         echo"
         <div class='row'>
         <div class='col-md-6'>
-        <div class='alert alert-danger alert-dismissible'>
-        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+        <div class='callout callout-danger '>
         <h5><i class='icon fas fa-bullhorn'></i> No Results!</h5>
        There are no exam results in  the database for the selected student currently
         </div>
@@ -299,7 +411,7 @@ WHERE
       }
       }
                 ?>
-                 </table>
+
                   </div>
                   <!-- /.tab-pane -->
 
@@ -308,7 +420,7 @@ WHERE
                   <div class="tab-pane" id="settings" style="min-height:550px">
                   <?php
 include("../config.php");
-$sql = "SELECT * FROM fees_collection,students where fees_collection.student_id = students.id
+$sql = "SELECT * FROM fees_collection,students where fees_collection.student_id = students.id AND students.id = '$id'
 ";
 
      if($res = mysqli_query($con,$sql)){
@@ -413,16 +525,16 @@ function selectUpdateStudent($id){
                 <div class='container-fluid'>
                   <div class='row'>
                     <div class='col-12'>
-                      <div class='card'>
+                      <div class='card card-outline card-primary '>
                         <div class='card-header'>
-                          <h3 class='card-title'>Add New Student</h3>
+                          <h3 class='card-title'>Edit Student Info</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class='card-body table-responsive p-0'>
                         <div class='row'>
                      <div class='col-md-1'></div>
                         <div class='col-md-9'>
-                      <div class='card mt-2 ml-2'>
+                      <div class='cardmt-2 ml-2'>
                         <!-- /.card-header -->
                         <div class='card-body'>
                       <!-- general form elements -->

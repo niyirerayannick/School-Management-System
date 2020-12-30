@@ -110,8 +110,7 @@ function viewAllStudents(){
         let parser = new DOMParser();
         let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
         contentWrapper.innerHTML = doc.innerHTML;
-          $('#myTable').DataTable();
-  })
+ })
   }
   
 function  viewHighperformingStudents(){
@@ -133,24 +132,99 @@ function viewStudentDetails(value,studentId){
   },  function(data){
     // Display the returned data in browser
    if(data == 1){
-          
-    contentWrapper.innerHTML = data;
-    var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
-    var lineChartOptions = $.extend(true, {}, areaChartOptions)
-    var lineChartData = $.extend(true, {}, areaChartData)
-    lineChartData.datasets[0].fill = false;
-    lineChartData.datasets[1].fill = false;
-    lineChartOptions.datasetFill = false
-
-    var lineChart = new Chart(lineChartCanvas, {
-      type: 'line',
-      data: lineChartData,
-      options: lineChartOptions
-    })
-
-      //viewAllStudents();
+  //viewAllStudents();
    }else {
      contentWrapper.innerHTML = data;
+     let doc = document.querySelector('#myChart');
+     let doc2 = document.querySelector('#labels');
+     let doc3 = document.querySelector('#data');
+    
+     document.getElementById("studentAttendance").innerHTML = doc.innerHTML;
+    //console.log(doc2.childNodes)
+     let labels = [];
+     let mainData = [];
+     for(index = 1 ; index < doc2.childNodes.length - 1; index++){
+ 
+       if(doc2.childNodes[index].className == 'number_of_attendance'){
+          mainData.push(doc2.childNodes[index].innerHTML);
+            }
+       else{
+         labels.push(doc2.childNodes[index].innerHTML);
+       }
+     }
+        // console.log(mainData)
+       //  console.log(labels)
+ 
+ 
+     contentWrapper.innerHTML = data;
+     $(function () {
+       
+       var ticksStyle = {
+         fontColor: '#495057',
+         fontStyle: 'bold'
+       }
+     
+       var mode = 'index'
+       var intersect = false
+ 
+       var $visitorsChart = $('#visitors-chart')
+       // eslint-disable-next-line no-unused-vars
+       var visitorsChart = new Chart($visitorsChart, {
+         data: {
+           labels: labels,
+           datasets: [{
+             type: 'line',
+             data: mainData,
+             backgroundColor: 'transparent',
+             borderColor: '#007bff',
+             pointBorderColor: '#007bff',
+             pointBackgroundColor: '#007bff',
+             fill: false,
+             pointHoverBackgroundColor: '#007bff',
+             // pointHoverBorderColor    : '#007bff'
+           }]
+         },
+         options: {
+           maintainAspectRatio: false,
+           tooltips: {
+             mode: mode,
+             intersect: intersect
+           },
+           hover: {
+             mode: mode,
+             intersect: intersect
+           },
+           legend: {
+             display: false
+           },
+           scales: {
+             yAxes: [{
+               // display: false,
+               gridLines: {
+                 display: true,
+                 lineWidth: '4px',
+                 color: 'rgba(0, 0, 0, .2)',
+                 zeroLineColor: 'transparent'
+               },
+               ticks: $.extend({
+                 beginAtZero: true,
+                 suggestedMax: 8
+               }, ticksStyle)
+             }],
+             xAxes: [{
+               display: true,
+               gridLines: {
+                 display: true,
+                 
+               },
+               ticks: ticksStyle
+             }]
+           }
+         }
+       })      
+     
+ })
+   
    }
 });
 }
@@ -163,6 +237,7 @@ function viewStudentDetails(value,studentId){
   "teachers/viewTeachers.php"
 function getAddNewTeacher(){
   getContents("teachers/addTeacher.php");
+
   }
 
 
@@ -177,9 +252,8 @@ function getAddNewTeacher(){
      $.post("teachers/teacher-dm.php", formValues, function(data){
          // Display the returned data in browser
          //console.log(formValues);
-         contentWrapper.innerHTML = data;
-
-        if(data == 1){
+        console.log(data)
+        if(data == 1111){
                
          var Toast = Swal.mixin({
            toast: true,
@@ -468,8 +542,8 @@ function getStudentAttendance(){
           labels.push(doc2.childNodes[index].innerHTML);
         }
       }
-          console.log(mainData)
-          console.log(labels)
+         // console.log(mainData)
+        //  console.log(labels)
 
 
       $(function () {
@@ -616,9 +690,16 @@ function viewAllHostels(){
       let parser = new DOMParser();
       let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
       contentWrapper.innerHTML = doc.innerHTML;
+      //initials datatables
+      $(function () {
+        $("#viewHostelTable").DataTable({
+          "responsive": true, "lengthChange": false, "autoWidth": false,
+          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#viewHostelTable_wrapper .col-md-6:eq(0)');
+    
+      });
   })
 }
-
 
 function getAddHostel(){
   fetch('hostels/addNewHostel.php')
@@ -984,7 +1065,7 @@ function getCalendar(){
 
  // initialize the external events
  // -----------------------------------------------------------------
-
+//our whole calendar
  var calendar = new Calendar(calendarEl, {
    headerToolbar: {
      left  : 'prev,next today',
@@ -992,58 +1073,140 @@ function getCalendar(){
      right : 'dayGridMonth,timeGridWeek,timeGridDay'
    },
    themeSystem: 'bootstrap',
-   events: 'loadKevin.php',
+   eventSources: [
+    // the file where the events will be fetched from
+    {
+      url: 'loadKevin.php',
+      success: function(data) {
+       console.log(data);
+      },
+      color: 'yellow',   // a non-ajax option
+      textColor: 'black' // a non-ajax option
+    }
+  ]  ,
+
    selectable:true,
    editable  : true,
+//prompt a user to input new event when a certain date is clicked
+   select: function(start, end,events)
+   {
 
-   eventResize:function(event)
+    var title = prompt("Enter Event Title");
+    if(title)
+    {
+      //console.log(start.end);
+
+     var startTime = calendar.formatDate(start.start, {
+      year: 'numeric',
+      month: 'long',
+      day: '2-digit',
+      hour:'2-digit',
+      minute: '2-digit',
+      second:'2-digit'
+    });
+     var end = calendar.formatDate(start.end, {
+            year: 'numeric',
+            month: 'long',
+            day: '2-digit',
+            hour:'2-digit',
+            minute: '2-digit',
+            second:'2-digit'
+          });
+          //console.log(`${start} and end is ${end}`)
+
+     $.ajax({
+      url:"insertKevin.php",
+      type:"POST",
+      data:{title:title, start:startTime, end:end},
+      success:function(data)
+      {
+        calendar.refetchEvents();
+        alert("School Event Added Successfully");
+      }
+     })
+    }
+   },
+
+
+   eventResize:function(e)
           {
-           var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-           var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-           var title = event.title;
-           var id = event.id;
+          //  console.log(e.event.start);
+           var start = calendar.formatDate(e.event.start, {
+            year: 'numeric',
+            month: 'long',
+            day: '2-digit',
+            hour:'2-digit',
+            minute: '2-digit',
+            second:'2-digit'
+          });
+           console.log(start);
+           var end = calendar.formatDate(e.event.end, {
+            year: 'numeric',
+            month: 'long',
+            day: '2-digit',
+            hour:'2-digit',
+            minute: '2-digit',
+            second:'2-digit'
+          });
+           var title = e.event.title;
+           var id = e.event.id;
            $.ajax({
             url:"updateKevin.php",
             type:"POST",
             data:{title:title, start:start, end:end, id:id},
             success:function(){
-             calendar.fullCalendar('refetchEvents');
-             alert('Event Update');
+              calendar.refetchEvents()
+              alert('Event Update');
             }
            })
           },
 
-   eventDrop:function(event)
+   eventDrop:function(e)
    {
-    var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-    var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-    var title = event.title;
-    var id = event.id;
-    $.ajax({
-     url:"updateKevin.php",
-     type:"POST",
-     data:{title:title, start:start, end:end, id:id},
-     success:function()
-     {
-      calendar.fullCalendar('refetchEvents');
-      alert("Event Updated");
-     }
+    //  console.log(e.event.start);
+     var start = calendar.formatDate(e.event.start, {
+      year: 'numeric',
+      month: 'long',
+      day: '2-digit',
+      hour:'2-digit',
+      minute: '2-digit',
+      second:'2-digit'
     });
-   },
+     console.log(start);
+     var end = calendar.formatDate(e.event.end, {
+      year: 'numeric',
+      month: 'long',
+      day: '2-digit',
+      hour:'2-digit',
+      minute: '2-digit',
+      second:'2-digit'
+    });
+     var title = e.event.title;
+     var id = e.event.id;
+     $.ajax({
+      url:"updateKevin.php",
+      type:"POST",
+      data:{title:title, start:start, end:end, id:id},
+      success:function(){
+        calendar.refetchEvents()
+        alert('Event Update');
+      }
+     })
+    },
    
-   eventClick:function(event)
+   eventClick:function(e)
    {
     if(confirm("Are you sure you want to remove it?"))
     {
-     var id = event.id;
-     console.log(id)
+     var id = e.event.id;
+     console.log(id);
      $.ajax({
       url:"deleteKevin.php",
       type:"POST",
-      data: "&id=" + event.id,
+      data: "&id=" + id,
       success: function (response) {
                        if(parseInt(response) > 0) {
-                           $('#calendar').fullCalendar('removeEvents', event.id);
+                           $('#calendar').fullCalendar('removeEvents', id);
                            displayMessage("Deleted Successfully");
                        }
                    }
@@ -1154,7 +1317,6 @@ function getExamCategories(){
   })
 }
 
-
 function viewBookSubmission(){
   fetch("library/viewBookSubmission.php")
   .then(response => response.text())
@@ -1162,6 +1324,13 @@ function viewBookSubmission(){
       let parser = new DOMParser();
       let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
       contentWrapper.innerHTML = doc.innerHTML;
+      $(function () {
+        $("#viewBookSubmissionTable").DataTable({
+          "responsive": true, "lengthChange": false, "autoWidth": false,
+          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#viewBookSubmissionTable_wrapper .col-md-6:eq(0)');
+    
+      });
   })
 }
 
@@ -1190,13 +1359,13 @@ function getLibraryStatus(){
       let parser = new DOMParser();
       let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
       contentWrapper.innerHTML = doc.innerHTML;
-      //Initialize Select2 Elements
-   $('.select2').select2()
-    
-   //Initialize Select2 Elements
-   $('.select2bs4').select2({
-     theme: 'bootstrap4'
-   })
+      //Initialize Datables
+      $(function () {
+        $("#viewLibraryStatusTable").DataTable({
+          "responsive": true, "lengthChange": false, "autoWidth": false,
+          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#viewLibraryStatus_wrapper .col-md-6:eq(0)');
+      });
   })
    
 }
@@ -1509,6 +1678,15 @@ function viewSubjects(){
       let parser = new DOMParser();
       let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
       contentWrapper.innerHTML = doc.innerHTML;
+      $(() => {
+        $("#viewSubjectsTable").DataTable({
+           "responsive": true,
+           "lengthChange": false, 
+           "autoWidth": false,
+           "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#viewSubjectsTable_wrapper .col-md-6:eq(0)');
+    
+      });
   })
 }
 

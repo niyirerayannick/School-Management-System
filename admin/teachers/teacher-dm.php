@@ -27,6 +27,16 @@ if($_POST["formId"] == 'addNewTeacher'){
     
   addNewTeacher($_POST['teacher_name'],$_POST['phone'],$_POST['email'],$_POST['martial_status'],$_POST['nationality'],$_POST['qualification'],
   $_POST['staff'],$_POST['responsability'],$_POST['gender'],$_POST['DOB'],$_POST['subject']);
+
+  //add Teacher Subjects
+  if(isset($_POST['subject']))
+{
+  $checkBox = $_POST['subject'];
+  $subjects = [];
+  foreach($checkBox as $sub){
+      array_push($subjects,$sub);
+  }
+}
    /*}
   }
   else{
@@ -55,7 +65,12 @@ function addNewTeacher($name,$phone,$email,$martial_status,$nationality,$qualifi
         (NULL, '$name', '$dob', '$phone', '$email', '$nationality', '$martial_status', '2020-12-01', '$responsability ', '$gender', 'bachelors of education', '$staff');";
     
         if($res = mysqli_query($con,$sql)){
-            echo $subject;
+          $last_insertedTeacher_id = mysqli_insert_id($con);
+          foreach ($subject as $value) {
+             $insertTeacherSubject = "INSERT INTO teacher_subjects ( `teacher_id`,`subject_id`) VALUES ('$last_insertedTeacher_id','$value')";
+                  $res2=mysqli_query($con,$insertTeacherSubject)?1:0;
+                  echo $res2;
+          }
           }
          else{
             echo "<div class='alert alert-danger' role='alert'>

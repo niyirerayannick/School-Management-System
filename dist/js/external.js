@@ -10,7 +10,19 @@ let contentWrapper = document.querySelector('#content-wrapper'),
  addClass = document.querySelector("#addClass"),
  timetable = document.querySelector("#timeTable");
 
+ const navIds = {
+  student: ['grape', 'plum'],
+  hostel: ['addhostel', 'viewHostels'],
+  teacher: ['banana', 'pineapple'],
+  library: ['grape', 'plum'],
+  class: ['grape', 'plum'],
+  library: ['grape', 'plum'],
+  bank: ['grape', 'plum'],
+  hr: ['grape', 'plum'],
+  fee:['fee1','fees2'],
+  subject:['fee1','fees2']
 
+};
 
 navbar.addEventListener("click",function(e){
   let target = e.target.parentNode;
@@ -21,11 +33,11 @@ navbar.addEventListener("click",function(e){
         getContents("hostels/addNewHostel.php");
       break;
     case 'viewHostels':
-      getContents("hostels/viewHostels.php");
+      viewAllHostels();
       break;
     case 'libraryStatus':
-      getContents("library/libraryStatus.php");
-      break;
+      getLibraryStatus();
+    break;
     case 'calendar':
       getContents("loadKevin.php");
       break;
@@ -45,8 +57,8 @@ navbar.addEventListener("click",function(e){
       getContents("exam/viewExamCategories.php"); 
       break;
     case 'viewBookSubmission':
-        getContents("library/viewBookSubmission.php");
-      break;
+      viewBookSubmission();
+    break;
     case 'lendNewBook':
       getContents("library/lendNewBook.php");
       break;
@@ -63,7 +75,7 @@ navbar.addEventListener("click",function(e){
       getContents("subjects/addSubject.php"); 
       break;
     case  'viewSubjects':
-      getContents("subjects/viewSubjects.php");
+      viewSubjects();
       break;
     case  'recentFeesCollection':
       getContents("school-fees/viewFeesCollection.php");
@@ -95,7 +107,28 @@ contentWrapper.addEventListener('click', function(e) {
 	if(e.target.id == 'viewEvent') {
 		getCalendar();
     }
-  
+
+    //displaying image as a modal when a user clicks on it
+    else if(e.target.id == 'myImg') {
+      // Get the modal
+      var modal = document.getElementById("myModal");
+      var modalImg = document.getElementById("img01");
+
+      modal.style.display = "block";
+      modalImg.src = e.target.src;
+
+       // Get the image and insert it inside the modal - use its "alt" text as a caption
+      var img = document.getElementById("myImg");
+      var modalImg = document.getElementById("img01");
+      var captionText = document.getElementById("caption");
+      }
+
+     else if(e.target.className == 'close'){
+     // When the user clicks on <span> (x), close the modal
+      var modal = document.getElementById("myModal");
+       modal.style.display = "none";
+     }
+
     else if(e.target.id == 'attendance') {
          getStudentAttendance();
     }

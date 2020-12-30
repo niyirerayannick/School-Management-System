@@ -104,7 +104,7 @@
                     
                             echo"
                             <div class='" . $color . " d-inline'>
-                            <input type='checkbox' id= " . $row['id'] . " name='subject' value= " . $row['id'] . ">
+                            <input type='checkbox' id= " . $row['id'] . " name='subject[]' value= " . $row['id'] . ">
                             <label for= " . $row['id'] . "> " . $row['subject_name'] . "
                             </label>
                           </div>";

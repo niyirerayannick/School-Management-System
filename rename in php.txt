@@ -1,0 +1,1 @@
+rename ("/folder/file.ext", "/folder/newfile.ext");

@@ -1077,8 +1077,8 @@ function getAddStudent(){
           {
            if(confirm("Are you sure you want to remove it?"))
            {
-            var id = event.id;
-            console.log(id)
+            var id = event;
+            alert('Event: ' + id.event.title);
             $.ajax({
              url:"deleteKevin.php",
              type:"POST",
