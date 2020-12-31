@@ -153,7 +153,12 @@ $teacher_id = $_SESSION["user_id"];
               <?php
               
 // Attempt select query execution
-  $sql = "SELECT * FROM fees_collection limit 0,9";
+  $sql = "SELECT 
+  students.FullName,class_name,option_name,payment_date,amount_paid,Year,Term,fees_collection.id,students.id as student_id
+  FROM fees_collection,students,classes,streams streams LEFT JOIN options on options.id = streams.option_id,sessions 
+  WHERE
+   fees_collection.student_id = students.id AND students.stream_id = streams.id AND streams.class_id = classes.id
+   ORDER BY class_name limit 0,9";
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";
@@ -167,7 +172,7 @@ $teacher_id = $_SESSION["user_id"];
         while($row = mysqli_fetch_array($result)){
             echo "<tr>                   <tbody>
             ";
-                echo "<td>" . $row['student_id'] . "</td>";
+                echo "<td>" . $row['FullName'] . "</td>";
                // echo "<td> " . $row[''] . "</td>";
                 echo "<td> " . $row['amount_paid'] . "</td>";
                 echo "<td> " . $row['payment_date'] . "</td>";

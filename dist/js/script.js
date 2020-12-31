@@ -341,6 +341,26 @@ function getAddClass(){
           })
         }
 
+ function addOption(){
+    $('form').submit(function(e){
+      e.preventDefault();
+        let formData = $(this).serialize();
+        $.post('class/class-dm.php',formData, data => {
+          var Toast = Swal.mixin({
+            toast: true,
+             position: 'top',
+            showConfirmButton: false,
+            timer: 3000
+              });
+                    Toast.fire({
+            icon: 'success',
+            title: 'Option Added Successfully'
+                });
+            viewClassStream()      
+          })
+      })
+ }
+
   function updateClass(){
     $("form").submit(function(event){
       // Stop form from submitting normally

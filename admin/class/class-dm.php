@@ -17,10 +17,24 @@ include("../config.php");
   }
   elseif($_POST["formId"] == 'updateClass'){
     updateClass($_POST["stream_name"],$_POST["id"]);
-
   }
 
-  
+  elseif($_POST["formId"] == 'addOption'){
+    addOption($_POST["option_name"],$_POST["abbreviation"]);
+  }
+
+  function addOption($name,$abbreviation){
+    include("../config.php");
+    
+        if(mysqli_query($con,"INSERT INTO `options` (`id`, `option_name`,`abbreviation`) VALUES (NULL, '$name','$abbreviation')")){
+            echo "1";
+          }
+         else{
+          echo("Error description: " . mysqli_error($con));
+
+         }
+  }
+
   function addNewClass($var,$option,$stream){
     include("../config.php");
     //check whether options select is set

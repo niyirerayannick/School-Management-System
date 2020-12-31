@@ -424,6 +424,7 @@ $sql = "SELECT * FROM fees_collection,students where fees_collection.student_id 
 ";
 
      if($res = mysqli_query($con,$sql)){
+       if(mysqli_num_rows($res) > 0){
         ?>
             <table class='table table-hover table-bordered'>
             <thead>
@@ -437,7 +438,7 @@ $sql = "SELECT * FROM fees_collection,students where fees_collection.student_id 
               </tr>
             </thead>
             <?php
-      while($row = mysqli_fetch_array($res)){
+       while($row = mysqli_fetch_array($res)){
             ?>
             <tbody>
               <tr>
@@ -456,6 +457,18 @@ $sql = "SELECT * FROM fees_collection,students where fees_collection.student_id 
               
             </tbody>
           <?php
+       }
+      }
+      else{
+        echo"
+        <div class='row'>
+        <div class='col-md-6'>
+        <div class='callout callout-warning '>
+        <h5><i class='icon fas fa-exclamation-triangle'></i> No Fees Collection Records!</h5>
+       There are no Fees Collection Records in  the database for the selected student currently
+        </div>
+      </div>
+      </div>";
       }
      }
                 ?></table>

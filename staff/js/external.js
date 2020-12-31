@@ -13,10 +13,13 @@ let contentWrapper = document.querySelector('#content-wrapper'),
 console.log(document.querySelector("#top-nav"));
 
  document.querySelector("#top-nav").addEventListener("click", e =>{
+  // console.log(e.target.id)
   switch(e.target.id){
     case 'requestLeave':
-      console.log(e.target)
       getContents("hr/requestLeave.php");
+     break;
+     case 'classAttendanceHome':
+      getContents("class/makeClassAttendance.php");
      break;
   }
 });
@@ -82,7 +85,14 @@ contentWrapper.addEventListener('click', function(e) {
 	if(e.target.id == 'viewEvent') {
 		getCalendar();
     }
-  
+    else if(e.target.id == 'checkAll'){
+      let checkbox = document.querySelectorAll("input[type ='checkbox']");
+      checkbox.forEach(box => box.checked = true)
+        }
+    else if(e.target.id == 'unCheckAll'){
+      let checkbox = document.querySelectorAll("input[type ='checkbox']");
+      checkbox.forEach(box => box.checked = false)
+        }
     else if(e.target.id == 'listStudents') {
 		viewAllStudents();
     }

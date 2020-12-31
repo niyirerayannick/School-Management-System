@@ -33,14 +33,17 @@
               <table id="viewStudehtsTable" class="table table-bordered table-hover">
                 <thead>
                 <?php
-                $con = mysqli_connect("localhost", "root", "","student_management_system");
- 
-                // Check connection
-                if($con === false){
-                    die("ERROR: Could not connect. " . mysqli_connect_error());
-                } 
+include('../config.php');
 // Attempt select query execution
-  $sql = "SELECT * FROM students,examresults WHERE students.id = examresults.student and marks > 50";
+  $sql = "SELECT
+  students.FullName,RegNo,examresults.id, subject_name,Marks,class_name,Year,stream_name,Term,category_name,option_name,
+  students.id as student_id
+   FROM 
+  examresults,students,classes,subjects,streams streams LEFT JOIN options on options.id = streams.option_id,sessions,exam_categories
+  WHERE
+  examresults.student_id = students.id AND students.stream_id = streams.id AND streams.class_id = classes.id
+  AND subjects.id = examresults.subject_id AND
+  examresults.exam_category = exam_categories.id AND examresults.marks > 60 ORDER BY class_name ";
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";

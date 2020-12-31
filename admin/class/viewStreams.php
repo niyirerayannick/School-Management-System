@@ -29,8 +29,10 @@
               <div class="card-body table-responsive p-0">
               <div class="row">
               <!-- /.card-header -->
-                  <div class="col-md-4"> 
+                  <div class="col-md-3"> 
                    <div class="card-body" style='min-height:550px'>
+                   <div class="card card-info border-2" style='min-height:378px'>
+
                            <div class="card-header border-0"><h3 class="card-title">Add New Combination</h3></div>
                               <!-- /.card-header -->
                            <div class="card-body">
@@ -38,15 +40,15 @@
                               <!-- form start -->
                                 <form>
                                      <div class="form-group">
-                                       <label for="exampleInputEmail1">Name</label>
-                                       <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Name of The Combination">
+                                       <label for="exampleInputEmail1">Combination Name</label>
+                                       <input type="text" name="option_name" class="form-control" id="exampleInputEmail1" placeholder="Enter Name of The Combination">
                                      </div>
                                      <div class="form-group">
                                        <label for="exampleInputPassword1">Abbreviation</label>
-                                       <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Abbreviation">
+                                       <input type="text" name ="abbreviation" class="form-control" id="exampleInputPassword1" placeholder="Abbreviation">
                                      </div>
-
-                                    <button type="submit" class="btn btn-outline-primary btn-block">Submit</button>
+                                     <input type="hidden" name ="formId" value='addOption'>
+                                    <button type="submit" class="btn btn-outline-primary btn-block" id='addOptionBtn'>Submit</button>
                                   </form>
                              </div>
                              <!-- /.card-body -->
@@ -54,8 +56,9 @@
                            <!-- /.card -->
 
                     </div>
+                    </div>
                  </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div class="card-body" style='min-height:550px'>
                         <div class="card card-primary mt-2">
                              <div class="card-header"><h3 class="card-title"> Combinations Offered By Our School</h3></div>
@@ -67,7 +70,7 @@
                                     include("../config.php");
                                     // Attempt select query execution
                                     $sql = "SELECT * FROM options
-                                    GROUP BY option_name
+                                    GROUP BY option_name ORDER BY id
                                    ";
                                   if($result = mysqli_query($con, $sql)){
                                      if(mysqli_num_rows($result) > 0){

@@ -305,7 +305,7 @@ include("config.php");
     </span>
               </p>
             </a>
-            <ul class="nav nav-treeview">
+            <ul class="nav nav-treeview" id='student'>
               <li class="nav-item" id='addStudent'>
                 <a href="#" class="nav-link">
                   <i class="fas fa-user-plus fa-sm nav-icon"></i>
@@ -346,7 +346,7 @@ include("config.php");
 ?></span>
               </p>
             </a>
-            <ul class="nav nav-treeview" >
+            <ul class="nav nav-treeview" id="teacher">
               <li class="nav-item" >
                 <a href="#" class="nav-link" id='addTeacher'>
                   <i class="fa fa-user-plus nav-icon"></i>
@@ -387,7 +387,7 @@ include("config.php");
 ?></span>
               </p>
             </a>
-            <ul class="nav nav-treeview" >
+            <ul class="nav nav-treeview" id="class">
               <li class="nav-item" id='addClass'>
                 <a href="#" class="nav-link">
                   <i class="fa fa-plus nav-icon"></i>
@@ -403,7 +403,7 @@ include("config.php");
               <li class="nav-item" >
                 <a href="#" class="nav-link" id="ViewClassStream">
                   <i class="fa fa-arrow-alt-circle-right nav-icon"></i>
-                  <p>Combination</p>
+                  <p>Combinations</p>
                 </a>
               </li>
             </ul>
@@ -416,7 +416,7 @@ include("config.php");
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview" >
+            <ul class="nav nav-treeview" id='exam'>
               <li class="nav-item" id='getExamResults'>
                 <a href="#" class="nav-link" id="viewExamResult">
                   <i class="fa fa-pencil-alt nav-icon"></i>
@@ -439,7 +439,7 @@ include("config.php");
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
+            <ul class="nav nav-treeview" id="exam">
             <li class="nav-item">
                 <a href="#" class="nav-link" id="libraryStatus">
                   <i class="far fa-circle nav-icon"></i>
@@ -481,7 +481,7 @@ include("config.php");
 ?></span>
               </p>
             </a>
-            <ul class="nav nav-treeview">
+            <ul class="nav nav-treeview" id = 'hostel'>
               <li class="nav-item">
                 <a href="#" class="nav-link" id="addhostel">
                   <i class="fa fa-plus nav-icon"></i>
@@ -504,7 +504,7 @@ include("config.php");
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
+            <ul class="nav nav-treeview" id='hr'>
               <li class="nav-item" >
                 <a href="#" class="nav-link" id="addEmployee">
                   <i class="fa fa-plus nav-icon"></i>
@@ -541,7 +541,7 @@ include("config.php");
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
+            <ul class="nav nav-treeview" id='subject'>
               <li class="nav-item">
                 <a href="#" class="nav-link" id="viewSubjects">
                   <i class="fa fa-list nav-icon"></i>
@@ -564,7 +564,7 @@ include("config.php");
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
+            <ul class="nav nav-treeview" id="fees">
               <li class="nav-item">
                 <a href="#" class="nav-link" id="viewFeesStructure">
                   <i class="fa fa-eye nav-icon"></i>
@@ -605,7 +605,7 @@ include("config.php");
 ?></span>
               </p>
             </a>
-            <ul class="nav nav-treeview">
+            <ul class="nav nav-treeview" id="bank">
               <li class="nav-item">
                 <a href="#" class="nav-link" id="viewBanks">
                   <i class="far fa-circle nav-icon"></i>

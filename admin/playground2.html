@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body id="wrapper">
+    <input type="checkbox" id= "2" >adsf
+    <input type="checkbox" id= "3" >adsf
+    <input type="checkbox" id= "5" >adsf
+    <input type="checkbox" id= "1" >adsf
+
+    <button class="btn btn-primary" style="margin-top:114px;display:block" id="checkAll">
+ checkAll
+ </button>
+    <script >
+      let checkbox = document.querySelectorAll("input[type ='checkbox']");
+
+ let btn = document.querySelector("button");
+document.getElementById("wrapper").addEventListener("click",function (e) {
+
+    if(e.target.id == 'checkAll'){
+        checkbox.forEach(box => console.log(box.checked));
+    }
+});
+
+    </script>
+</body>
+</html>

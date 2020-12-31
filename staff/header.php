@@ -3,7 +3,7 @@ include("config.php");
 
    ob_start();
    session_start();
- if (!isset($_SESSION['username'])) {
+ if (!isset($_SESSION['username'] ) || $_SESSION['user_type'] !== "staff" ) {
   header('location:../login1.html');
  }
  if ($_SESSION['user_type'] != 'staff') {
@@ -65,7 +65,33 @@ include("config.php");
  <link rel="stylesheet" href="../plugins/bs-stepper/css/bs-stepper.min.css">
 <!-- ChartJs -->
  <link rel="stylesheet" type="text/css" href="../plugins/chart.js/Chart.min.css">
+<style>
+  @media screen and (max-width: 580px) {
+    .checkAllBtn{
+      display: none;
+      background-color:yellow;
+    }
+  
+}
+@media screen and (max-width: 780px) {
+  .checkAllBtn{
+         display: none;   
+         background-color:#fff;
+         border-color:#fff;
 
+    }
+}
+
+@media screen and (max-height: 580px) {
+  .checkAllBtn{
+      display: none;     
+       background-color:yellow;
+       background-color:#fff;
+         border-color:#fff;
+    }
+}
+
+</style>
   
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed text-sm" onload= "fetch('index2.php')
@@ -83,11 +109,11 @@ include("config.php");
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block" id="homeDashboard">
-        <a href="#" class="nav-link">Home</a>
+      <li class="nav-item d-none d-sm-inline-block" >
+        <a href="#" class="nav-link" id="homeDashboard">Home</a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block" id="classAttendanceHome">
-        <a href="#" class="nav-link">Class Attendance</a>
+      <li class="nav-item d-none d-sm-inline-block" >
+        <a href="#" class="nav-link" id="classAttendanceHome">Class Attendance</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block" >
         <a href="#" class="nav-link" id="requestLeave">Request leave</a>

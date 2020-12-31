@@ -9,7 +9,9 @@ include("config.php");
   elseif($_POST["formId"] == 'getFeesTable'){
       getFeesTable($_POST['class_id']);
   }
-
+  elseif($_POST["formId"] == 'getAttandanceTable'){
+    getAttandanceStudentsTable($_POST['class_id']);
+}
 
 
 
@@ -30,6 +32,53 @@ function getOption($id){
 else{
     echo "
     ";
+}
+ }
+
+ function getAttandanceStudentsTable($id){
+    include("config.php");
+
+    $sql = "SELECT students.FullName,class_name,option_name,stream_name,students.id
+    FROM students,classes,streams streams LEFT JOIN options on options.id = streams.option_id
+     WHERE students.stream_id = streams.id AND streams.class_id = classes.id and streams.class_id = $id";
+ 
+     if($res = mysqli_query($con,$sql)){
+        echo "<tr>";
+        echo "<th>id</th>";
+        echo "<th>Student Name </th>";
+        echo "<th>Class Name</th>";
+        echo "<th>Combination</th>";
+        echo "<th>Stream</th>";
+        echo "<th>Attended</th>";
+
+    echo "</tr> </thead>";
+        while($row = mysqli_fetch_array($res)){
+            echo "<tr>                   <tbody>";
+
+            echo "<td>" . $row['id'] . "</td>";
+            echo "<td>" . $row['FullName'] . "</td>";
+            echo "<td>" . $row['class_name'] . "</td>";  
+            echo "<td>" . $row['option_name'] . "</td>";
+            echo "<td>" . $row['stream_name'] . "</td>";?>
+            <td>
+            <div class="icheck-success d-inline">
+                        <input type="checkbox" id= "<?php  echo $row['id'];  ?>" >
+                        <label for= "<?php  echo $row['id'];  ?>">
+                        </label>
+                      </div> </td>
+          <?php
+          echo "</tr><tbody>";
+    }
+    echo "</table>";    
+    // Free result set
+} 
+else{
+    echo "<div class='alert alert-danger' role='alert'>
+    There are no Fees Collection Records For The Selected Class currently in the database!
+  </div>"  
+  ;
+      echo "Error: " . $sql . "<br>" . mysqli_error($con);
+
 }
  }
 

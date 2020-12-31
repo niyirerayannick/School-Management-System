@@ -5,23 +5,160 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
+<body id="wrapper">
+  <li class="nav-item">
+    <a href="#" class="nav-link">
+      <i class="nav-icon fas fa-book-open"></i>
+      <p>
+        Exams
+        <i class="right fas fa-angle-left"></i>
+      </p>
+    </a>
+    <ul class="nav nav-treeview" id='exam'>
+      <li class="nav-item" id='getExamResults'>
+        <a href="#" class="nav-link" id="viewExamResult">
+          <i class="fa fa-pencil-alt nav-icon"></i>
+          <p>Exam Results</p>
+        </a>
+      </li>
+      <li class="nav-item" >
+        <a href="#" class="nav-link" id='viewExamCategories'>
+          <i class="far fa-circle nav-icon"></i>
+          <p>View Exam Categories</p>
+        </a>
+      </li>
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a href="#" class="nav-link">
+      <i class="nav-icon fas fa-book-reader"></i>
+      <p>
+        Library
+        <i class="fas fa-angle-left right"></i>
+      </p>
+    </a>
+    <ul class="nav nav-treeview" id="library">
+    <li class="nav-item">
+        <a href="#" class="nav-link" id="libraryStatus">
+          <i class="far fa-circle nav-icon"></i>
+          <p>Current Library Status</p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link" id="lendNewBook">
+        <i class="fa fa-arrow-right nav-icon"></i>
+          <p>Lend A New Book</p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link" id="viewBookSubmission">
+          <i class="fa fa-arrow-left nav-icon"></i>
+          <p>Recent Book Submissions</p>
+        </a>
+      </li>
+      
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a href="#" class="nav-link">
+      <i class="nav-icon fa fa-bed "></i>
+      <p>
+        Hostels
+        <i class="fas fa-angle-left right"></i>
+        <span class="badge badge-info right"> 
+</span>
+      </p>
+    </a>
+    <ul class="nav nav-treeview" id = 'hostel'>
+      <li class="nav-item">
+        <a href="#" class="nav-link" id="addhostel">
+          <i class="fa fa-plus nav-icon"></i>
+          <p>Add A New Hostel</p>
+        </a>
+      </li>
+      <li class="nav-item" >
+        <a href="#" class="nav-link" id="viewHostels">
+          <i class="fa fa-list nav-icon"></i>
+          <p>View All Hostels</p>
+        </a>
+      </li>
+    </ul>
+  </li>
     <script >
 
 let arr = ['c','d','g','a'];
        // use object literal to find fruits in color
   const fruitColor = {
-    hostel: ['addHostel', 'viewhostels'],
-    yellow: ['banana', 'pineapple'],
-    purple: ['grape', 'plum']
-  };
+  //  hostel: ['addHostel', 'viewhostels'],
+    hostel: {
+      addhostel: "hostels/addNewHostel.php", 
+      viewHostels:'i am going to view hostel'
+    },
+    library: {
+      libraryStatus:'i am library status',
+      lendNewBook:'i am lend new book',
+      viewBookSubmission:'i am view book submission'
+    },
+    exam: {
+      viewExamResult:'i am exam results',
+      viewExamCategories:'i am exam categories'
+    },
 
-function test(color) {
-  return (fruitColor[color]?fruitColor[color][0] : []);
-}
+    getColor:function(propertyValue,propertyValue1){
+       let El =fruitColor.hasOwnProperty(propertyValue), innerEl =fruitColor[propertyValue];
+       console.log(innerEl[propertyValue1])
+         return El ? innerEl.hasOwnProperty(propertyValue1)?printHello(innerEl[propertyValue1]):'not outer' :  'not inner';
+      }
+    };
+   
+   function printHello(location){
+    fetch(location)
+    .then(response =>  response.text())
+    .then(html => {
+        //contentWrapper.innerHTML = html
+        let parser = new DOMParser();
+        let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
+        document.getElementById("wrapper").innerHTML = doc.innerHTML;
+  })
+    }
 
-console.log(test('hostels'))
+document.getElementById("wrapper").addEventListener("click",function (e) {
+  let category = e.target.parentNode.parentNode.parentNode
+  //return (fruitColor[color]?fruitColor[color][0] : []);
+console.log(fruitColor.getColor(`${category.id}`, `${e.target.parentNode.id}`));
+});
 
+
+
+//console.log(test('hostel','addHostel'))
+
+/*
+  const ElementIds = {
+    hostel: {
+      addhostel:getContents("hostels/addNewHostel.php"),
+     // viewHostels:viewAllHostels()
+    },
+    library: {
+      libraryStatus:'i am library status',
+      lendNewBook:'i am lend new book',
+      viewBookSubmission:'i am view book submission'
+    },
+    exam: {
+      viewExamResult:'i am exam results',
+      viewExamCategories:'i am exam categories'
+    },
+  
+    fetchPage:function(propertyValue,propertyValue1){
+      let El =ElementIds.hasOwnProperty(propertyValue), innerEl =ElementIds[propertyValue];
+      return El ? innerEl.hasOwnProperty(propertyValue1)?innerEl[propertyValue1]:'not present' :  'nahh';
+      }
+    };
+    navbar = document.querySelector('#navBar'),
+      
+      navbar.addEventListener("click",function (e) {
+        let category = e.target.parentNode.parentNode.parentNode
+      console.log(ElementIds.fetchPage(`${category.id}`, `${e.target.parentNode.id}`));
+      });
 var speedCanvas = document.getElementById("speedChart");
 
 Chart.defaults.global.defaultFontFamily = "Lato";
@@ -63,7 +200,7 @@ var lineChart = new Chart(speedCanvas, {
   type: 'line',
   data: speedData,
   options: chartOptions
-});
+});*/
     </script>
 </body>
 </html>

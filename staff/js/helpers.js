@@ -9,6 +9,9 @@ contentWrapper.addEventListener('change', function(e) {
      else if(e.target.id == 'selectClassFees'){
        getFeesTable(e.target);
      }
+     else if(e.target.id == 'selectClassAttendance'){
+       getAttandanceTable(e.target);
+     }
      else if(e.target.id == 'className'){
        if(e.target.value == 's4' || e.target.value == 's5' || e.target.value == 's6'
        || e.target.value == 'S4'||e.target.value == 'S5'||e.target.value == 'S6'){
@@ -134,18 +137,52 @@ contentWrapper.addEventListener('change', function(e) {
                   formId:'getFeesTable'
               }
                    , function(data){
-                     console.log(data);
+                 //    console.log(data);
                  // Display the returned data in browser
                 if(data == 1){
                        
                 
                  //  handle errors from the server
                 }else {
-                document.querySelector("#viewFeesTable").innerHTML = data;
+                //document.querySelector("#viewFeesTable").innerHTML = data;
+                document.querySelector("#viewAttandanceTable").innerHTML = data;
+                document.querySelector("#big").className = 'col-md-4';
+                document.querySelector("#small").className = 'col-md-8';
+
+                //hide the un and checkall button when the current column is big
+                document.querySelector("#checkAll").style.display = 'none';
+                document.querySelector("#unCheckAll").style.display = 'none';
                 }
              });
  }
 
+ function getAttandanceTable(target){
+
+  $.post("helpers.php",{
+      class_id: target.value,
+      formId:'getAttandanceTable'
+  }
+       , function(data){
+     //    console.log(data);
+     // Display the returned data in browser
+    if(data == 1){
+           
+    
+     //  handle errors from the server
+    }else {
+    document.querySelector("#viewFeesTable").innerHTML = data;
+    //Show the Check all and un check all buttons
+    document.querySelector("#checkAll").style.display = 'block';
+    document.querySelector("#unCheckAll").style.display = 'block';
+
+    //make the current column the big one 
+    document.querySelector("#big").className = 'col-md-8';
+    document.querySelector("#small").className = 'col-md-4';
+
+
+    }
+ });
+}
 /*
  function getStream(target){
   console.log(target)

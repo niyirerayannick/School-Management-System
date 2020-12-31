@@ -9,21 +9,64 @@ let contentWrapper = document.querySelector('#content-wrapper'),
  viewClass = document.querySelector("#viewClasses"),
  addClass = document.querySelector("#addClass"),
  timetable = document.querySelector("#timeTable");
-
- const navIds = {
-  student: ['grape', 'plum'],
-  hostel: ['addhostel', 'viewHostels'],
-  teacher: ['banana', 'pineapple'],
-  library: ['grape', 'plum'],
-  class: ['grape', 'plum'],
-  library: ['grape', 'plum'],
-  bank: ['grape', 'plum'],
-  hr: ['grape', 'plum'],
-  fee:['fee1','fees2'],
-  subject:['fee1','fees2']
-
-};
-
+/*
+ const ElementIds = {
+  student:{
+    addStudent:'students/addStudent.php',
+    viewStudents:'students/viewStudents.php',
+    highPerformingStudents:'students/viewHighPerformingStudents.php'
+  },
+  teacher:{
+    addTeacher:'teachers/addTeacher.php',
+    viewTeachers:'teachers/viewTeachers.php'
+  },
+  class:{
+    addClass:'class/addClass.php',
+    viewClasses:'class/viewClasses.php',
+    ViewClassStream:'class/viewStream.php'
+  },
+  hostel: {
+    addhostel:'hostels/addNewHostel.php',
+   //viewHostels:viewAllHostels()
+  },
+  library: {
+     libraryStatus:'i am library status',
+     lendNewBook:'i am lend new book',
+     viewBookSubmission:'i am view book submission'
+  },
+  exam: {
+     viewExamResult:'i am exam results',
+     viewExamCategories:'i am exam categories'
+  },
+  hr:{
+    addEmployee:'hr/addNewEmployee.php',
+    listEmployee:'hr/viewEmployees.php',
+    leaveManagement:'hr/leaveIndex.php'
+  },
+  subject:{
+    viewSubjects:'subjects/viewSubjects.php',
+    addSubject:'subjects/addSubject.php'
+  },
+  fees:{
+    viewFeesStructure:'school-fees/viewFeesStructure.php',
+    changeFeesStructure:'school-fees/changeFeesStructure.php',
+    recentFeesCollection:'school-fees/viewFeesCollection.php'
+  },
+  bank:{
+    viewBanks:'banks/viewBanks.php',
+    addNewBank:'banks/viewBanks.php'
+  },
+  fetchPage:function(propertyValue,propertyValue1){
+    let El =ElementIds.hasOwnProperty(propertyValue), innerEl =ElementIds[propertyValue];
+    return El ? innerEl.hasOwnProperty(propertyValue1)?getContents(innerEl[propertyValue1]):'not present' :  'nahh';
+    }
+  };
+    
+    navbar.addEventListener("click",function (e) {
+      let category = e.target.parentNode.parentNode.parentNode
+    return ElementIds.fetchPage(`${category.id}`, `${e.target.parentNode.id}`);
+    });
+*/
 navbar.addEventListener("click",function(e){
   let target = e.target.parentNode;
  //console.log(target)
@@ -185,7 +228,9 @@ contentWrapper.addEventListener('click', function(e) {
       e.preventDefault();
       getClassAttendance();
       } 
-  
+    else if(e.target.id == 'addOptionBtn'){
+      addOption();
+    }
 
     else if(e.target.id == 'listTeachers') {
 		viewAllTeachers();
