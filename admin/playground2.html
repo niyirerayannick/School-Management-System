@@ -6,24 +6,37 @@
     <title>Document</title>
 </head>
 <body id="wrapper">
-    <input type="checkbox" id= "2" >adsf
-    <input type="checkbox" id= "3" >adsf
-    <input type="checkbox" id= "5" >adsf
-    <input type="checkbox" id= "1" >adsf
+    <div style="display:none">
+    <input type="radio" id= "1" name="status" value='yes'>sdfsd
+    <input type="radio" id= "3" name="status" value='no'>adsf
+</div>
+<div>
+    <table border="1">
+        <tr>
+            <th>le</th>
+            <th colspan="2">le</th>
+        </tr>
+        <tr>
+            <td>d1</td>
+            <td>d1</td>
+            <td>d1</td>
 
-    <button class="btn btn-primary" style="margin-top:114px;display:block" id="checkAll">
- checkAll
- </button>
+        </tr>
+    </table>
+</div>
+
     <script >
-      let checkbox = document.querySelectorAll("input[type ='checkbox']");
+      let checkbox = document.querySelectorAll("input[value ='yes']" );
+      console.log(checkbox)
 
  let btn = document.querySelector("button");
 document.getElementById("wrapper").addEventListener("click",function (e) {
-
     if(e.target.id == 'checkAll'){
         checkbox.forEach(box => console.log(box.checked));
     }
 });
+
+
 
     </script>
 </body>

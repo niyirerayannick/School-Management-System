@@ -124,6 +124,31 @@ function  viewHighperformingStudents(){
 })
 }
 
+    function mergeSubjects(arr){
+    let subjects = [];
+    for(let i =0 ; i < arr.length ; i++){
+       subjects.push(arr[i][0])
+     }
+
+     subjects = [...new Set(subjects)];
+
+      return subjects;
+    }
+
+          function spreadArray(arr,spreadValue){
+          let res1 = arr;
+               var result = res1.filter(function(v,i) {
+                   return v[0][0] === spreadValue;
+                    });
+               result.forEach(e => {
+                    e.shift();
+                    });
+               result = [].concat(...result);
+
+            return result;
+           }
+           const colors = ['#007bff', '#8e44ad', '#0bbe3e', '#e67e22', '#2ecc71','#eb3d0d','#280e0e']
+
 
 function viewStudentDetails(value,studentId){
   $.post("students/student-dm.php", {
@@ -136,26 +161,50 @@ function viewStudentDetails(value,studentId){
    }else {
      contentWrapper.innerHTML = data;
      let doc = document.querySelector('#myChart');
-     let doc2 = document.querySelector('#labels');
-     let doc3 = document.querySelector('#data');
-    
-     document.getElementById("studentAttendance").innerHTML = doc.innerHTML;
-    //console.log(doc2.childNodes)
-     let labels = [];
-     let mainData = [];
-     for(index = 1 ; index < doc2.childNodes.length - 1; index++){
- 
-       if(doc2.childNodes[index].className == 'number_of_attendance'){
-          mainData.push(doc2.childNodes[index].innerHTML);
+
+     let  labels = JSON.parse(document.querySelector('#spanLabel').innerHTML);
+     let  mainData = JSON.parse(document.querySelector('#spanData').innerHTML);
+     let  d = JSON.parse(document.querySelector('#checking').innerHTML);   
+     let legendText = JSON.parse(document.querySelector("#subjects").innerHTML);
+     console.log(legendText);
+     let res = mergeSubjects(d)
+     let j;
+     let dataset =[]
+     for(j = 0; j < res.length ;j++){
+
+      let attendance = spreadArray(d,res[j]);
+      //get the dates for the subjects studied
+      let  dates = attendance.filter((v,i) => i % 2 !== 0)
+      //get the number of times the subject were studied at a certain date
+        attendance = attendance.filter((v,i) => i % 2 == 0)
+        //loop through the label property to put zero where the student didn't attend
+            for(let i = 0; i < labels.length ; i++){
+                if(!dates.includes(labels[i])){
+                  attendance.splice(i, 0, "0");                }
             }
-       else{
-         labels.push(doc2.childNodes[index].innerHTML);
-       }
+            let obj = {
+              type: 'line',
+              label:legendText[j],
+              data: attendance,
+              backgroundColor: 'transparent',
+              borderColor: colors[j],
+              pointBorderColor: colors[j],
+              pointBackgroundColor: colors[j],
+              fill: false
+              // pointHoverBackgroundColor: '#007bff',
+              // pointHoverBorderColor    : '#007bff'
+            }
+            dataset.push(obj);
+    }
+/*
+     for(j = 0; j < res.length ;j++){
+      
      }
-        // console.log(mainData)
-       //  console.log(labels)
- 
- 
+*/
+     document.getElementById("studentAttendance").innerHTML = doc.innerHTML;
+
+     //console.log(mainData)
+
      contentWrapper.innerHTML = data;
      $(function () {
        
@@ -172,17 +221,7 @@ function viewStudentDetails(value,studentId){
        var visitorsChart = new Chart($visitorsChart, {
          data: {
            labels: labels,
-           datasets: [{
-             type: 'line',
-             data: mainData,
-             backgroundColor: 'transparent',
-             borderColor: '#007bff',
-             pointBorderColor: '#007bff',
-             pointBackgroundColor: '#007bff',
-             fill: false,
-             pointHoverBackgroundColor: '#007bff',
-             // pointHoverBorderColor    : '#007bff'
-           }]
+           datasets: dataset
          },
          options: {
            maintainAspectRatio: false,
@@ -195,7 +234,8 @@ function viewStudentDetails(value,studentId){
              intersect: intersect
            },
            legend: {
-             display: false
+             display: true,
+             legendText : ["Algorithm &amp; Programming II", "Economics", "Operating System", "Mathematics"]
            },
            scales: {
              yAxes: [{
@@ -207,8 +247,10 @@ function viewStudentDetails(value,studentId){
                  zeroLineColor: 'transparent'
                },
                ticks: $.extend({
-                 beginAtZero: true,
-                 suggestedMax: 8
+                 beginAtZero: false,
+                 suggestedMax: 8,
+                 suggestedMin: -1
+
                }, ticksStyle)
              }],
              xAxes: [{

@@ -10,7 +10,7 @@ contentWrapper.addEventListener('change', function(e) {
        getFeesTable(e.target);
      }
      else if(e.target.id == 'selectClassAttendance'){
-       getAttandanceTable(e.target);
+       //getAttandanceTable(e.target);
      }
      else if(e.target.id == 'className'){
        if(e.target.value == 's4' || e.target.value == 's5' || e.target.value == 's6'
@@ -157,32 +157,52 @@ contentWrapper.addEventListener('change', function(e) {
  }
 
  function getAttandanceTable(target){
-
-  $.post("helpers.php",{
-      class_id: target.value,
-      formId:'getAttandanceTable'
-  }
-       , function(data){
-     //    console.log(data);
-     // Display the returned data in browser
-    if(data == 1){
+  $('#getClassAttandance').submit(function(e)
+  {
+   e.preventDefault();
+      let formData = $(this).serialize();
+      $.post("helpers.php", formData , function(data)
+       {
+             //    console.log(data);
+           // Display the returned data in browser
+         if(data == 1){
            
     
-     //  handle errors from the server
-    }else {
-    document.querySelector("#viewFeesTable").innerHTML = data;
-    //Show the Check all and un check all buttons
-    document.querySelector("#checkAll").style.display = 'block';
-    document.querySelector("#unCheckAll").style.display = 'block';
-
-    //make the current column the big one 
-    document.querySelector("#big").className = 'col-md-8';
-    document.querySelector("#small").className = 'col-md-4';
+          //  handle errors from the server
+          }else {
+          document.querySelector("#viewFeesTable").innerHTML = data;
+          //Show the Check all and un check all buttons
+          document.querySelector("#checkAll").style.display = 'block';
+          document.querySelector("#unCheckAll").style.display = 'block';
+          document.querySelector("#makeAttendanceTable").style.display = 'block';
 
 
+         //make the current column the big one 
+         document.querySelector("#big").className = 'col-md-8';
+         document.querySelector("#small").className = 'col-md-4';
+       }
+      });
+    })
+  }
+  function disableCheckbox(checkbox){
+       if(checkbox.value == 'yes'){
+         let dangerBox = document.querySelectorAll("input[value ='no']");
+         dangerBox.forEach(box =>{
+            if(box.id == checkbox.id * 1000 + 1000){
+              box.checked =false;
+           }
+           })
+       }
+      else  if(checkbox.value == 'no'){
+        console.log((parseInt(checkbox.id) - 1000 )/ 1000)
+        let succesBox = document.querySelectorAll("input[value ='yes']");
+        succesBox.forEach(box =>{
+           if(box.id == (parseInt(checkbox.id) - 1000 )/ 1000){
+             box.checked =false;
+          }
+          })
+      }
     }
- });
-}
 /*
  function getStream(target){
   console.log(target)

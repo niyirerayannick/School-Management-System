@@ -211,43 +211,96 @@ function viewStudentDetails($id){
                 <div class="tab-content">
                   <div class="active tab-pane" id="activity" style="min-height:550px">
                     <div class="card-body">
-                       <div class="chart" id='studentAttendance'>
+                       <div class="chart" id='studentAttendance' >
+
+
                              <?php
                               //$sql = mysqli_query($con,"SELECT students.id FROM  students WHERE students.FullName LIKE '$id'");
                               //$row2 =mysqli_fetch_row($sql);
                               //$student_id = $row2[0];
-                               if($ret=mysqli_query($con,"SELECT 
-                                      FullName, Date, count(classattendance.Attended) as N_O_attendance 
-                                      FROM students,classattendance
-                                       WHERE 
-                                       students.id =$id and classattendance.student_id = $id and classattendance.attended = 1 group by Date"))
+                               if($ret=mysqli_query($con,"SELECT subject_id,subject_name,Date,COUNT(attended) as number_of_attendance FROM
+                                classattendance ,subjects,students WHERE 
+                                subjects.id = classattendance.subject_id and students.id = $id and classattendance.student_id = $id
+                                 GROUP BY subject_id,Date order by subject_id
+                               "))
                                  {
                                       if(mysqli_num_rows($ret) > 0){
                                           $row=mysqli_fetch_array($ret);
                                            //converting php data to json 
                                            ?> 
-                            <select id="labels">
                                           <?php
+                                      
+                                          $labelArrayPhp = array();
+                                          $dataArrayPhp = array();
+                                          $cars = array (
+
+                                          );
+
                                           do {
-                                         echo "<option class='date' value =" . $row['Date']  . ">" . $row['Date']  . "</option>";
-                                         echo "<option class = 'number_of_attendance' value =" . $row['N_O_attendance']  . ">" . $row['N_O_attendance']  . "</option>";
+                                            array_push($labelArrayPhp,$row['Date']);
+                                            
+                                            array_push($cars,array($row['subject_id'],$row['number_of_attendance'],$row['Date']));
+
+                                            array_push($dataArrayPhp,$row['number_of_attendance']);
                                         }
-                                       while($row = mysqli_fetch_array($ret))
+                                       while($row = mysqli_fetch_array($ret));
+                                         $labelArrayJs = json_encode($labelArrayPhp);
+                                         $dataArrayJs = json_encode($dataArrayPhp);
+                                         $cars = json_encode($cars);
                                           ?>
-                             </select> 
                                 <?php
                                     $row=mysqli_fetch_array($ret);
+               
                                    ?>
+
+                              <?php
+                              //$sql = mysqli_query($con,"SELECT students.id FROM  students WHERE students.FullName LIKE '$id'");
+                              //$row2 =mysqli_fetch_row($sql);
+                              //$student_id = $row2[0];
+                               if($ret2=mysqli_query($con,"SELECT DISTINCT subject_name FROM classattendance ,subjects,students WHERE subjects.id = classattendance.subject_id and students.id = 0 and classattendance.student_id =0 GROUP BY subject_id, Date order by subject_id,Date
+
+                               "))
+                                 {
+                                      if(mysqli_num_rows($ret2) > 0){
+                                          $row2=mysqli_fetch_array($ret2);
+                                           //converting php data to json 
+                                           ?> 
+                                          <?php
+                                      
+                                          $subject_names = array();
+                                          do {
+                                            array_push($subject_names,$row2['subject_name']);
+
+                                        }
+                                       while($row2 = mysqli_fetch_array($ret2));
+                                         $subject_names = json_encode($subject_names);
+
+                                          ?>
+                                <?php
+                                    $row2=mysqli_fetch_array($ret2);?>
+                                
+                                    <span id='subjects' style="display:none"><?php echo $subject_names;  ?></span>
+                                    <?php
+                                      }
+                                    }
+                                   ?>                       
+
+                                  <!-- offloading the json encoded arrays to be accessible by the chart -->
+
+                                                                            <span id='checking' style="display:none"><?php echo $cars;  ?></span>
+                                                                            <span id='spanLabel' style="display:none"><?php echo $labelArrayJs;  ?></span>
+                                                                            <span id='spanData' style="display:none"><?php echo $dataArrayJs;  ?></span>
+
                                     <!--<div id="view"><canvas id="myChart"></canvas></div> -->
                                  <div class="row" id ="myChart">
                                     <div class="col-12">
-                                      <div class="card" >
+                                      <div class="card" style="min-height:550px">
                                           <div class="card-header border-0">
                                                <div class="d-flex justify-content-between">
                   <h3 class="card-title text-bold text-lg">
                     <?php 
                     $ret=mysqli_query($con,"SELECT 
-                    FullName, Date, count(classattendance.Attended) as N_O_attendance 
+                    FullName, Date, count(classattendance.Attended) as number_of_attendance 
                     FROM students,classattendance
                      WHERE 
                      students.id =$id and classattendance.student_id = 1 and classattendance.attended = 1 group by Date");
@@ -262,12 +315,6 @@ function viewStudentDetails($id){
                 <div class="d-flex">
                   <p class="d-flex flex-column">
                     <span>N<sup>o</sup> Of Subject Studied Over Time</span>
-                  </p>
-                  <p class="ml-auto d-flex flex-column text-right">
-                    <span class="text-success">
-                      <i class="fas fa-arrow-up"></i> 12.5%
-                    </span>
-                    <span class="text-muted">Since last Term</span>
                   </p>
                 </div>
                 <!-- /.d-flex -->

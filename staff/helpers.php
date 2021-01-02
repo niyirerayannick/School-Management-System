@@ -10,7 +10,7 @@ include("config.php");
       getFeesTable($_POST['class_id']);
   }
   elseif($_POST["formId"] == 'getAttandanceTable'){
-    getAttandanceStudentsTable($_POST['class_id']);
+    getAttandanceStudentsTable($_POST['class_name'],$_POST["subject_name"]);
 }
 
 
@@ -35,12 +35,12 @@ else{
 }
  }
 
- function getAttandanceStudentsTable($id){
+ function getAttandanceStudentsTable($class,$subject){
     include("config.php");
 
     $sql = "SELECT students.FullName,class_name,option_name,stream_name,students.id
     FROM students,classes,streams streams LEFT JOIN options on options.id = streams.option_id
-     WHERE students.stream_id = streams.id AND streams.class_id = classes.id and streams.class_id = $id";
+     WHERE students.stream_id = streams.id AND streams.class_id = classes.id and streams.class_id = $class";
  
      if($res = mysqli_query($con,$sql)){
         echo "<tr>";
@@ -49,7 +49,8 @@ else{
         echo "<th>Class Name</th>";
         echo "<th>Combination</th>";
         echo "<th>Stream</th>";
-        echo "<th>Attended</th>";
+        echo "<th>Subject</th>";
+        echo "<th colspan='2'>Attended</th>";
 
     echo "</tr> </thead>";
         while($row = mysqli_fetch_array($res)){
@@ -59,13 +60,31 @@ else{
             echo "<td>" . $row['FullName'] . "</td>";
             echo "<td>" . $row['class_name'] . "</td>";  
             echo "<td>" . $row['option_name'] . "</td>";
-            echo "<td>" . $row['stream_name'] . "</td>";?>
-            <td>
-            <div class="icheck-success d-inline">
-                        <input type="checkbox" id= "<?php  echo $row['id'];  ?>" >
-                        <label for= "<?php  echo $row['id'];  ?>">
-                        </label>
-                      </div> </td>
+            echo "<td>" . $row['stream_name'] . "</td>";
+                 $sql2 = "SELECT subject_name
+                         FROM subjects
+                         WHERE  subjects.id = $subject";
+                          if($res2 = mysqli_query($con,$sql2)){
+                              $row2 = mysqli_fetch_array($res2);
+                             echo "<td>" . $row2['subject_name'] . "</td>";
+                          }
+
+            ?>
+                     <td>
+                        <div class="icheck-success d-inline">
+                           <input type="checkbox" id= "<?php  echo $row['id'];  ?>" value="yes">
+                           <label for= "<?php  echo $row['id'];  ?>">
+                           </label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="icheck-danger d-inline">
+                        <?php  $rondomId =$row['id'] * 1000 + 1000 ?>
+                           <input type="checkbox" id= "<?php  echo $rondomId;  ?>" value="no">
+                           <label for= "<?php  echo $rondomId;  ?>">
+                           </label>
+                        </div>
+                    </td>
           <?php
           echo "</tr><tbody>";
     }
@@ -77,6 +96,7 @@ else{
     There are no Fees Collection Records For The Selected Class currently in the database!
   </div>"  
   ;
+  echo $subject;
       echo "Error: " . $sql . "<br>" . mysqli_error($con);
 
 }

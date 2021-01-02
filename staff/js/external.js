@@ -10,7 +10,7 @@ let contentWrapper = document.querySelector('#content-wrapper'),
  addClass = document.querySelector("#addClass"),
  timetable = document.querySelector("#timeTable");
 
-console.log(document.querySelector("#top-nav"));
+//console.log(document.querySelector("#top-nav"));
 
  document.querySelector("#top-nav").addEventListener("click", e =>{
   // console.log(e.target.id)
@@ -83,16 +83,25 @@ navbar.addEventListener("click",function(e){
 contentWrapper.addEventListener('click', function(e) {
  // console.log(e.target.value);
 	if(e.target.id == 'viewEvent') {
-		getCalendar();
-    }
+	  	getCalendar();
+       }
     else if(e.target.id == 'checkAll'){
-      let checkbox = document.querySelectorAll("input[type ='checkbox']");
-      checkbox.forEach(box => box.checked = true)
+      let checkbox = document.querySelectorAll("input[value ='yes']");
+   
+       for(let i =0 ; i<checkbox.length ;i++){
+          console.log(checkbox[i].checked=true)
+       }
         }
     else if(e.target.id == 'unCheckAll'){
-      let checkbox = document.querySelectorAll("input[type ='checkbox']");
+      let checkbox = document.querySelectorAll("input[value ='no']");
       checkbox.forEach(box => box.checked = false)
         }
+      else if(e.target.type == 'checkbox'){
+           disableCheckbox(e.target);
+        } 
+    else if(e.target.id == 'selectClassAttendance'){
+      getAttandanceTable();
+      }
     else if(e.target.id == 'listStudents') {
 		viewAllStudents();
     }
