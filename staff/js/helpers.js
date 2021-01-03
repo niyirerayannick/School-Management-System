@@ -146,8 +146,8 @@ contentWrapper.addEventListener('change', function(e) {
                 }else {
                 //document.querySelector("#viewFeesTable").innerHTML = data;
                 document.querySelector("#viewAttandanceTable").innerHTML = data;
-                document.querySelector("#big").className = 'col-md-4';
-                document.querySelector("#small").className = 'col-md-8';
+                document.querySelector("#big").className = 'col-md-6';
+                document.querySelector("#small").className = 'col-md-6';
 
                 //hide the un and checkall button when the current column is big
                 document.querySelector("#checkAll").style.display = 'none';
@@ -156,7 +156,7 @@ contentWrapper.addEventListener('change', function(e) {
              });
  }
 
- function getAttandanceTable(target){
+ function getAttandanceTable(){
   $('#getClassAttandance').submit(function(e)
   {
    e.preventDefault();
@@ -184,18 +184,51 @@ contentWrapper.addEventListener('change', function(e) {
       });
     })
   }
+
+  function makeAttendanceTable(){
+    $('#makeAttandance').submit(function(e)
+    {
+     e.preventDefault();
+        let formData = $(this).serialize();
+        $.post("helpers.php", formData , function(data)
+         {
+               //    console.log(data);
+             // Display the returned data in browser
+           if(data == 1){
+            //  handle errors from the server
+            }else {
+           document.querySelector("#viewFeesTable").innerHTML = '';
+           var Toast = Swal.mixin({
+            toast: true,
+             position: 'top',
+            showConfirmButton: false,
+            timer: 3000
+              });
+                    Toast.fire({
+            icon: 'success',
+            title: 'New Class Attendance Record made successfully'
+                     });
+                              //make the current column the big one 
+          document.querySelector("#big").className = 'col-md-6';
+          document.querySelector("#small").className = 'col-md-6';
+             }  
+        });
+      })
+    }
+
   function disableCheckbox(checkbox){
-       if(checkbox.value == 'yes'){
-         let dangerBox = document.querySelectorAll("input[value ='no']");
-         dangerBox.forEach(box =>{
-            if(box.id == checkbox.id * 1000 + 1000){
-              box.checked =false;
-           }
-           })
-       }
-      else  if(checkbox.value == 'no'){
+      if(checkbox.value == '1'){
         console.log((parseInt(checkbox.id) - 1000 )/ 1000)
-        let succesBox = document.querySelectorAll("input[value ='yes']");
+        let dangerBox = document.querySelectorAll("input[value ='0']");
+        dangerBox.forEach(box =>{
+        if(box.id == (parseInt(checkbox.id) - 1000 )/ 1000){
+          box.checked =false;
+       }
+       })
+     }
+       else  if(checkbox.value == '0'){
+         console.log((parseInt(checkbox.id) - 1000 )/ 1000)
+        let succesBox = document.querySelectorAll("input[value ='1']");
         succesBox.forEach(box =>{
            if(box.id == (parseInt(checkbox.id) - 1000 )/ 1000){
              box.checked =false;

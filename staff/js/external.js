@@ -86,22 +86,36 @@ contentWrapper.addEventListener('click', function(e) {
 	  	getCalendar();
        }
     else if(e.target.id == 'checkAll'){
-      let checkbox = document.querySelectorAll("input[value ='yes']");
+      let checkbox = document.querySelectorAll("input[value ='1']");
+      let dangerBox = document.querySelectorAll("input[value ='0']");
    
        for(let i =0 ; i<checkbox.length ;i++){
-          console.log(checkbox[i].checked=true)
+         checkbox[i].checked=true
+         dangerBox[i].checked = false;
        }
         }
     else if(e.target.id == 'unCheckAll'){
-      let checkbox = document.querySelectorAll("input[value ='no']");
-      checkbox.forEach(box => box.checked = false)
-        }
-      else if(e.target.type == 'checkbox'){
+      let checkbox = document.querySelectorAll("input[value ='1']");
+      let dangerBox = document.querySelectorAll("input[value ='0']");
+
+      for(let i =0 ; i<checkbox.length ;i++){
+        checkbox[i].checked=false;
+        dangerBox[i].checked = false;
+      }
+    }
+        
+    else if(e.target.type == 'checkbox'){
+           console.log(checkbox.type)
            disableCheckbox(e.target);
         } 
     else if(e.target.id == 'selectClassAttendance'){
       getAttandanceTable();
       }
+
+    else if(e.target.id == 'makeAttendanceTable'){
+      makeAttendanceTable();
+      }
+
     else if(e.target.id == 'listStudents') {
 		viewAllStudents();
     }

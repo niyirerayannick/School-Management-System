@@ -11,9 +11,20 @@ include("config.php");
   }
   elseif($_POST["formId"] == 'getAttandanceTable'){
     getAttandanceStudentsTable($_POST['class_name'],$_POST["subject_name"]);
-}
+  }
+  elseif($_POST["formId"] == 'makeClassAttendance'){
+    makeClassAttendance($_POST['attended'],$_POST['student_id'],$_POST['subject_id']);
+  }
 
-
+       function makeClassAttendance($attended,$student,$subject){
+        include("config.php");
+        $date = date('Y-m-d');
+            for( $i = 0; $i < count($attended);$i++){
+                $sql = "INSERT INTO `classattendance` (`id`, `student_id`, `subject_id`, `date`, `attended`) VALUES (NULL, '$student[$i]', '$subject[$i]', '$date', '$attended[$i]')";
+                $res2=mysqli_query($con,$sql)?0:1;
+                echo $res2;           
+             }
+       }
 
 function getOption($id){
     include("config.php");
@@ -56,23 +67,27 @@ else{
         while($row = mysqli_fetch_array($res)){
             echo "<tr>                   <tbody>";
 
-            echo "<td>" . $row['id'] . "</td>";
+            echo "<td>" . $row['id'] . "</td>";?>
+            <input type="hidden" id= "<?php  echo $row['id'];  ?>" name="student_id[]" value= "<?php  echo $row['id'];  ?>">
+            <?php
             echo "<td>" . $row['FullName'] . "</td>";
             echo "<td>" . $row['class_name'] . "</td>";  
             echo "<td>" . $row['option_name'] . "</td>";
             echo "<td>" . $row['stream_name'] . "</td>";
-                 $sql2 = "SELECT subject_name
+                 $sql2 = "SELECT subject_name,id
                          FROM subjects
                          WHERE  subjects.id = $subject";
                           if($res2 = mysqli_query($con,$sql2)){
                               $row2 = mysqli_fetch_array($res2);
-                             echo "<td>" . $row2['subject_name'] . "</td>";
+                             echo "<td>" . $row2['subject_name'] . "</td>";?>
+                             <input type="hidden" id= "<?php  echo $row2['id'];  ?>" name="subject_id[]" value= "<?php  echo $row2['id'];  ?>">
+                             <?php
                           }
 
             ?>
                      <td>
                         <div class="icheck-success d-inline">
-                           <input type="checkbox" id= "<?php  echo $row['id'];  ?>" value="yes">
+                           <input type="checkbox" id= "<?php  echo $row['id'];  ?>" name="attended[]" value="1">
                            <label for= "<?php  echo $row['id'];  ?>">
                            </label>
                         </div>
@@ -80,7 +95,7 @@ else{
                     <td>
                         <div class="icheck-danger d-inline">
                         <?php  $rondomId =$row['id'] * 1000 + 1000 ?>
-                           <input type="checkbox" id= "<?php  echo $rondomId;  ?>" value="no">
+                           <input type="checkbox" id= "<?php  echo $rondomId;  ?>" name ='attended[]' value="0">
                            <label for= "<?php  echo $rondomId;  ?>">
                            </label>
                         </div>
