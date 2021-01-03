@@ -40,9 +40,9 @@
               <!-- /.card-header -->
               <div class="card-body">
                  <div class="form-group">
-                    <label name="class-name">Class Name</label>
+                    <label name="class-name">Reason For Requesting Leave</label>
                     <input type="hidden" id="addNewClassForm" name="formId" value ="addNewClass">
-                    <input type="text" class="form-control" id="className" placeholder="Enter The Class Name" name="class-name">
+                    <input type="text" class="form-control" id="className" placeholder="Enter The Reason" name="reason">
                  </div>
 
                  <div class="form-group" style= "display:none" id="optionDiv">

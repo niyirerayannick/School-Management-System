@@ -217,23 +217,29 @@ contentWrapper.addEventListener('change', function(e) {
     }
 
   function disableCheckbox(checkbox){
-      if(checkbox.value == '1'){
-        console.log((parseInt(checkbox.id) - 1000 )/ 1000)
-        let dangerBox = document.querySelectorAll("input[value ='0']");
-        dangerBox.forEach(box =>{
-        if(box.id == (parseInt(checkbox.id) - 1000 )/ 1000){
-          box.checked =false;
-       }
-       })
-     }
-       else  if(checkbox.value == '0'){
-         console.log((parseInt(checkbox.id) - 1000 )/ 1000)
-        let succesBox = document.querySelectorAll("input[value ='1']");
-        succesBox.forEach(box =>{
-           if(box.id == (parseInt(checkbox.id) - 1000 )/ 1000){
-             box.checked =false;
-          }
-          })
+        if(checkbox.value == '1'){
+          let dangerBox = document.querySelectorAll("input[value ='0']");
+            if(checkbox.id == '-1000000'){
+             document.getElementById("1000").checked= false;
+              }else{
+                 dangerBox.forEach(box =>{
+                 if(-(box.id - 1000 )/ 1000 == parseInt(checkbox.id)){
+                    box.checked =false;
+                  }
+                })
+              }
+         }
+        else  if(checkbox.value == '0'){
+            let succesBox = document.querySelectorAll("input[value ='1']");
+              if(checkbox.id == '1000'){
+                document.getElementById('-1000000').checked = false;
+              }else{
+                succesBox.forEach(box =>{
+                  if(parseInt(box.id) == -(checkbox.id - 1000 )/ 1000){
+                     box.checked =false;
+                  }
+                })
+              }
       }
     }
 /*

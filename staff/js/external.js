@@ -105,7 +105,7 @@ contentWrapper.addEventListener('click', function(e) {
     }
         
     else if(e.target.type == 'checkbox'){
-           console.log(checkbox.type)
+           console.log(e.target.type)
            disableCheckbox(e.target);
         } 
     else if(e.target.id == 'selectClassAttendance'){

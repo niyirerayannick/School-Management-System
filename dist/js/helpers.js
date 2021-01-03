@@ -6,7 +6,7 @@ contentWrapper.addEventListener('change', function(e) {
      }
   
       else if(e.target.id =='optionSelect'){
-   getStream(e.target);
+         getStream(e.target);
       }
      else if(e.target.id == 'className'){
        if(e.target.value == 's4' || e.target.value == 's5' || e.target.value == 's6'
@@ -14,7 +14,6 @@ contentWrapper.addEventListener('change', function(e) {
          document.querySelector("#optionDiv").style.display = 'block';
        }else{
          document.querySelector("#optionDiv").style.display = 'none';
- 
        }
      }
      else if(e.target.id == 'classNameUpdate'){
@@ -65,7 +64,7 @@ contentWrapper.addEventListener('change', function(e) {
                 }
                 
                   else {
-                 document.querySelector("#streamSelect").innerHTML = data;
+                 document.querySelector("#stream_name").innerHTML = data;
                 }
              });
             }

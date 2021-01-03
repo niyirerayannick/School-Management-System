@@ -147,7 +147,7 @@ function  viewHighperformingStudents(){
 
             return result;
            }
-           const colors = ['#007bff', '#8e44ad', '#0bbe3e', '#e67e22', '#2ecc71','#eb3d0d','#280e0e']
+           const colors = ['#007bff', '#8e44ad', '#5421b9', '#e67e22', '#2ecc71','#eb3d0d','#343a40']
 
 
 function viewStudentDetails(value,studentId){
@@ -166,7 +166,6 @@ function viewStudentDetails(value,studentId){
      let  mainData = JSON.parse(document.querySelector('#spanData').innerHTML);
      let  d = JSON.parse(document.querySelector('#checking').innerHTML);   
      let legendText = JSON.parse(document.querySelector("#subjects").innerHTML);
-     console.log(legendText);
      let res = mergeSubjects(d)
      let j;
      let dataset =[]
@@ -492,34 +491,41 @@ function viewAllClasses(){
   }
 
 function getClassAttendance(){
-  fetch('class_attendance.php')
-  .then(response => response.text())
-  .then(html =>{
-      let parser = new DOMParser();
-      let doc = (parser.parseFromString(html, 'text/html')).querySelector('#myChart');
+  $('#form').submit(function(e){
+    e.preventDefault();
+     let formData = $(this).serialize();
+     console.log(formData);
+    $.post("class_attendance.php",formData,  function(data){
+      // Display the returned data in browser
+     if(data == 1){
+            document.getElementById("empty").style.display = 'block';
+     }else {
 
-     
-      document.querySelector("#classAttendanceChart").innerHTML = doc.innerHTML;
-      
+      let doc = document.querySelector('#myChart');
+      document.querySelector("#classAttendanceChart").innerHTML = data;
 
+      let  labels = JSON.parse(document.querySelector('#spanLabel').innerHTML);
+      let  mainData = JSON.parse(document.querySelector('#spanData').innerHTML);
+      let legendText = document.querySelector('#legendText').innerHTML;
+      console.log(legendText);
       $(function () {
-      
         var ticksStyle = {
           fontColor: '#495057',
           fontStyle: 'bold'
         }
-      
         var mode = 'index'
         var intersect = false
 
         var $visitorsChart = $('#visitors-chart')
         // eslint-disable-next-line no-unused-vars
+        var $visitorsChart = $('#visitors-chart')
+        // eslint-disable-next-line no-unused-vars
         var visitorsChart = new Chart($visitorsChart, {
           data: {
-            labels: ['18th', '20th', '22nd', '24th', '26th', '28th', '30th'],
+            labels: labels,
             datasets: [{
               type: 'line',
-              data: [100, 120, 170, 167, 180, 177, 160],
+              data: mainData,
               backgroundColor: 'transparent',
               borderColor: '#007bff',
               pointBorderColor: '#007bff',
@@ -527,17 +533,6 @@ function getClassAttendance(){
               fill: false,
               pointHoverBackgroundColor: '#007bff',
               // pointHoverBorderColor    : '#007bff'
-            },
-            {
-              type: 'line',
-              data: [60, 80, 70, 67, 80, 77, 100],
-              backgroundColor: 'tansparent',
-              borderColor: '#ced4da',
-              pointBorderColor: '#ced4da',
-              pointBackgroundColor: '#ced4da',
-              fill: false
-              // pointHoverBackgroundColor: '#ced4da',
-              // pointHoverBorderColor    : '#ced4da'
             }]
           },
           options: {
@@ -551,35 +546,41 @@ function getClassAttendance(){
               intersect: intersect
             },
             legend: {
-              display: false
+              display: false,
             },
             scales: {
               yAxes: [{
                 // display: false,
                 gridLines: {
                   display: true,
+                  lineWidth: '4px',
+                  color: 'rgba(0, 0, 0, .2)',
+                  zeroLineColor: 'transparent'
                 },
                 ticks: $.extend({
-                  beginAtZero: true,
-                  suggestedMax: 200
+                  beginAtZero: false,
+                  suggestedMax: 8,
+                  suggestedMin: -1
+ 
                 }, ticksStyle)
               }],
               xAxes: [{
                 display: true,
                 gridLines: {
                   display: true,
-                 
+                  
                 },
                 ticks: ticksStyle
               }]
             }
           }
-        })      
-      
-  })
-      
-  })
-}
+        })  
+      })
+      //  ---$(function () 
+    }
+    });
+  });
+ }
 
 
 function getStudentAttendance(){
@@ -678,70 +679,6 @@ function getStudentAttendance(){
    
   })
 }
-
-
-function getClassAttendance1(){
-  fetch('class_attendance.php')
-  .then(response => response.text())
-  .then(html =>{
-      let parser = new DOMParser();
-      let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
-
-       //decraring x,y axis valiables
-       var dates = new Array();
-       var num =new Array();
-      contentWrapper.innerHTML = doc.innerHTML;
- /*converting php data to json 
-var name = <?php echo json_encode($row['Date']); ?>;
-var numb = <?php echo json_encode($row['N_O_attendance']); ?>;*/
-      dates.push(name);
-      num.push(numb);
-      
-
-      var ctx = document.getElementById('myChart').getContext('2d');
-    
-    
-      var chart = new Chart(ctx, {
-    // The type of chart we want to create
-    type: 'line',
-
-    // The data for our  dataset
-    data: {
-        labels: dates, //the variable we created ealier,
-        datasets: [{
-            label: '',
-            borderColor: 'rgb(255, 99, 132)',
-            data: num //the variable we created ealier
-        }]
-    },
-
-    // Configuration options go here
-    options: {
-        title: {
-            display: true,
-            text: 'STUDENT ATTANDANCE'
-        },
-        tooltips: {
-            // Disable the on-canvas tooltip
-            enabled: true,
-      
-        },
-        scales: {
-        yAxes: [{
-            display: true,
-            ticks: {
-                beginAtZero: true,
-                min: 0
-            }
-        }]
-    }
-    }
-
-   });
-
-  })
-}
-
 
 
 //get list of Hostels

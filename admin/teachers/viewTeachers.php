@@ -82,7 +82,7 @@
               echo "<td>";
                 if($res = mysqli_query($con, $sql2)){
             while($row2 = mysqli_fetch_array($res)){
-              echo "" . $row2['subject_name'] . "<br>";
+              echo "" . $row2['subject_name'] . ",<br>";
             }
           }
           echo "</td>";

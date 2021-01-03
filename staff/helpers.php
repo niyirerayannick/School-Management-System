@@ -87,14 +87,16 @@ else{
             ?>
                      <td>
                         <div class="icheck-success d-inline">
-                           <input type="checkbox" id= "<?php  echo $row['id'];  ?>" name="attended[]" value="1">
-                           <label for= "<?php  echo $row['id'];  ?>">
+                        <?php  $rondomId = $row['id'] == 0 ? -($row['id']+ 1000000): (-$row['id'])  ?>
+                           <input type="checkbox" id= "<?php  echo $rondomId  ?>" name="attended[]" value="1">
+                           <label for= "<?php  echo $rondomId;  ?>">
                            </label>
                         </div>
                     </td>
                     <td>
                         <div class="icheck-danger d-inline">
-                        <?php  $rondomId =$row['id'] * 1000 + 1000 ?>
+
+                        <?php  $rondomId =$row['id'] * 1000 + 1000?>
                            <input type="checkbox" id= "<?php  echo $rondomId;  ?>" name ='attended[]' value="0">
                            <label for= "<?php  echo $rondomId;  ?>">
                            </label>

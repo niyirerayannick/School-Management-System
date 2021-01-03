@@ -85,13 +85,15 @@ function deleteStudent($id){
 
 function viewStudentDetails($id){
   include("../config.php");
-  $sql = "SELECT * 
+  $sql = "SELECT
+  students.id,FullName,DOB,DOJ,RegNo,Photo,class_name, hostel_name ,parent_name , category_name , Gender,
+  sessions.Year,option_name,stream_name
   FROM 
-  students,classes,sessions,student_category,hostels,parents,streams,options 
-  WHERE 
-  students.class_id = classes.id and students.hostel_id = hostels.id and students.parent_id = parents.id 
-  and students.student_category = student_category.id and streams.class_id = students.class_id and streams.option_id = options.id 
-  and students.id ='$id'";
+  students,classes,sessions,student_category,hostels,parents,streams 
+  LEFT JOIN options on options.id = streams.option_id 
+  WHERE
+   students.hostel_id = hostels.id and students.parent_id = parents.id AND students.stream_id = streams.id AND streams.class_id = classes.id 
+   and students.student_category = student_category.id and students.id ='$id'";
 
   if($res = mysqli_query($con,$sql)){
     $row = mysqli_fetch_array($res);
@@ -220,8 +222,8 @@ function viewStudentDetails($id){
                               //$student_id = $row2[0];
                                if($ret=mysqli_query($con,"SELECT subject_id,subject_name,Date,COUNT(attended) as number_of_attendance FROM
                                 classattendance ,subjects,students WHERE 
-                                subjects.id = classattendance.subject_id and students.id = $id and classattendance.student_id = $id
-                                 GROUP BY subject_id,Date order by subject_id
+                                subjects.id = classattendance.subject_id and students.id = $id and classattendance.student_id = $id AND classattendance.attended = 1
+                                 GROUP BY subject_id,Date order by Date
                                "))
                                  {
                                       if(mysqli_num_rows($ret) > 0){
@@ -257,7 +259,9 @@ function viewStudentDetails($id){
                               //$sql = mysqli_query($con,"SELECT students.id FROM  students WHERE students.FullName LIKE '$id'");
                               //$row2 =mysqli_fetch_row($sql);
                               //$student_id = $row2[0];
-                               if($ret2=mysqli_query($con,"SELECT DISTINCT subject_name FROM classattendance ,subjects,students WHERE subjects.id = classattendance.subject_id and students.id = 0 and classattendance.student_id =0 GROUP BY subject_id, Date order by subject_id,Date
+                               if($ret2=mysqli_query($con,"SELECT DISTINCT subject_name FROM classattendance ,subjects,students WHERE
+                                subjects.id = classattendance.subject_id and students.id = $id and classattendance.student_id =$id
+                                GROUP BY subject_id, Date order by subject_id,Date
 
                                "))
                                  {
@@ -269,7 +273,7 @@ function viewStudentDetails($id){
                                       
                                           $subject_names = array();
                                           do {
-                                            array_push($subject_names,$row2['subject_name']);
+                                            array_push($subject_names, htmlentities($row2['subject_name']));
 
                                         }
                                        while($row2 = mysqli_fetch_array($ret2));

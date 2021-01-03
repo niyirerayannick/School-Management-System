@@ -146,7 +146,7 @@ navbar.addEventListener("click",function(e){
 
 
 contentWrapper.addEventListener('click', function(e) {
- // console.log(e.target.value);
+ //console.log(e.target.id);
 	if(e.target.id == 'viewEvent') {
 		getCalendar();
     }
@@ -225,7 +225,6 @@ contentWrapper.addEventListener('click', function(e) {
     deleteClass(e.target.value,'deleteClassBtn');
     } 
     else if(e.target.id == 'viewClassAttendance') {
-      e.preventDefault();
       getClassAttendance();
       } 
     else if(e.target.id == 'addOptionBtn'){
