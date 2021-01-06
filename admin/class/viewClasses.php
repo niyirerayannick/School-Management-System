@@ -26,7 +26,7 @@
                 <button class="btn btn-info card-title" id="newClass"> <i class="fa fa-plus"></i>  Add New Class</button>
               </div>
               <!-- /.card-header -->
-              <div class="card-body">
+              <div class="card-body" id='resultContainer'>
                 <table id="viewClassesTable" class="table table-bordered table-hover">
                   <thead>
                   <tr>
@@ -35,7 +35,7 @@
                                                  // Attempt select query execution
                                                  $sql = "SELECT 
                                                  class_name,option_name,stream_name,streams.id,abbreviation
-                                                 FROM classes,streams streams LEFT JOIN options on options.id = streams.option_id,sessions 
+                                                 FROM classes, streams LEFT JOIN options on options.id = streams.option_id,sessions 
                                                  WHERE
                                                  streams.class_id = classes.id
                                                  ORDER BY class_name";

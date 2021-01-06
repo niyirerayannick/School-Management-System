@@ -1,8 +1,6 @@
 //declaring elements
 let contentWrapper = document.querySelector('#content-wrapper'),
  navbar = document.querySelector('#navBar'),
- dashboard = document.querySelector("#dashboard"),
- Homedashboard = document.querySelector("#homeDashboard"),
  addStudent = document.querySelector('#addStudent'),
  viewStudents = document.querySelector('#viewStudents'),
  viewTeacher = document.querySelector('#viewTeachers'),
@@ -16,10 +14,14 @@ let contentWrapper = document.querySelector('#content-wrapper'),
   // console.log(e.target.id)
   switch(e.target.id){
     case 'requestLeave':
-      getContents("hr/requestLeave.php");
+      getRequestLeave();    //Date range as a button
+
      break;
      case 'classAttendanceHome':
       getContents("class/makeClassAttendance.php");
+     break;
+     case 'homeDashboard':
+      getContents("index2.php");
      break;
   }
 });
@@ -28,6 +30,9 @@ navbar.addEventListener("click",function(e){
   let target = e.target.parentNode;
  //console.log(target)
   switch (target.id) {
+    case  'dashboard':  
+    getContents("index2.php"); 
+    break;
     case  'highPerformingStudents':  
       getContents("students/viewHighPerformingStudents.php"); 
       break;
@@ -72,7 +77,10 @@ navbar.addEventListener("click",function(e){
       break; 
     case 'addExamResult':
         getContents("exam/addExamResult.php"); 
-      break;      
+      break; 
+    case 'timeTable':
+        getContents("viewAllTimeTables.php"); 
+      break;     
     default:
       break;
   }
@@ -85,6 +93,27 @@ contentWrapper.addEventListener('click', function(e) {
 	if(e.target.id == 'viewEvent') {
 	  	getCalendar();
        }
+      
+    //displaying image as a modal when a user clicks on it
+    else if(e.target.id == 'myImg') {
+      // Get the modal
+      var modal = document.getElementById("myModal");
+      var modalImg = document.getElementById("img01");
+
+      modal.style.display = "block";
+      modalImg.src = e.target.src;
+
+       // Get the image and insert it inside the modal - use its "alt" text as a caption
+      var img = document.getElementById("myImg");
+      var modalImg = document.getElementById("img01");
+      var captionText = document.getElementById("caption");
+      }
+      else if(e.target.className == 'close'){
+        // When the user clicks on <span> (x), close the modal
+         var modal = document.getElementById("myModal");
+          modal.style.display = "none";
+        }
+
     else if(e.target.id == 'checkAll'){
       let checkbox = document.querySelectorAll("input[value ='1']");
       let dangerBox = document.querySelectorAll("input[value ='0']");
@@ -116,6 +145,7 @@ contentWrapper.addEventListener('click', function(e) {
       makeAttendanceTable();
       }
 
+
     else if(e.target.id == 'listStudents') {
 		viewAllStudents();
     }
@@ -136,8 +166,8 @@ contentWrapper.addEventListener('click', function(e) {
     deleteStudent(e.target.value,'deleteStudentBtn');
     }
     else if(e.target.id == 'listStudents2') {
-      document.querySelector("#loading").style.display = 'block';
-      //viewAllStudents();
+      //document.querySelector("#loading").style.display = 'block';
+      viewAllStudents();
       }
     else if(e.target.id == 'viewStudentDetails') {
 
@@ -145,8 +175,8 @@ contentWrapper.addEventListener('click', function(e) {
     }  
 
     //add class submit btn
-   else if(e.target.id == 'addClassBtn') {
-    addNewClass();
+   else if(e.target.id == 'addExamResultBtn') {
+         addExamResult();
      }
     //add new class from the view class
    else if(e.target.id == 'newClass') {
@@ -341,9 +371,5 @@ addClass.addEventListener('click',getAddClass)
 
 //time table 
 timetable.addEventListener("click",getTimeTable)
-//homepage
-dashboard.addEventListener("click",loadDashboard)
-Homedashboard.addEventListener("click",loadDashboard)
 
-document.getElementById('classAttendanceHome').addEventListener("click",getClassAttendance);
 

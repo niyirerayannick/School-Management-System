@@ -35,7 +35,8 @@
 // Attempt select query execution
   $sql = "SELECT library.id, students.FullName,class_name,bookname,pdate,sdate,library.status FROM library,students,classes,streams
   LEFT JOIN options on options.id = streams.option_id,sessions
-  WHERE library.student_id = students.id AND students.stream_id = streams.id AND streams.class_id = classes.id and library.status= 'submitted'";
+  WHERE library.student_id = students.id AND students.stream_id = streams.id AND streams.class_id = classes.id and
+   library.status= 'submitted' AND sessions.status = 'active'";
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
       ?>

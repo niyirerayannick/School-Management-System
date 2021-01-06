@@ -66,6 +66,107 @@ include("config.php");
 <!-- ChartJs -->
  <link rel="stylesheet" type="text/css" href="../plugins/chart.js/Chart.min.css">
 <style>
+  <style>
+    /* Background Gradient for Analagous Colors */
+.coral
+{
+    background-color: #FF5078;
+    /* For WebKit (Safari, Chrome, etc) */
+    background: #FF5078 -webkit-gradient(linear, left top, left bottom, from(#f19147), to(#bd7137)) no-repeat;
+    /* Mozilla,Firefox/Gecko */
+    background: #FF5078 -moz-linear-gradient(top, #FF9C50, #FF5078) no-repeat;
+    /* IE 5.5 - 7 */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF9C50, endColorstr=#FF5078) no-repeat;
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF9C50, endColorstr=#FF9C50)" no-repeat;
+}
+
+#myImg {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#myImg:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+/* Caption of Modal Image */
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+
+/* Add Animation */
+.modal-content, #caption {  
+  -webkit-animation-name: zoom;
+  -webkit-animation-duration: 0.6s;
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+  from {-webkit-transform:scale(0)} 
+  to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+  from {transform:scale(0)} 
+  to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 40px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: rgb(196, 40, 40);
+  border-color: rgb(233, 13, 13);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  .modal-content {
+    width: 100%;
+  }
+}
   @media screen and (max-width: 580px) {
     .checkAllBtn{
       display: none;
@@ -189,8 +290,8 @@ include("config.php");
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" id='navBar'> 
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open" id="dashboard">
-            <a href="#" class="nav-link bg-navy active">
+          <li class="nav-item menu-open" >
+            <a href="#" class="nav-link bg-navy active" id="dashboard">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -270,13 +371,13 @@ include("config.php");
               </p>
             </a>
             <ul class="nav nav-treeview" >
-            <li class="nav-item" id='getExamResults'>
-                <a href="#" class="nav-link" id="viewExamResult">
+            <li class="nav-item" >
+                <a href="#" class="nav-link" id="addExamResult">
                   <i class="fa fa-plus nav-icon"></i>
                   <p>Add Exam Results</p>
                 </a>
               </li>
-              <li class="nav-item" id='getExamResults'>
+              <li class="nav-item">
                 <a href="#" class="nav-link" id="viewExamResult">
                   <i class="fa fa-pencil-alt nav-icon"></i>
                   <p>Exam Results</p>
@@ -372,8 +473,8 @@ include("config.php");
               
             </ul>
           </li>
-          <li class="nav-item" id= 'timeTable'>
-            <a href="#" class="nav-link">
+          <li class="nav-item" >
+            <a href="#" class="nav-link" id= 'timeTable'>
               <i class="nav-icon fas fa-clock"></i>
               <p>
                 Time Table

@@ -44,7 +44,7 @@
    LEFT JOIN options on options.id = streams.option_id 
    WHERE
     students.hostel_id = hostels.id and students.parent_id = parents.id AND students.stream_id = streams.id AND streams.class_id = classes.id 
-    and students.student_category = student_category.id";
+    and students.student_category = student_category.id AND sessions.status = 'active'";
     $total = 32423;
     $balance  =2345;
     $unpaid = 324;
@@ -72,8 +72,10 @@
                 echo "<td>" . $row['id'] . "</td>";
                 echo "<td><button id='viewStudentDetails' class='btn btn-outline-secondary btn-xs' value=" . $row['id'] . ">" . $row['FullName'] . "</td></button>";
                 echo "<td>" . $row['DOB'] . "</td>";
-                echo "<td><img src=" . $row['Photo'] . " class ='img img-thumbnail img-sm'></td>";
-                echo "<td>" . $row['RegNo'] . "</td>";
+                echo "<td>";?>
+                <img src="<?php echo htmlentities($row['Photo']) ?>" id='myImg' alt = 'No Photo' class ='img img-thumbnail img-sm'>
+                <?php
+                echo"</td>";                echo "<td>" . $row['RegNo'] . "</td>";
                 echo "<td>" . $row['class_name'] . "</td>";
                 if($row['option_name'] == NULL){
                   echo "<td>  - </td>";
@@ -105,17 +107,15 @@
                  
                   </tbody>
                 </table>
+                                    <!-- The Modal -->
+                                    <div id="myModal" class="modal">
+                   <span class="close">&times;</span>
+                   <img class="modal-content" id="img01">
+                   <div id="caption"></div>
+                 </div>
               </div>
               <!-- /.card-body -->
-              <div class="card-footer clearfix">
-                <ul class="pagination pagination-sm m-0 float-right">
-                  <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                </ul>
-              </div>
+
             </div>
             </div>
             <!-- /.card -->

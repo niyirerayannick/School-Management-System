@@ -37,7 +37,7 @@
                   <div class="form-group">
                     <label name="class-name">Select Class To View Fee Collection</label>
                     <input type="hidden" id="addNewClassForm" name="formId" value ="addNewClass">
-                    <select name="class-name" id="selectClassFees" class="form-control form-control-sm select2 select2-info">
+                    <select name="class-name" id="selectClassFees" class="form-control form-control-sm ">
                       <option disabled selected> Select Class To View Fee Collection</option>
                       <?php
                                   include '../config.php';

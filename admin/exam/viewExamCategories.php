@@ -29,7 +29,7 @@
               <div class="card-body table-responsive p-0" style="min-height:650px">
               <div class="row">
           
-              <div class="col-md-12">
+              <div class="col-md-6">
             <div class="card mt-2 ml-2">
             <div class="card-header">
                 <button class="btn btn-outline btn-secondary float-right card-title" onclick = "window.print()">

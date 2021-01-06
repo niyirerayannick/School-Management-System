@@ -51,11 +51,11 @@
    students.FullName,RegNo,examresults.id, subject_name,Marks,class_name,Year,stream_name,Term,category_name,option_name,
    students.id as student_id
     FROM 
-  examresults,students,classes,subjects,streams streams LEFT JOIN options on options.id = streams.option_id,sessions,exam_categories
+  examresults,students,classes,subjects, streams LEFT JOIN options on options.id = streams.option_id,sessions,exam_categories
    WHERE
   examresults.student_id = students.id AND students.stream_id = streams.id AND streams.class_id = classes.id
   AND subjects.id = examresults.subject_id AND
- examresults.exam_category = exam_categories.id ORDER BY class_name ";
+ examresults.exam_category = exam_categories.id AND sessions.status = 'active' ORDER BY FullName ";
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";

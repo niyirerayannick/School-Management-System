@@ -68,7 +68,7 @@
                                              </div>
                                              <div class="form-group" style= "display:none" id="optionDiv">
                                                <label>Option <span class="text-danger">*</span> </label>
-                                               <select id='optionSelect' name= "option_name" class="form-control form-control-sm select2 select2-info"
+                                               <select id='optionSelect' name= "stream_name" class="form-control form-control-sm select2 select2-info"
                                                data-dropdown-css-class="select2-info" style="width: 100%;">
                     
                                                </select>
@@ -90,16 +90,12 @@
                                      </div>
                                      <!-- /.col-md-5 -->
                                      <div class="col-md-9" id='classAttendanceChart'>
-                  
-                                     <div class='row'>
-      <div class='col-md-8' style="display:none" id="empty">
+                                     </div>
+       <div class="col-md-3" style="display:none" id="empty">
         <div class='callout callout-danger '>
         <h5><i class='icon fas fa-bullhorn'></i> No Chart Analytics!</h5>
        There are no record of attendance for this class in  the database
         </div>
-   </div>
-
-                                     </div>
                                    </div>
                                    <!-- /.row -->
                                  </div>

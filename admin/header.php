@@ -565,22 +565,17 @@ include("config.php");
               </p>
             </a>
             <ul class="nav nav-treeview" id="fees">
+
+              <li class="nav-item">
+                <a href="#" class="nav-link" id="feesCollection">
+                  <i class="fa fa-edit nav-icon"></i>
+                  <p>School Fees Collection</p>
+                </a>
+              </li>
               <li class="nav-item">
                 <a href="#" class="nav-link" id="viewFeesStructure">
                   <i class="fa fa-eye nav-icon"></i>
-                  <p>View School Fees Structure</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link" id="changeFeesStructure">
-                  <i class="fa fa-edit nav-icon"></i>
-                  <p>Change School Fees Structure</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link" id="recentFeesCollection">
-                  <i class="fa fa-book nav-icon"></i>
-                  <p>Recent Fees Collection</p>
+                  <p>School Fees Structure</p>
                 </a>
               </li>
             </ul>

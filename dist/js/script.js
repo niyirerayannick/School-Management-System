@@ -481,7 +481,7 @@ function viewAllClasses(){
    $(function () {
     $("#viewClassesTable").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      "buttons": ["csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#viewClassesTable_wrapper .col-md-6:eq(0)');
 
   });
@@ -500,6 +500,7 @@ function getClassAttendance(){
      if(data == 1){
             document.getElementById("empty").style.display = 'block';
      }else {
+      document.getElementById("empty").style.display = 'none';
 
       let doc = document.querySelector('#myChart');
       document.querySelector("#classAttendanceChart").innerHTML = data;
@@ -814,7 +815,7 @@ viewAllHostels();
 
 //get list of Fees Collection
 function viewFeesCollection(){
-  fetch('school-fees/viewFeesCollection.php')
+  fetch('school_fees/viewFeesCollection.php')
   .then(response => response.text())
   .then(html =>{
       let parser = new DOMParser();
@@ -824,7 +825,7 @@ function viewFeesCollection(){
 }
 
 function getChangeFeeStructure(){
-  fetch("school-fees/changeFeesStructure.php")
+  fetch("school_fees/changeFeesStructure.php")
   .then(response => response.text())
   .then(html =>{
       let parser = new DOMParser();
@@ -834,7 +835,7 @@ function getChangeFeeStructure(){
 }
 
 function viewFeesStructure(){
-  fetch("school-fees/ViewFeesStructure.php")
+  fetch("school_fees/ViewFeesStructure.php")
   .then(response => response.text())
   .then(html =>{
       let parser = new DOMParser();
@@ -844,7 +845,7 @@ function viewFeesStructure(){
 }
   
 function addNewFees(){
-  fetch("school-fees/changeFeesStructure.php")
+  fetch("school_fees/changeFeesStructure.php")
   .then(response => response.text())
   .then(html =>{
       let parser = new DOMParser();
@@ -853,7 +854,56 @@ function addNewFees(){
   })
 }
 
+function getAddNewFeesCollection(studentId){
+
+
+  $.post("school_fees/addFeesCollectionStudent.php", studentId, function(data){
+    document.getElementById("settings").innerHTML  = data;
+       // Display the returned data in browser
+       if(data == 1){
+                  
+        var Toast = Swal.mixin({
+        toast: true,
+         position: 'top',
+        showConfirmButton: false,
+        timer: 3000
+          });
+                Toast.fire({
+        icon: 'success',
+        title: 'Fees Structure Changed Successfully'
+                 });
+         viewFeesStructure();
+         }  
+
+   });
+
+      //Initialize Select2 Elements
+      $('.select2').select2()
+
+      //Initialize Select2 Elements
+      $('.select2bs4').select2({
+        theme: 'bootstrap4'
+      })
+}
  
+function addNewFeesCollection(){
+  fetch("school_fees/addFeesCollection.php")
+  .then(response => response.text())
+  .then(html =>{
+      let parser = new DOMParser();
+      let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
+      contentWrapper.innerHTML = doc.innerHTML;
+  })
+
+      //Initialize Select2 Elements
+      $('.select2').select2()
+
+      //Initialize Select2 Elements
+      $('.select2bs4').select2({
+        theme: 'bootstrap4'
+      })
+}
+
 function changeFeesStructure(){
   //console.log('here we are');
   $("form").submit(function(event){
@@ -863,7 +913,7 @@ function changeFeesStructure(){
    /* Serialize the submitted form control values to be sent to the web server with the request */
    let formValues = $(this).serialize();
    // Send the form data using post
-   $.post("school-fees/fees-dm.php", formValues, function(data){
+   $.post("school_fees/fees-dm.php", formValues, function(data){
     contentWrapper.innerHTML = data;
        // Display the returned data in browser
        if(data == 1){
@@ -884,6 +934,37 @@ function changeFeesStructure(){
    });
 });
 }
+
+function addFeesCollection(){
+  //console.log('here we are');
+  $("form").submit(function(event){
+   // Stop form from submitting normally
+   event.preventDefault();
+   
+   /* Serialize the submitted form control values to be sent to the web server with the request */
+   let formValues = $(this).serialize();
+   // Send the form data using post
+   $.post("school_fees/fees-dm.php", formValues, function(data){
+    contentWrapper.innerHTML = data;
+       // Display the returned data in browser
+       if(data == 1){
+        var Toast = Swal.mixin({
+        toast: true,
+         position: 'top',
+        showConfirmButton: false,
+        timer: 3000
+          });
+                Toast.fire({
+        icon: 'success',
+        title: 'Fees Collection Added Successfully'
+                 });
+         viewFeesCollection();
+         }  
+
+   });
+});
+}
+
 
 //get list of leaves
 function viewAllLeaves(){
@@ -932,7 +1013,7 @@ function deleteFees(value,classId){
 }
 
 function deleteFeesStructure(value,classId){
-  $.post("school-fees/fees-dm.php", {
+  $.post("school_fees/fees-dm.php", {
     value: value,
     formId: classId
   },
@@ -958,7 +1039,7 @@ function deleteFeesStructure(value,classId){
 
 function selectUpdateFees(value,classId){
 
-  $.post("school-fees/fees-dm.php", {
+  $.post("school_fees/fees-dm.php", {
     value: value,
     formId: classId
   },
@@ -1014,7 +1095,7 @@ function updateFeesStructure(){
   /* Serialize the submitted form control values to be sent to the web server with the request */
   let formValues = $(this).serialize();
   // Send the form data using post
-    $.post("school-fees/fees-dm.php",formValues,function(data){
+    $.post("school_fees/fees-dm.php",formValues,function(data){
   // Display the returned data in browser
   console.log(formValues);
    if(data == 1){

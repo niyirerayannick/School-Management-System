@@ -11,27 +11,25 @@
     <input type="radio" id= "3" name="status" value='no'>adsf
 </div>
 <div>
-    <table border="1">
-        <tr>
-            <th>le</th>
-            <th colspan="2">le</th>
-        </tr>
-        <tr>
-            <td>d1</td>
-            <td>d1</td>
-            <td>d1</td>
+   <button id="deleteStudent">deleteStudent</button>
 
-        </tr>
-    </table>
+    <ul class="nav nav-treeview" id='student'>
+        <li class="nav-item" id='addStudent'>
+          <a href="#" class="nav-link">
+            <i class="fas fa-user-plus fa-sm nav-icon"></i>
+             <p id='paragraph'>kevin</p>
+        </a>
+        </li>
+   </ul>
 </div>
 
     <script >
+    let p =   document.getElementById("deleteStudent");
       let checkbox = document.querySelectorAll("input[value ='yes']" );
-      console.log(checkbox)
 
  let btn = document.querySelector("button");
 document.getElementById("wrapper").addEventListener("click",function (e) {
-    if(e.target.id == 'checkAll'){
+    if(e.target.id == 'deleteStudent'){
         checkbox.forEach(box => console.log(box.checked));
     }
 });

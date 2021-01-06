@@ -211,7 +211,15 @@ $teacher_id = $_SESSION["user_id"];
                 <thead>
               <?php
 // Attempt select query execution
-  $sql = "SELECT * FROM students,classes where classes.id = students.class_id limit 1,9";
+  $sql = "SELECT
+  students.id,FullName,DOB,DOJ,RegNo,Photo,class_name, hostel_name ,parent_name , category_name ,
+  sessions.Year,option_name,stream_name
+  FROM 
+  students,classes,sessions,student_category,hostels,parents,streams 
+  LEFT JOIN options on options.id = streams.option_id 
+  WHERE
+   students.hostel_id = hostels.id and students.parent_id = parents.id AND students.stream_id = streams.id AND streams.class_id = classes.id 
+   and students.student_category = student_category.id AND sessions.status = 'active' limit 1,9";
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";

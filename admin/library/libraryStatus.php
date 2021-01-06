@@ -44,7 +44,7 @@
 // Attempt select query execution
   $sql = "SELECT library.id, students.FullName,class_name,bookname,pdate,sdate,library.status FROM library,students,classes,streams
    LEFT JOIN options on options.id = streams.option_id,sessions
-   WHERE library.student_id = students.id AND students.stream_id = streams.id AND streams.class_id = classes.id ORDER BY class_name";
+   WHERE library.student_id = students.id AND students.stream_id = streams.id AND streams.class_id = classes.id AND sessions.status = 'active' ORDER BY class_name";
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";

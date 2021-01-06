@@ -1,7 +1,7 @@
 contentWrapper.addEventListener('change', function(e) {
-    if(e.target.id == 'classTimeTable' || e.target.id == 'studentClass' ) {
-  getOption(e.target) 
-     }
+      if(e.target.id == 'classTimeTable' || e.target.id == 'studentClass' ) {
+         getOption(e.target) 
+        }
   
       else if(e.target.id =='optionSelect'){
    getStream(e.target);
@@ -9,9 +9,9 @@ contentWrapper.addEventListener('change', function(e) {
      else if(e.target.id == 'selectClassFees'){
        getFeesTable(e.target);
      }
-     else if(e.target.id == 'selectClassAttendance'){
-       //getAttandanceTable(e.target);
-     }
+    else if(e.target.id == 'selectClassFees'){
+      getFeesTable();
+      }
      else if(e.target.id == 'className'){
        if(e.target.value == 's4' || e.target.value == 's5' || e.target.value == 's6'
        || e.target.value == 'S4'||e.target.value == 'S5'||e.target.value == 'S6'){
@@ -131,7 +131,7 @@ contentWrapper.addEventListener('change', function(e) {
 
 
  function getFeesTable(target){
-
+    
               $.post("helpers.php",{
                   class_id: target.value,
                   formId:'getFeesTable'
@@ -145,7 +145,7 @@ contentWrapper.addEventListener('change', function(e) {
                  //  handle errors from the server
                 }else {
                 //document.querySelector("#viewFeesTable").innerHTML = data;
-                document.querySelector("#viewAttandanceTable").innerHTML = data;
+                document.querySelector("#viewFeesTable").innerHTML = data;
                 document.querySelector("#big").className = 'col-md-6';
                 document.querySelector("#small").className = 'col-md-6';
 

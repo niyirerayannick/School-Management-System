@@ -15,6 +15,13 @@ function getContents(location){
         let parser = new DOMParser();
         let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
         contentWrapper.innerHTML = doc.innerHTML;
+      //Initialize Select2 Elements
+      $('.select2').select2()
+
+      //Initialize Select2 Elements
+      $('.select2bs4').select2({
+       theme: 'bootstrap4'
+      })
   })
   }
 

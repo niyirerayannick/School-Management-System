@@ -51,7 +51,7 @@
    LEFT JOIN options on options.id = streams.option_id 
    WHERE
     students.hostel_id = hostels.id and students.parent_id = parents.id AND students.stream_id = streams.id AND streams.class_id = classes.id 
-    and students.student_category = student_category.id";
+    and students.student_category = student_category.id AND sessions.status = 'active'";
     $total = 32423;
     $balance  =2345;
     $unpaid = 324;
@@ -87,7 +87,6 @@
 
                  if(!file_exists("$photo")){
                   clearstatcache();
-
                 ?>
                <td>
                  <img src="<?php echo htmlentities($row['Photo']) ?>" id='myImg' alt = 'No Photo' class ='img img-thumbnail img-sm'>

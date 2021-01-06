@@ -1,6 +1,5 @@
 <?php
    include("config.php");
-    
     $stream_id = $_POST['stream_name'];
    if($ret=mysqli_query($con,"SELECT Date,streams.id, count(students.id) as number_of_attendance FROM classattendance,students,streams WHERE
     students.id = classattendance.student_id and students.stream_id = streams.id AND streams.id = $stream_id AND attended = 1 GROUP BY Date order by Date

@@ -135,70 +135,6 @@ function getClassAttendance(){
 }
 
 
-function getClassAttendance1(){
-  fetch('class_attendance.php')
-  .then(response => response.text())
-  .then(html =>{
-      let parser = new DOMParser();
-      let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
-
-       //decraring x,y axis valiables
-       var dates = new Array();
-       var num =new Array();
-      contentWrapper.innerHTML = doc.innerHTML;
- /*converting php data to json 
-var name = <?php echo json_encode($row['Date']); ?>;
-var numb = <?php echo json_encode($row['N_O_attendance']); ?>;*/
-      dates.push(name);
-      num.push(numb);
-      
-
-      var ctx = document.getElementById('myChart').getContext('2d');
-    
-    
-      var chart = new Chart(ctx, {
-    // The type of chart we want to create
-    type: 'line',
-
-    // The data for our  dataset
-    data: {
-        labels: dates, //the variable we created ealier,
-        datasets: [{
-            label: '',
-            borderColor: 'rgb(255, 99, 132)',
-            data: num //the variable we created ealier
-        }]
-    },
-
-    // Configuration options go here
-    options: {
-        title: {
-            display: true,
-            text: 'STUDENT ATTANDANCE'
-        },
-        tooltips: {
-            // Disable the on-canvas tooltip
-            enabled: true,
-      
-        },
-        scales: {
-        yAxes: [{
-            display: true,
-            ticks: {
-                beginAtZero: true,
-                min: 0
-            }
-        }]
-    }
-    }
-
-   });
-
-  })
-}
-
-
-
 //get list of Hostels
 function viewAllHostels(){
   fetch('hostels/viewHostels.php')
@@ -208,119 +144,6 @@ function viewAllHostels(){
       let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
       contentWrapper.innerHTML = doc.innerHTML;
   })
-}
-
-
-function getAddHostel(){
-  fetch('hostels/addNewHostel.php')
-  .then(response => response.text())
-  .then(html =>{
-      let parser = new DOMParser();
-      let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
-      contentWrapper.innerHTML = doc.innerHTML;
-  })
-}
-
-function addHostel(){
-  $("form").submit(function(event){
-   // Stop form from submitting normally
-   event.preventDefault();
-   
-   /* Serialize the submitted form control values to be sent to the web server with the request */
-   let formValues = $(this).serialize();
-   // Send the form data using post
-   $.post("hostels/hostel-dm.php", formValues, function(data){
-       // Display the returned data in browser
-       if(data == 1){
-                  
-        var Toast = Swal.mixin({
-        toast: true,
-         position: 'top',
-        showConfirmButton: false,
-        timer: 3000
-          });
-                Toast.fire({
-        icon: 'success',
-        title: 'Hostel Added Successfully'
-                 });
-         viewAllHostels();
-         }  
-
-   });
-});
-}
-
-function deleteHostel(value,classId){
-  $.post("hostels/hostel-dm.php", {
-    value: value,
-    formId: classId
-  },
-  function(data){
-    contentWrapper.innerHTML = data;
-
-    if(data == 1){
-                  
-      var Toast = Swal.mixin({
-      toast: true,
-       position: 'top',
-      showConfirmButton: false,
-      timer: 3000
-        });
-              Toast.fire({
-      icon: 'error',
-      title: 'Hostel Deleted Successfully'
-               });
-       viewAllHostels();
-       }   
-      })
-}
-
-function selectUpdateHostel(value,classId){
-
-  $.post("hostels/hostel-dm.php", {
-    value: value,
-    formId: classId
-  },
-  function(data){
-    contentWrapper.innerHTML = data;
-  })
-    //Initialize Select2 Elements
-    $('.select2').select2()
-
-    //Initialize Select2 Elements
-    $('.select2bs4').select2({
-      theme: 'bootstrap4'
-    })
-  }
-
-function updateHostel(){
-$("form").submit(function(event){ 
-// Stop form from submitting normally
-event.preventDefault();
-
-/* Serialize the submitted form control values to be sent to the web server with the request */
-let formValues = $(this).serialize();
-// Send the form data using post
-  //let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
-  $.post("hostels/hostel-dm.php",formValues,function(data){
-// Display the returned data in browser
- if(data == 1){
-              
-  var Toast = Swal.mixin({
-  toast: true,
-   position: 'top',
-  showConfirmButton: false,
-  timer: 3000
-    });
-          Toast.fire({
-  icon: 'success',
-  title: 'Hostel Updated Successfully'
-});
-viewAllHostels();
-}     
-})
-   
-})
 }
 
 //get list of Fees Collection
@@ -354,48 +177,7 @@ function viewFeesStructure(){
       contentWrapper.innerHTML = doc.innerHTML;
   })
 }
-  
-function addNewFees(){
-  fetch("school-fees/changeFeesStructure.php")
-  .then(response => response.text())
-  .then(html =>{
-      let parser = new DOMParser();
-      let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
-      contentWrapper.innerHTML = doc.innerHTML;
-  })
-}
 
- 
-function changeFeesStructure(){
-  //console.log('here we are');
-  $("form").submit(function(event){
-   // Stop form from submitting normally
-   event.preventDefault();
-   
-   /* Serialize the submitted form control values to be sent to the web server with the request */
-   let formValues = $(this).serialize();
-   // Send the form data using post
-   $.post("school-fees/fees-dm.php", formValues, function(data){
-    contentWrapper.innerHTML = data;
-       // Display the returned data in browser
-       if(data == 1){
-                  
-        var Toast = Swal.mixin({
-        toast: true,
-         position: 'top',
-        showConfirmButton: false,
-        timer: 3000
-          });
-                Toast.fire({
-        icon: 'success',
-        title: 'Fees Structure Changed Successfully'
-                 });
-         viewFeesStructure();
-         }  
-
-   });
-});
-}
 
 //get list of leaves
 function viewAllLeaves(){
@@ -419,138 +201,45 @@ function getLeaveManagement(){
   })
 }
 
-function deleteFees(value,classId){
-  $.post("hr/hr-dm.php", {
-    value: value,
-    formId: classId
-  },
-  function(data){
+function getRequestLeave (){
+  fetch("hr/requestLeave.php")
+  .then(response =>  response.text())
+  .then(html => {
+      //contentWrapper.innerHTML = html
+      let parser = new DOMParser();
+      let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
+      contentWrapper.innerHTML = doc.innerHTML;
 
-    if(data == 1){
-                  
-      var Toast = Swal.mixin({
-      toast: true,
-       position: 'top',
-      showConfirmButton: false,
-      timer: 3000
-        });
-              Toast.fire({
-      icon: 'error',
-      title: 'Fees Deleted Successfully'
-               });
-       viewAllFeess();
-       }   
+      $('#daterange-btn').daterangepicker(
+        {
+          ranges   : {
+            '3 Days'       : [moment(), moment()],
+            '1 Week'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            '2 Weeks' : [moment().subtract(6, 'days'), moment()],
+            '1 Month': [moment().subtract(29, 'days'), moment()],
+
+          },
+          startDate: moment().subtract(29, 'days'),
+          endDate  : moment()
+        },
+        function (start, end) {
+          $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+        }
+      )
+
+      $('#daterange-btn"]').click('apply.daterangepicker', function(ev, picker) {
+        console.log(ev)
+     });
+
+      //Initialize Select2 Elements
+      $('.select2').select2()
+
+      //Initialize Select2 Elements
+      $('.select2bs4').select2({
+       theme: 'bootstrap4'
       })
-}
-
-function deleteFeesStructure(value,classId){
-  $.post("school-fees/fees-dm.php", {
-    value: value,
-    formId: classId
-  },
-  function(data){
-
-    if(data == 1){
-                  
-      var Toast = Swal.mixin({
-      toast: true,
-       position: 'top',
-      showConfirmButton: false,
-      timer: 3000
-        });
-              Toast.fire({
-      icon: 'error',
-      title: 'Fees Structure Deleted Successfully'
-               });
-       viewFeesStructure();
-       }   
-      })
-}
-
-
-function selectUpdateFees(value,classId){
-
-  $.post("school-fees/fees-dm.php", {
-    value: value,
-    formId: classId
-  },
-  function(data){
-    contentWrapper.innerHTML = data;
-  })
-    //Initialize Select2 Elements
-    $('.select2').select2()
-
-    //Initialize Select2 Elements
-    $('.select2bs4').select2({
-      theme: 'bootstrap4'
-    })
-  }
-
-function updateFees(){
-$("form").submit(function(event){
-// Stop form from submitting normally
-event.preventDefault();
-
-/* Serialize the submitted form control values to be sent to the web server with the request */
-let formValues = $(this).serialize();
-// Send the form data using post
-  $.post("hr/hr-dm.php",formValues,function(data){
-// Display the returned data in browser
-console.log(formValues);
- if(data == 1){
-              
-  var Toast = Swal.mixin({
-  toast: true,
-   position: 'top',
-  showConfirmButton: false,
-  timer: 3000
-    });
-          Toast.fire({
-  icon: 'success',
-  title: 'Fees Updated Successfully'
-});
-viewAllFeess();
-}     
-contentWrapper.innerHTML = data;
-
-})
-   
 })
 }
-
-function updateFeesStructure(){
-  $("form").submit(function(event){
-  // Stop form from submitting normally
-  event.preventDefault();
-  
-  /* Serialize the submitted form control values to be sent to the web server with the request */
-  let formValues = $(this).serialize();
-  // Send the form data using post
-    $.post("school-fees/fees-dm.php",formValues,function(data){
-  // Display the returned data in browser
-  console.log(formValues);
-   if(data == 1){
-                
-    var Toast = Swal.mixin({
-    toast: true,
-     position: 'top',
-    showConfirmButton: false,
-    timer: 3000
-      });
-            Toast.fire({
-    icon: 'success',
-    title: 'Fees Structure Updated Successfully'
-  });
-  viewFeesStructure();
-  }     
-  contentWrapper.innerHTML = data;
-  
-  })
-     
-  })
-  }
-
-
 
 //get calendar
   
@@ -744,11 +433,59 @@ function getExamCategories(){
   .then(html =>{
       let parser = new DOMParser();
       let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
-      console.log(doc);
       contentWrapper.innerHTML = doc.innerHTML;
   })
 }
 
+function getAddExamResult(){
+  fetch("exam/addExamResult.php")
+  .then(response => response.text())
+  .then(html =>{
+      let parser = new DOMParser();
+      let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
+      contentWrapper.innerHTML = doc.innerHTML;
+      //Initialize Select2 Elements
+      $('.select2').select2()
+
+      //Initialize Select2 Elements
+      $('.select2bs4').select2({
+       theme: 'bootstrap4'
+      })
+      
+      $('[data-mask]').inputmask()
+
+  })
+}
+
+function addExamResult(){
+  $("form").submit(function(event){
+    // Stop form from submitting normally
+    event.preventDefault();
+    
+    /* Serialize the submitted form control values to be sent to the web server with the request */
+    let formValues = $(this).serialize();
+    // Send the form data using post
+    $.post("exam/exam-dm.php", formValues, function(data){
+      console.log(data);
+        // Display the returned data in browser
+        if(data == 1){
+                   
+         var Toast = Swal.mixin({
+         toast: true,
+          position: 'top',
+         showConfirmButton: false,
+         timer: 3000
+           });
+                 Toast.fire({
+         icon: 'success',
+         title: 'Exam Results Added Successfully'
+                  });
+          viewSubjects();
+          }  
+ 
+    });
+ });
+}
 
 function viewBookSubmission(){
   fetch("library/viewBookSubmission.php")
@@ -758,24 +495,6 @@ function viewBookSubmission(){
       let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
       contentWrapper.innerHTML = doc.innerHTML;
   })
-}
-
-function getlendNewBook(){
-  fetch("library/lendNewBook.php")
-  .then(response => response.text())
-  .then(html =>{
-      let parser = new DOMParser();
-      let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
-      contentWrapper.innerHTML = doc.innerHTML;
-      //Initialize Select2 Elements
-   $('.select2').select2()
-    
-   //Initialize Select2 Elements
-   $('.select2bs4').select2({
-     theme: 'bootstrap4'
-   })
-  })
-   
 }
 
 function getLibraryStatus(){
@@ -796,114 +515,6 @@ function getLibraryStatus(){
    
 }
 
-function lendNewBook(){
-
-  $("form").submit(function(event){
-   // Stop form from submitting normally
-   event.preventDefault();
-   console.log("hi");
-
-   /* Serialize the submitted form control values to be sent to the web server with the request */
-   let formValues = $(this).serialize();
-
-   // Send the form data using post
-   $.post("library/library-dm.php", formValues, function(data){
-           console.log(formValues);
-           contentWrapper.innerHTML =data;
-
-       // Display the returned data in browser
-       if(data == 1){
-                  
-        var Toast = Swal.mixin({
-        toast: true,
-         position: 'top',
-        showConfirmButton: false,
-        timer: 3000
-          });
-                Toast.fire({
-        icon: 'success',
-        title: 'New Book Lend Successfully'
-                 });
-         viewBookSubmission();
-         }  
-
-   });
-});
-}
-
-function deleteLibrary(value,classId){
-  $.post("library/library-dm.php", {
-    value: value,
-    formId: classId
-  },
-  function(data){
-console.log(data);
-    if(data == 1){
-                  
-      var Toast = Swal.mixin({
-      toast: true,
-       position: 'top',
-      showConfirmButton: false,
-      timer: 3000
-        });
-              Toast.fire({
-      icon: 'error',
-      title: 'One book Deleted From Library Deleted Successfully'
-               });
-       viewBookSubmission();
-       }   
-      })
-}
-
-function selectUpdateLibrary(value,classId){
-
-  $.post("library/library-dm.php", {
-    value: value,
-    formId: classId
-  },
-  function(data){
-    
-    contentWrapper.innerHTML = data;
-  })
-    //Initialize Select2 Elements
-    $('.select2').select2()
-
-    //Initialize Select2 Elements
-    $('.select2bs4').select2({
-      theme: 'bootstrap4'
-    })
-  }
-
-
-function updateLibrary(){
-$("form").submit(function(event){
-// Stop form from submitting normally
-event.preventDefault();
-
-/* Serialize the submitted form control values to be sent to the web server with the request */
-let formValues = $(this).serialize();
-// Send the form data using post
-  $.post("library/library-dm.php",formValues,function(data){
-// Display the returned data in browser
-console.log(formValues);
- if(data == 1){
-              
-  var Toast = Swal.mixin({
-  toast: true,
-   position: 'top',
-  showConfirmButton: false,
-  timer: 3000
-    });
-          Toast.fire({
-  icon: 'success',
-  title: 'Library Updated Successfully'
-});
-viewBookSubmission();
-}     
-})
-   
-})
-}
 
 //get list of Employees
 function viewAllEmployees(){
@@ -916,47 +527,7 @@ function viewAllEmployees(){
   })
 }
 
-
-function addNewEmployee(){
-  fetch("hr/addNewEmployee.php")
-  .then(response => response.text())
-  .then(html =>{
-      let parser = new DOMParser();
-      let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
-      contentWrapper.innerHTML = doc.innerHTML;
-  })
-}
-
  
-function addEmployee(){
-  $("form").submit(function(event){
-   // Stop form from submitting normally
-   event.preventDefault();
-   
-   /* Serialize the submitted form control values to be sent to the web server with the request */
-   let formValues = $(this).serialize();
-   // Send the form data using post
-   $.post("hr/hr-dm.php", formValues, function(data){
-    contentWrapper.innerHTML = data;
-       // Display the returned data in browser
-       if(data == 1){
-                  
-        var Toast = Swal.mixin({
-        toast: true,
-         position: 'top',
-        showConfirmButton: false,
-        timer: 3000
-          });
-                Toast.fire({
-        icon: 'success',
-        title: 'New Employee Added Successfully'
-                 });
-         viewAllEmployees();
-         }  
-
-   });
-});
-}
 //get list of Employees
 function viewAllLeaves(){
   fetch('hr/viewEmployees.php')
@@ -979,114 +550,6 @@ function getLeaveManagement(){
   })
 }
 
-  function acceptLeave(value,classId){
-    $.post("hr/hr-dm.php", {
-      value: value,
-      formId: classId
-    },
-    function(data){
-  
-      if(data == 1){
-                    
-        var Toast = Swal.mixin({
-        toast: true,
-         position: 'left',
-        showConfirmButton: false,
-        timer: 3000
-          });
-                Toast.fire({
-        icon: 'success',
-        title: 'Employee Leave Accepted'
-                 });
-         getLeaveManagement();
-         }   
-        })
-  }
-
-
-function deleteEmployee(value,classId){
-  $.post("hr/hr-dm.php", {
-    value: value,
-    formId: classId
-  },
-  function(data){
-
-    if(data == 1){
-                  
-      var Toast = Swal.mixin({
-      toast: true,
-       position: 'top',
-      showConfirmButton: false,
-      timer: 3000
-        });
-              Toast.fire({
-      icon: 'error',
-      title: 'Employee Deleted Successfully'
-               });
-       viewAllEmployees();
-       }   
-      })
-}
-
-function selectUpdateEmployee(value,classId){
-
-  $.post("hr/hr-dm.php", {
-    value: value,
-    formId: classId
-  },
-  function(data){
-    contentWrapper.innerHTML = data;
-  })
-    //Initialize Select2 Elements
-    $('.select2').select2()
-
-    //Initialize Select2 Elements
-    $('.select2bs4').select2({
-      theme: 'bootstrap4'
-    })
-  }
-
-function updateEmployee(){
-$("form").submit(function(event){
-// Stop form from submitting normally
-event.preventDefault();
-
-/* Serialize the submitted form control values to be sent to the web server with the request */
-let formValues = $(this).serialize();
-// Send the form data using post
-  $.post("hr/hr-dm.php",formValues,function(data){
-// Display the returned data in browser
-console.log(formValues);
- if(data == 1){
-              
-  var Toast = Swal.mixin({
-  toast: true,
-   position: 'top',
-  showConfirmButton: false,
-  timer: 3000
-    });
-          Toast.fire({
-  icon: 'success',
-  title: 'Employee Updated Successfully'
-});
-viewAllEmployees();
-}     
-contentWrapper.innerHTML = data;
-
-})
-   
-})
-}
-
-function addNewSubject(){
-  fetch("subjects/addSubject.php")
-  .then(response => response.text())
-  .then(html =>{
-      let parser = new DOMParser();
-      let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
-      contentWrapper.innerHTML = doc.innerHTML;
-  })
-}
 
 function viewSubjects(){
   fetch("subjects/viewsubjects.php")
@@ -1098,35 +561,6 @@ function viewSubjects(){
   })
 }
 
-function addSubject(){
-  $("form").submit(function(event){
-   // Stop form from submitting normally
-   event.preventDefault();
-   
-   /* Serialize the submitted form control values to be sent to the web server with the request */
-   let formValues = $(this).serialize();
-   // Send the form data using post
-   $.post("subjects/subject-dm.php", formValues, function(data){
-     console.log(formValues);
-       // Display the returned data in browser
-       if(data == 1){
-                  
-        var Toast = Swal.mixin({
-        toast: true,
-         position: 'top',
-        showConfirmButton: false,
-        timer: 3000
-          });
-                Toast.fire({
-        icon: 'success',
-        title: 'New Subject Added Successfully'
-                 });
-         viewSubjects();
-         }  
-
-   });
-});
-}
 
 function deleteSubject(value,classId){
   $.post("subjects/subject-dm.php", {
@@ -1221,117 +655,3 @@ function viewBanks(){
     })
 }
 
-
-function addNewBank(){
-  fetch("banks/addNewBank.php")
-  .then(response => response.text())
-  .then(html =>{
-      let parser = new DOMParser();
-      let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
-      contentWrapper.innerHTML = doc.innerHTML;
-  })
-
-}
-  
-function addBank(){
-  $("form").submit(function(event){
-   // Stop form from submitting normally
-   event.preventDefault();
-   
-   /* Serialize the submitted form control values to be sent to the web server with the request */
-   let formValues = $(this).serialize();
-   // Send the form data using post
-   $.post("banks/bank-dm.php", formValues, function(data){
-       // Display the returned data in browser
-       if(data == 1){
-                  
-        var Toast = Swal.mixin({
-        toast: true,
-         position: 'top',
-        showConfirmButton: false,
-        timer: 3000
-          });
-                Toast.fire({
-        icon: 'success',
-        title: 'New Bank Added Successfully'
-                 });
-         viewBanks();
-         }  
-
-   });
-});
-}
-
-function deleteBank(value,classId){
-  $.post("banks/bank-dm.php", {
-    value: value,
-    formId: classId
-  },
-  function(data){
-
-    if(data == 1){
-                  
-      var Toast = Swal.mixin({
-      toast: true,
-       position: 'top',
-      showConfirmButton: false,
-      timer: 3000
-        });
-              Toast.fire({
-      icon: 'error',
-      title: 'Bank Deleted Successfully'
-               });
-       viewBanks();
-       }   
-      })
-}
-
-function selectUpdateBank(value,classId){
-
-  $.post("banks/bank-dm.php", {
-    value: value,
-    formId: classId
-  },
-  function(data){
-    contentWrapper.innerHTML = data;
-  })
-    //Initialize Select2 Elements
-    $('.select2').select2()
-
-    //Initialize Select2 Elements
-    $('.select2bs4').select2({
-      theme: 'bootstrap4'
-    })
-  }
-
-function updateBank(){
-$("form").submit(function(event){
-// Stop form from submitting normally
-event.preventDefault();
-
-/* Serialize the submitted form control values to be sent to the web server with the request */
-let formValues = $(this).serialize();
-// Send the form data using post
-  $.post("Banks/bank-dm.php",formValues,function(data){
-// Display the returned data in browser
-console.log(formValues);
-contentWrapper.innerHTML = data;
-
- if(data == 1){
-              
-  var Toast = Swal.mixin({
-  toast: true,
-   position: 'top',
-  showConfirmButton: false,
-  timer: 3000
-    });
-          Toast.fire({
-  icon: 'success',
-  title: 'Bank Updated Successfully'
-});
-viewBanks();
-}     
-})
-   
-})
-}

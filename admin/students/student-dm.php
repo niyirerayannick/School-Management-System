@@ -212,8 +212,8 @@ function viewStudentDetails($id){
               <div class="card-body">
                 <div class="tab-content">
                   <div class="active tab-pane" id="activity" style="min-height:550px">
-                    <div class="card-body">
-                       <div class="chart" id='studentAttendance' >
+                    <div class="card-body">                     
+                      <div class="chart" id='studentAttendance' >
 
 
                              <?php
@@ -469,6 +469,10 @@ WHERE
 
 
                   <div class="tab-pane" id="settings" style="min-height:550px">
+                  <div class="card-header">
+                           <button class="btn btn-outline-info card-title" id="newFeeCollectionStudent"> <i class="fa fa-plus"></i>
+                           Add New Fees Collection For This Student</button>
+                    </div> 
                   <?php
 include("../config.php");
 $sql = "SELECT * FROM fees_collection,students where fees_collection.student_id = students.id AND students.id = '$id'

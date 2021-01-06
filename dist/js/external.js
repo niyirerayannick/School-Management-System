@@ -9,10 +9,10 @@ let contentWrapper = document.querySelector('#content-wrapper'),
  viewClass = document.querySelector("#viewClasses"),
  addClass = document.querySelector("#addClass"),
  timetable = document.querySelector("#timeTable");
-/*
+
  const ElementIds = {
   student:{
-    addStudent:'students/addStudent.php',
+    addStudent:'addStudent.php',
     viewStudents:'students/viewStudents.php',
     highPerformingStudents:'students/viewHighPerformingStudents.php'
   },
@@ -23,7 +23,7 @@ let contentWrapper = document.querySelector('#content-wrapper'),
   class:{
     addClass:'class/addClass.php',
     viewClasses:'class/viewClasses.php',
-    ViewClassStream:'class/viewStream.php'
+    ViewClassStream:'class/viewStreams.php'
   },
   hostel: {
     addhostel:'hostels/addNewHostel.php',
@@ -48,20 +48,21 @@ let contentWrapper = document.querySelector('#content-wrapper'),
     addSubject:'subjects/addSubject.php'
   },
   fees:{
-    viewFeesStructure:'school-fees/viewFeesStructure.php',
-    changeFeesStructure:'school-fees/changeFeesStructure.php',
-    recentFeesCollection:'school-fees/viewFeesCollection.php'
+    viewFeesStructure:'school_feess/viewFeesStructure.php',
+    changeFeesStructure:'school_feess/changeFeesStructure.php',
+    recentFeesCollection:'school_feess/viewFeesCollection.php'
   },
   bank:{
     viewBanks:'banks/viewBanks.php',
     addNewBank:'banks/viewBanks.php'
   },
   fetchPage:function(propertyValue,propertyValue1){
+    console.log(`${propertyValue}/${propertyValue1}`);
     let El =ElementIds.hasOwnProperty(propertyValue), innerEl =ElementIds[propertyValue];
-    return El ? innerEl.hasOwnProperty(propertyValue1)?getContents(innerEl[propertyValue1]):'not present' :  'nahh';
+    return El ? innerEl.hasOwnProperty(propertyValue1)?getContents(`${propertyValue}/${propertyValue1}`):'not present' :  'nahh';
     }
   };
-    
+    /*
     navbar.addEventListener("click",function (e) {
       let category = e.target.parentNode.parentNode.parentNode
     return ElementIds.fetchPage(`${category.id}`, `${e.target.parentNode.id}`);
@@ -120,14 +121,14 @@ navbar.addEventListener("click",function(e){
     case  'viewSubjects':
       viewSubjects();
       break;
-    case  'recentFeesCollection':
-      getContents("school-fees/viewFeesCollection.php");
+    case  'feesCollection':
+      getContents("school_fees/viewFeesCollection.php");
       break;
     case 'viewFeesStructure':
-      getContents("school-fees/viewFeesStructure.php"); 
+      getContents("school_fees/viewFeesStructure.php"); 
       break;
     case 'changeFeesStructure':
-      getContents("school-fees/changeFeesStructure.php"); 
+      getContents("school_fees/changeFeesStructure.php"); 
       break; 
     case  'addNewBank':
       getContents("banks/addNewBank.php");
@@ -135,9 +136,6 @@ navbar.addEventListener("click",function(e){
     case 'viewBanks':
       getContents("banks/viewBanks.php"); 
       break;  
-    case 'changeFeesStructure':
-      getContents("school-fees/changeFeesStructure.php"); 
-      break;           
     default:
       break;
   }
@@ -329,6 +327,32 @@ contentWrapper.addEventListener('click', function(e) {
       rejectLeave(e.target.value,'rejectLeave');
     }
 
+    else if(e.target.id == 'changeFeeCollection') {
+      getChangeFeeCollection();
+    }
+    else if(e.target.id == 'AddFeesCollectionBtn') {
+      //console.log(e.target);
+      addFeesCollection();
+    }
+
+    else if(e.target.id == 'newFeeCollection') {
+      addNewFeesCollection();
+    }
+
+    else if(e.target.id == 'newFeeCollectionStudent') {
+      getAddNewFeesCollection(e.target.value);
+    }
+
+    else if(e.target.id == 'updateFeeCollection') {
+      selectUpdateFees(e.target.value,'selectUpdateFees');
+    }
+    else if(e.target.id == 'deleteFeesCollection') {
+      deleteFeesCollection(e.target.value,'deleteFeesCollectionBtn');
+    }
+    else if(e.target.id == 'updateFeeCollectionBtn') {
+      updateFeesCollection();
+    }
+
     else if(e.target.id == 'changeFeeStructure') {
       getChangeFeeStructure();
     }
@@ -338,7 +362,7 @@ contentWrapper.addEventListener('click', function(e) {
     }
     else if(e.target.id == 'newFees') {
       addNewFees();
-    }
+    }  
     else if(e.target.id == 'newFeeStructure') {
       addNewFees();
     }
