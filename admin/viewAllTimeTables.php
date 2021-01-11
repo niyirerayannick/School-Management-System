@@ -42,9 +42,11 @@
                 <?php
                include 'config.php';
 // Attempt select query execution
-  $sql = "SELECT timetable.id,class_name,stream_name,option_name,timetable,abbreviation FROM classes, timetable
-   LEFT JOIN (streams LEFT JOIN options on streams.option_id = options.id) on streams.id = timetable.stream_id
-    WHERE classes.id = timetable.class_id";
+  $sql = "SELECT 
+  class_name,option_name,stream_name,streams.id,abbreviation,timetable
+  FROM classes,sessions,timetable, streams LEFT JOIN options on options.id = streams.option_id
+  WHERE
+  streams.class_id = classes.id AND timetable.stream_id = streams.id AND sessions.status = 'active' ORDER BY class_name";
     
      
      if($result = mysqli_query($con, $sql)){
@@ -62,8 +64,10 @@
             echo "<tr>                   <tbody>
             ";
                 echo "<td>" . $row['id'] . "</td>";
-                echo "<td>" . $row['timetable'] . "</td>";
-                echo "<td>"  . $row['class_name']   ."</td>";
+                echo "<td>";?>
+                <img src="<?php echo htmlentities($row['timetable']) ?>" id='myImg' alt = 'No Photo' class ='img img-thumbnail img-sm'>
+                <?php
+                echo"</td>";                echo "<td>"  . $row['class_name']   ."</td>";
                 if($row['option_name'] == NULL){
                     echo "<td>  - </td>";
                     }else{
@@ -93,28 +97,22 @@
                  
                   </tbody>
                 </table>
+                                    <!-- The Modal -->
+                                    <div id="myModal" class="modal">
+                   <span class="close">&times;</span>
+                   <img class="modal-content" id="img01">
+                   <div id="caption"></div>
+                 </div>
               </div>
               <!-- /.card-body -->
-              <div class="card-footer clearfix">
-                <ul class="pagination pagination-sm m-0 float-right">
-                  <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                </ul>
-              </div>
+
             </div>
             </div>
             <!-- /.card -->
           </div>
         </div>
-        <div class='row'>
-            <div class = 'col-md-9'>
-                    
-            </div>
 
-        </div>
+
         <!-- /.row -->
 
             <!-- /.card -->

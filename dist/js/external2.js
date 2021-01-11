@@ -12,7 +12,7 @@ let contentWrapper = document.querySelector('#content-wrapper'),
  navbar.addEventListener("click",function (e) {
   let ul = e.target.parentNode.parentNode.parentNode;
   if(e.target.tagName == "P" && ul.classList.contains('nav-treeview')){
-   let category = e.target.parentNode.parentNode.parentNode
+      let category = e.target.parentNode.parentNode.parentNode
    return getContents(`${category.id}/${e.target.parentNode.id}.php`);
   }
 });

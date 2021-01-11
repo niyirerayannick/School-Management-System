@@ -70,7 +70,108 @@ alert("You not Authorized to view this content");
   <link rel="stylesheet" href="../plugins/bs-stepper/css/bs-stepper.min.css">
   <!-- dropzonejs -->
   <link rel="stylesheet" href="../plugins/dropzone/min/dropzone.min.css">
-  
+  <style>
+    /* Background Gradient for Analagous Colors */
+.coral
+{
+    background-color: #FF5078;
+    /* For WebKit (Safari, Chrome, etc) */
+    background: #FF5078 -webkit-gradient(linear, left top, left bottom, from(#f19147), to(#bd7137)) no-repeat;
+    /* Mozilla,Firefox/Gecko */
+    background: #FF5078 -moz-linear-gradient(top, #FF9C50, #FF5078) no-repeat;
+    /* IE 5.5 - 7 */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF9C50, endColorstr=#FF5078) no-repeat;
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF9C50, endColorstr=#FF9C50)" no-repeat;
+}
+
+#myImg {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#myImg:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+/* Caption of Modal Image */
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+
+/* Add Animation */
+.modal-content, #caption {  
+  -webkit-animation-name: zoom;
+  -webkit-animation-duration: 0.6s;
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+  from {-webkit-transform:scale(0)} 
+  to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+  from {transform:scale(0)} 
+  to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 40px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: rgb(196, 40, 40);
+  border-color: rgb(233, 13, 13);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  .modal-content {
+    width: 100%;
+  }
+}
+  </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed sidebar-collapse layout-navbar-fixed text-sm" onload= "fetch('index2.php')
     .then(response => response.text())
@@ -87,8 +188,8 @@ alert("You not Authorized to view this content");
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block" id="homeDashboard">
-        <a href="#" class="nav-link">Home</a>
+      <li class="nav-item d-none d-sm-inline-block" >
+        <a href="#" class="nav-link" id="homeDashboard"> Home</a>
       </li>
     </ul>
     <!-- SEARCH FORM -->
@@ -176,7 +277,9 @@ alert("You not Authorized to view this content");
                 <?php
  // Attempt select query execution
  $username = $_SESSION["username"];
-   $sql = "SELECT id FROM parents WHERE parent_name = '$username'";
+ $user_id = $_SESSION["user_id"];
+
+   $sql = "SELECT id FROM students WHERE parent_id = '$user_id'";
    if($result = mysqli_query($con, $sql)){
    $row = mysqli_num_rows($result);
    echo "$row";

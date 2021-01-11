@@ -194,8 +194,7 @@ contentWrapper.addEventListener('click', function(e) {
     deleteStudent(e.target.value,'deleteStudentBtn');
     }
     else if(e.target.id == 'listStudents2') {
-      document.querySelector("#loading").style.display = 'block';
-      //viewAllStudents();
+      viewAllStudents();
       }
     else if(e.target.id == 'viewStudentDetails') {
 
@@ -393,6 +392,7 @@ contentWrapper.addEventListener('click', function(e) {
       updateLibrary();
     }
  
+    
     else if(e.target.id == 'addTimeTable') {
       addTimeTable();
     }

@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!-- Content Header (Page header) -->
 <div id='view'>
 <section class="content-header">
@@ -34,6 +37,7 @@
                 <?php
              include("../config.php");
 // Attempt select query execution
+$parent_id = $_SESSION["user_id"];
   $sql = "SELECT
    students.id,FullName,DOB,DOJ,RegNo,Photo,class_name, hostel_name ,parent_name , category_name ,
    sessions.Year,option_name,stream_name
@@ -42,7 +46,7 @@
    LEFT JOIN options on options.id = streams.option_id 
    WHERE
     students.hostel_id = hostels.id and students.parent_id = parents.id AND students.stream_id = streams.id AND streams.class_id = classes.id 
-    and students.student_category = student_category.id";
+    and students.student_category = student_category.id AND sessions.status = 'active' AND students.parent_id = '$parent_id' ";
     $total = 32423;
     $balance  =2345;
     $unpaid = 324;
@@ -67,8 +71,11 @@
             ";
                 echo "<td>" . $row['id'] . "</td>";
                 echo "<td><button id='viewStudentDetails' class='btn btn-outline-secondary btn-xs' value=" . $row['id'] . ">" . $row['FullName'] . "</td></button>";
-                echo "<td><img src=" . $row['Photo'] . " class ='img img-thumbnail img-sm'></td>";
-                echo "<td>" . $row['RegNo'] . "</td>";
+                ?>
+               <td>
+                 <img src="<?php echo htmlentities($row['Photo']) ?>" id='myImg' alt = 'No Photo' class ='img img-thumbnail img-sm'>
+                </td>
+               <?php                echo "<td>" . $row['RegNo'] . "</td>";
                 echo "<td>" . $row['class_name'] . "</td>";
                 if($row['option_name'] == NULL){
                   echo "<td>  - </td>";
@@ -98,6 +105,12 @@
                  
                   </tbody>
                 </table>
+                                <!-- The Modal -->
+<div id="myModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
               </div>
               <!-- /.card-body -->
               <div class="card-footer clearfix">

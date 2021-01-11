@@ -6,14 +6,14 @@ if($_POST["formId"] == 'addTimeTable'){
     //$errorimg = $_FILES["image"][“error”];// stores any error code resulting from the transfer
     
     $valid_extensions = array('jpeg', 'jpg', 'png', 'gif', 'bmp' , 'pdf' , 'doc' , 'ppt'); // valid extensions
-    $path = '../img/'; // upload directory
+    $path = '../dist/img/'; // upload directory
     
     $img = $_FILES['timetable']['name'];
     $tmp = $_FILES['timetable']['tmp_name'];
     // get uploaded file's extension
     $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
     // can upload same image using rand function
-    $final_image = rand(1000,1000000).$img;
+    $final_image = $img;
     // check's valid format
     if(in_array($ext, $valid_extensions)) 
     { 

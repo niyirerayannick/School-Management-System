@@ -24,17 +24,23 @@
 </div>
 
     <script >
-    let p =   document.getElementById("deleteStudent");
+    //let p =   document.getElementById("deleteStudent");
       let checkbox = document.querySelectorAll("input[value ='yes']" );
 
- let btn = document.querySelector("button");
-document.getElementById("wrapper").addEventListener("click",function (e) {
-    if(e.target.id == 'deleteStudent'){
-        checkbox.forEach(box => console.log(box.checked));
-    }
-});
-
-
+document.getElementById("deleteStudent").addEventListener("click",fetchCalendarEvents);
+function fetchCalendarEvents(){
+  fetch('loadKevin.php')
+  .then(response => response.json())
+  .then(html =>{
+      let arr = [];
+       for(let obj of html){
+           console.log(obj)
+       }
+  })
+  .catch(error =>{
+      console.log(error);
+  });
+}
 
     </script>
 </body>

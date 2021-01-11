@@ -25,6 +25,48 @@ function  viewHighperformingStudents(){
 })
 }
 
+/*
+function viewStudentDetails(value,studentId){
+  $.post("students/student-dm.php", {
+    value: value,
+    formId: studentId
+  },  function(data){
+    contentWrapper.innerHTML = data;
+    // Display the returned data in browser
+   if(data == 1){
+
+      //viewAllStudents();
+   }else {
+     contentWrapper.innerHTML = data;
+   }
+});
+}
+*/
+function mergeSubjects(arr){
+  let subjects = [];
+  for(let i =0 ; i < arr.length ; i++){
+     subjects.push(arr[i][0])
+   }
+
+   subjects = [...new Set(subjects)];
+
+    return subjects;
+  }
+
+        function spreadArray(arr,spreadValue){
+        let res1 = arr;
+             var result = res1.filter(function(v,i) {
+                 return v[0][0] === spreadValue;
+                  });
+             result.forEach(e => {
+                  e.shift();
+                  });
+             result = [].concat(...result);
+
+          return result;
+         }
+         const colors = ['#007bff', '#8e44ad', '#5421b9', '#e67e22', '#2ecc71','#eb3d0d','#343a40']
+         
 
 function viewStudentDetails(value,studentId){
   $.post("students/student-dm.php", {
@@ -33,27 +75,119 @@ function viewStudentDetails(value,studentId){
   },  function(data){
     // Display the returned data in browser
    if(data == 1){
-          
-    contentWrapper.innerHTML = data;
-    var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
-    var lineChartOptions = $.extend(true, {}, areaChartOptions)
-    var lineChartData = $.extend(true, {}, areaChartData)
-    lineChartData.datasets[0].fill = false;
-    lineChartData.datasets[1].fill = false;
-    lineChartOptions.datasetFill = false
-
-    var lineChart = new Chart(lineChartCanvas, {
-      type: 'line',
-      data: lineChartData,
-      options: lineChartOptions
-    })
-
-      //viewAllStudents();
+  //viewAllStudents();
    }else {
      contentWrapper.innerHTML = data;
+     let doc = document.querySelector('#myChart');
+
+     let  labels = JSON.parse(document.querySelector('#spanLabel').innerHTML);
+     let  mainData = JSON.parse(document.querySelector('#spanData').innerHTML);
+     let  d = JSON.parse(document.querySelector('#checking').innerHTML);   
+     let legendText = JSON.parse(document.querySelector("#subjects").innerHTML);
+     let res = mergeSubjects(d)
+     let j;
+     let dataset =[]
+     for(j = 0; j < res.length ;j++){
+
+      let attendance = spreadArray(d,res[j]);
+      //get the dates for the subjects studied
+      let  dates = attendance.filter((v,i) => i % 2 !== 0)
+      //get the number of times the subject were studied at a certain date
+        attendance = attendance.filter((v,i) => i % 2 == 0)
+        //loop through the label property to put zero where the student didn't attend
+            for(let i = 0; i < labels.length ; i++){
+                if(!dates.includes(labels[i])){
+                  attendance.splice(i, 0, "0");                }
+            }
+            let obj = {
+              type: 'line',
+              label:legendText[j],
+              data: attendance,
+              backgroundColor: 'transparent',
+              borderColor: colors[j],
+              pointBorderColor: colors[j],
+              pointBackgroundColor: colors[j],
+              fill: false
+              // pointHoverBackgroundColor: '#007bff',
+              // pointHoverBorderColor    : '#007bff'
+            }
+            dataset.push(obj);
+    }
+/*
+     for(j = 0; j < res.length ;j++){
+      
+     }
+*/
+     document.getElementById("studentAttendance").innerHTML = doc.innerHTML;
+
+     //console.log(mainData)
+
+     contentWrapper.innerHTML = data;
+     $(function () {
+       
+       var ticksStyle = {
+         fontColor: '#495057',
+         fontStyle: 'bold'
+       }
+     
+       var mode = 'index'
+       var intersect = false
+ 
+       var $visitorsChart = $('#visitors-chart')
+       // eslint-disable-next-line no-unused-vars
+       var visitorsChart = new Chart($visitorsChart, {
+         data: {
+           labels: labels,
+           datasets: dataset
+         },
+         options: {
+           maintainAspectRatio: false,
+           tooltips: {
+             mode: mode,
+             intersect: intersect
+           },
+           hover: {
+             mode: mode,
+             intersect: intersect
+           },
+           legend: {
+             display: true,
+             legendText : ["Algorithm &amp; Programming II", "Economics", "Operating System", "Mathematics"]
+           },
+           scales: {
+             yAxes: [{
+               // display: false,
+               gridLines: {
+                 display: true,
+                 lineWidth: '4px',
+                 color: 'rgba(0, 0, 0, .2)',
+                 zeroLineColor: 'transparent'
+               },
+               ticks: $.extend({
+                 beginAtZero: false,
+                 suggestedMax: 8,
+                 suggestedMin: -1
+
+               }, ticksStyle)
+             }],
+             xAxes: [{
+               display: true,
+               gridLines: {
+                 display: true,
+                 
+               },
+               ticks: ticksStyle
+             }]
+           }
+         }
+       })      
+     
+ })
+   
    }
 });
 }
+
 
 
 //teachers handling methods
@@ -79,69 +213,6 @@ function viewAllClasses(){
         contentWrapper.innerHTML = doc.innerHTML;
   })
   }
-
-
-function getClassAttendance1(){
-  fetch('class_attendance.php')
-  .then(response => response.text())
-  .then(html =>{
-      let parser = new DOMParser();
-      let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
-
-       //decraring x,y axis valiables
-       var dates = new Array();
-       var num =new Array();
-      contentWrapper.innerHTML = doc.innerHTML;
- /*converting php data to json 
-var name = <?php echo json_encode($row['Date']); ?>;
-var numb = <?php echo json_encode($row['N_O_attendance']); ?>;*/
-      dates.push(name);
-      num.push(numb);
-      
-
-      var ctx = document.getElementById('myChart').getContext('2d');
-    
-    
-      var chart = new Chart(ctx, {
-    // The type of chart we want to create
-    type: 'line',
-
-    // The data for our  dataset
-    data: {
-        labels: dates, //the variable we created ealier,
-        datasets: [{
-            label: '',
-            borderColor: 'rgb(255, 99, 132)',
-            data: num //the variable we created ealier
-        }]
-    },
-
-    // Configuration options go here
-    options: {
-        title: {
-            display: true,
-            text: 'STUDENT ATTANDANCE'
-        },
-        tooltips: {
-            // Disable the on-canvas tooltip
-            enabled: true,
-      
-        },
-        scales: {
-        yAxes: [{
-            display: true,
-            ticks: {
-                beginAtZero: true,
-                min: 0
-            }
-        }]
-    }
-    }
-
-   });
-
-  })
-}
 
 
 

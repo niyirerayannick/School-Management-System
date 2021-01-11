@@ -35,8 +35,9 @@ session_start();
                 <span class="info-box-text">My Students</span>
                 <span class="info-box-number">  <?php
  // Attempt select query execution
-   $sql = "SELECT * FROM teachers";
-   if($result = mysqli_query($con, $sql)){
+ $user_id = $_SESSION["user_id"];
+ $sql = "SELECT id FROM students WHERE parent_id = '$user_id'";
+ if($result = mysqli_query($con, $sql)){
    $row = mysqli_num_rows($result);
    echo "$row";
 } else{
@@ -107,10 +108,10 @@ session_start();
         <div class="row">
         
            <div class="col-lg-4">
-            <div class="card card-info card-outline">
+            <div class="card card-danger card-outline">
               <div class="card-header border-0">
                 <div class="d-flex justify-content-between">
-                <h3 class="card-title">Class Attendance</h3>
+                <h3 class="card-title">Latest Class Attendance</h3>
                   <a href="javascript:void(0);"  id="feesReport">View Full Report</a>
                 </div>
               </div>
@@ -118,13 +119,7 @@ session_start();
               <table id="viewStudehtsTable" class="table table-bordered table-hover">
                 <thead>
               <?php
-                $con = mysqli_connect("localhost", "root", "","fantastic_school_admin_db");
- 
-                // Check connection
-                if($con === false){
-                    die("ERROR: Could not connect. " . mysqli_connect_error());
-                } 
-// Attempt select query execution
+  // Attempt select query execution
   $sql = "SELECT * FROM feescollection limit 0,9";
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
@@ -166,25 +161,24 @@ session_start();
       </div>
           <!-- /.col-md-6 -->
           <div class="col-lg-4">
-            <div class="card card-info card-outline">
+            <div class="card card-primary card-outline">
               <div class="card-header border-0">
                 <div class="d-flex justify-content-between">
                   <h3 class="card-title">Recent Exam Results</h3>
-                  <a href="javascript:void(0);"  id="listStudents2">View Whole List</a>
+                  <a href="javascript:void(0);"  id="viewExamResultHome">View Whole List</a>
                 </div>
               </div>
               <div class="card-body"  style ="min-height:410px;">
               <?php
-include("config.php");
-$sql = "SELECT
-students.FullName,RegNo,examresults.id, subject_name,Marks,class_name,Year,stream_name,Term,category_name,option_name,
-students.id as student_id
- FROM 
-examresults,students,classes,subjects,streams streams LEFT JOIN options on options.id = streams.option_id,sessions,exam_categories
-WHERE
-examresults.student_id = students.id AND students.stream_id = streams.id AND streams.class_id = classes.id
-AND subjects.id = examresults.subject_id AND
-examresults.exam_category = exam_categories.id ORDER BY class_name ";
+$parent_id = $_SESSION["user_id"];
+  $sql = "SELECT
+ students.id,FullName,class_name  ,exam_categories.category_name, sessions.Year,sessions.Term,option_name,Marks,stream_name,subject_name
+  FROM students,classes,sessions,student_category,hostels,parents,examresults,exam_categories,subjects,
+ streams LEFT JOIN options on options.id = streams.option_id
+  WHERE students.hostel_id = hostels.id AND students.parent_id = parents.id AND students.stream_id = streams.id 
+  AND streams.class_id = classes.id AND students.student_category = student_category.id AND examresults.student_id = students.id 
+  AND exam_categories.id = examresults.exam_category AND examresults.subject_id = subjects.id
+   AND sessions.status = 'active' AND students.parent_id = '$parent_id' ORDER BY FullName LIMIT 0,7";
 
      if($res = mysqli_query($con,$sql)){
       if(mysqli_num_rows($res) > 0){
@@ -267,7 +261,7 @@ examresults.exam_category = exam_categories.id ORDER BY class_name ";
       </div>
       
       <div class="col-lg-4">
-            <div class="card card-info card-outline">
+            <div class="card card-success card-outline">
               <div class="card-header border-0">
                 <div class="d-flex justify-content-between">
                   <h3 class="card-title">School Fees Payment</h3>
@@ -276,9 +270,10 @@ examresults.exam_category = exam_categories.id ORDER BY class_name ";
               </div>
               <div class="card-body"  style ="min-height:410px;">
               <?php
-include("config.php");
 $sql = "SELECT * FROM fees_collection,students,banks,sessions
- WHERE fees_collection.student_id = students.id and  banks.id = fees_collection.bank_id AND fees_collection.session_id = sessions.id
+ WHERE
+ fees_collection.student_id = students.id AND banks.id = fees_collection.bank_id AND fees_collection.session_id = sessions.id  
+ AND students.parent_id = '$user_id'
 ";
 
      if($res = mysqli_query($con,$sql)){

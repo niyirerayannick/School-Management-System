@@ -9,26 +9,18 @@
                                                   <div class="form-group">
                                                       <label>Student Name</label>
                                                       <select name='student_id' class="form-control select2 select2-info" data-dropdown-css-class="select2-secondary">
-                                                         <option selected="selected" disabled>Select The Student's Name</option>
                                                             <?php
                                                               include("../config.php");
                                                               // Attempt select query execution
-                                                               $sql = "SELECT
-                                                               students.id,FullName,DOB,DOJ,RegNo,Photo,class_name, hostel_name ,parent_name , category_name ,
-                                                               sessions.Year,option_name,stream_name
-                                                               FROM 
-                                                               students,classes,sessions,student_category,hostels,parents,streams 
-                                                               LEFT JOIN options on options.id = streams.option_id 
-                                                               WHERE
-                                                               students.hostel_id = hostels.id and students.parent_id = parents.id AND students.stream_id = streams.id AND streams.class_id = classes.id 
-                                                                and students.student_category = student_category.id  AND sessions.status = 'active'";
+                                                               $sql = "SELECT id,FullName FROM 
+                                                               students WHERE students.id = '$_POST[student_id]'";
                                                                if($result = mysqli_query($con, $sql)){
                                                                   if(mysqli_num_rows($result) > 0){
                                                                       while($row = mysqli_fetch_array($result)){
-                                                                         echo "<option value=" . $row['id'] . ">" . $_POST["studentId"] . "</option>";
+                                                                         echo "<option value=" . $row['id'] . " selected>" . $row["FullName"] . "</option>";
                                                                         }
                                                                    } else{
-                                                                     echo "<option disabled> No Students Currently</option>";     
+                                                                     echo "<option disabled> No Such Students </option>";     
                                                                   }
                                                                }
                                                           ?>

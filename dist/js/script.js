@@ -857,7 +857,7 @@ function addNewFees(){
 function getAddNewFeesCollection(studentId){
 
 
-  $.post("school_fees/addFeesCollectionStudent.php", studentId, function(data){
+  $.post("school_fees/addFeesCollectionStudent.php", {student_id:studentId}, function(data){
     document.getElementById("settings").innerHTML  = data;
        // Display the returned data in browser
        if(data == 1){
@@ -876,6 +876,8 @@ function getAddNewFeesCollection(studentId){
          }  
 
    });
+
+
 
       //Initialize Select2 Elements
       $('.select2').select2()
@@ -1119,7 +1121,13 @@ function updateFeesStructure(){
   })
   }
 
-
+function fetchCalendarEvents(){
+  fetch('calendar_view.php')
+  .then(response => response.text())
+  .then(html =>{
+      return html;
+  });
+}
 
 //get calendar
    
@@ -1155,11 +1163,8 @@ function getCalendar(){
    themeSystem: 'bootstrap',
    eventSources: [
     // the file where the events will be fetched from
-    {
+       {
       url: 'loadKevin.php',
-      success: function(data) {
-       console.log(data);
-      },
       color: 'yellow',   // a non-ajax option
       textColor: 'black' // a non-ajax option
     }
@@ -1326,7 +1331,7 @@ function addTimeTable(){
         processData: false,
         contentType: false,
         success:function(data){
-
+ console.log(data)
             var Toast = Swal.mixin({
               toast: true,
               position: 'top',

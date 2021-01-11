@@ -67,10 +67,7 @@ navbar.addEventListener("click",function(e){
       }
       else if(e.target.parentNode.id == 'viewFeesStructure'){
         viewFeesStructure();
-      }
-
-     
-      
+      }   
 })
 
 contentWrapper.addEventListener('click', function(e) {
@@ -95,6 +92,28 @@ contentWrapper.addEventListener('click', function(e) {
 		getContents("school-fees/viewFeesCollection.php");
     }
   
+        //displaying image as a modal when a user clicks on it
+        else if(e.target.id == 'myImg') {
+          // Get the modal
+          var modal = document.getElementById("myModal");
+          var modalImg = document.getElementById("img01");
+    
+          modal.style.display = "block";
+          modalImg.src = e.target.src;
+    
+           // Get the image and insert it inside the modal - use its "alt" text as a caption
+          var img = document.getElementById("myImg");
+          var modalImg = document.getElementById("img01");
+          var captionText = document.getElementById("caption");
+          }
+    
+         else if(e.target.className == 'close'){
+         // When the user clicks on <span> (x), close the modal
+          var modal = document.getElementById("myModal");
+           modal.style.display = "none";
+         }
+
+         
     else if(e.target.id == 'listStudents') {
 		viewAllStudents();
     }
@@ -125,7 +144,9 @@ contentWrapper.addEventListener('click', function(e) {
     else if(e.target.id == 'listHostels') {
       viewAllHostels();
     }
-
+    else if(e.target.id == 'viewExamResultHome'){
+       viewExam();
+    }
 })
 
 //adding event listeners

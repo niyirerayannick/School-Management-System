@@ -8,9 +8,6 @@ include("config.php");
   }
   
 
-
-
-
 function getOption($id){
     include("config.php");
 
