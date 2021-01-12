@@ -2,13 +2,14 @@
 let contentWrapper = document.querySelector('#content-wrapper'),
  navbar = document.querySelector('#navBar'),
  dashboard = document.querySelector("#dashboard"),
- Homedashboard = document.querySelector("#homeDashboard"),
- addStudent = document.querySelector('#addStudent'),
  viewStudents = document.querySelector('#viewStudents'),
  viewTeacher = document.querySelector('#viewTeachers'),
  viewClass = document.querySelector("#viewClasses"),
- addClass = document.querySelector("#addClass"),
  timetable = document.querySelector("#timeTable");
+
+ document.getElementById("homeDashboard").addEventListener("click",function(){
+     getContents('index2.php')
+ })
 
 navbar.addEventListener("click",function(e){
   //console.log(e.target.parentNode.id)
@@ -150,8 +151,7 @@ contentWrapper.addEventListener('click', function(e) {
 })
 
 //adding event listeners
-//student  handling event listeners
-addStudent.addEventListener("click", getAddStudent);
+
 viewStudents.addEventListener("click", viewAllStudents);
 
 //teacher handling event listeners
@@ -159,12 +159,10 @@ viewTeacher.addEventListener('click', viewAllTeachers);
 
 //classes handling events
 viewClass.addEventListener("click", viewAllClasses)
-addClass.addEventListener('click',getAddClass)
+
 
 //time table 
 timetable.addEventListener("click",getTimeTable)
-//homepage
-Homedashboard.addEventListener("click",getContents("index2.php"))
 
 document.getElementById('classAttendanceHome').addEventListener("click",getClassAttendance)
 

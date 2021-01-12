@@ -145,7 +145,10 @@ contentWrapper.addEventListener('click', function(e) {
       makeAttendanceTable();
       }
 
-
+      else if(e.target.id == 'viewSubjectsHome') {
+        getContents('subjects/viewSubjects.php');
+        }
+      
     else if(e.target.id == 'listStudents') {
 		viewAllStudents();
     }
@@ -176,7 +179,7 @@ contentWrapper.addEventListener('click', function(e) {
 
     //add class submit btn
    else if(e.target.id == 'addExamResultBtn') {
-         addExamResult();
+        addExamResult();
      }
     //add new class from the view class
    else if(e.target.id == 'newClass') {
@@ -194,7 +197,9 @@ contentWrapper.addEventListener('click', function(e) {
     else if(e.target.id == 'deleteClass') {
     deleteClass(e.target.value,'deleteClassBtn');
     } 
-
+    else if(e.target.id == 'viewClassesHome') {
+      viewAllClasses();
+      } 
 
     else if(e.target.id == 'listTeachers') {
 		viewAllTeachers();
@@ -368,7 +373,6 @@ viewTeacher.addEventListener('click', viewAllTeachers);
 //classes handling events
 viewClass.addEventListener("click", viewAllClasses)
 addClass.addEventListener('click',getAddClass)
-
 //time table 
 timetable.addEventListener("click",getTimeTable)
 

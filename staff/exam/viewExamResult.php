@@ -61,7 +61,6 @@
             echo "<tr>";
                 echo "<th>id</th>";
                 echo "<th>Student Name</th>";
-                echo "<th>Registration Number</th>";
                 echo "<th>Class  </th>";
                 echo "<th>Combination  </th>";
                 echo "<th>Stream</th>";
@@ -76,7 +75,6 @@
             ";
                 echo "<td>" . $row['id'] . "</td>";
                 echo "<td><button id='viewStudentDetails' class='btn btn-outline-secondary btn-xs' value=" . $row['student_id'] . ">" . $row['FullName'] . "</td></button>";
-                echo "<td>" . $row['RegNo'] . "</td>";
                 echo "<td>" . $row['class_name'] . "</td>";
                 if($row['option_name'] == NULL){
                   echo "<td>  - </td>";

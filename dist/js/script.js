@@ -1170,6 +1170,14 @@ function getCalendar(){
     }
   ]  ,
 
+  showNonCurrentDates:false,
+  businessHours: {
+    // days of week. an array of zero-based day of week integers (0=Sunday)
+    daysOfWeek: [ 1, 2, 3, 4 ,5], // Monday - Thursday
+  
+    startTime: '07:00', // a start time (10am in this example)
+    endTime: '18:00', // an end time (6pm in this example)
+  },
    selectable:true,
    editable  : true,
 //prompt a user to input new event when a certain date is clicked
@@ -1181,22 +1189,8 @@ function getCalendar(){
     {
       //console.log(start.end);
 
-     var startTime = calendar.formatDate(start.start, {
-      year: 'numeric',
-      month: 'long',
-      day: '2-digit',
-      hour:'2-digit',
-      minute: '2-digit',
-      second:'2-digit'
-    });
-     var end = calendar.formatDate(start.end, {
-            year: 'numeric',
-            month: 'long',
-            day: '2-digit',
-            hour:'2-digit',
-            minute: '2-digit',
-            second:'2-digit'
-          });
+      var startTime = calendar.formatIso(start.start);
+      var end = calendar.formatIso(start.end);
           //console.log(`${start} and end is ${end}`)
 
      $.ajax({

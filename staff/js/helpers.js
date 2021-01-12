@@ -178,8 +178,8 @@ contentWrapper.addEventListener('change', function(e) {
 
 
          //make the current column the big one 
-         document.querySelector("#big").className = 'col-md-8';
-         document.querySelector("#small").className = 'col-md-4';
+         document.querySelector("#big").className = 'col-md-9';
+         document.querySelector("#small").className = 'col-md-2';
        }
       });
     })

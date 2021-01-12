@@ -89,7 +89,7 @@ navbar.addEventListener("click",function(e){
       getContents("teachers/addTeacher.php");
       break;
     case  'highPerformingStudents':  
-      getContents("students/viewHighPerformingStudents.php"); 
+      getContents("students/highPerformingStudents.php"); 
       break;
     case  'ViewClassStream':
       getContents("class/viewStreams.php");

@@ -5,86 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body id="wrapper">
-  <li class="nav-item">
-    <a href="#" class="nav-link">
-      <i class="nav-icon fas fa-book-open"></i>
-      <p>
-        Exams
-        <i class="right fas fa-angle-left"></i>
-      </p>
-    </a>
-    <ul class="nav nav-treeview" id='exam'>
-      <li class="nav-item" id='getExamResults'>
-        <a href="#" class="nav-link" id="viewExamResult">
-          <i class="fa fa-pencil-alt nav-icon"></i>
-          <p>Exam Results</p>
-        </a>
-      </li>
-      <li class="nav-item" >
-        <a href="#" class="nav-link" id='viewExamCategories'>
-          <i class="far fa-circle nav-icon"></i>
-          <p>View Exam Categories</p>
-        </a>
-      </li>
-    </ul>
-  </li>
-  <li class="nav-item">
-    <a href="#" class="nav-link">
-      <i class="nav-icon fas fa-book-reader"></i>
-      <p>
-        Library
-        <i class="fas fa-angle-left right"></i>
-      </p>
-    </a>
-    <ul class="nav nav-treeview" id="library">
-    <li class="nav-item">
-        <a href="#" class="nav-link" id="libraryStatus">
-          <i class="far fa-circle nav-icon"></i>
-          <p>Current Library Status</p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link" id="lendNewBook">
-        <i class="fa fa-arrow-right nav-icon"></i>
-          <p>Lend A New Book</p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link" id="viewBookSubmission">
-          <i class="fa fa-arrow-left nav-icon"></i>
-          <p>Recent Book Submissions</p>
-        </a>
-      </li>
-      
-    </ul>
-  </li>
-  <li class="nav-item">
-    <a href="#" class="nav-link">
-      <i class="nav-icon fa fa-bed "></i>
-      <p>
-        Hostels
-        <i class="fas fa-angle-left right"></i>
-        <span class="badge badge-info right"> 
-</span>
-      </p>
-    </a>
-    <ul class="nav nav-treeview" id = 'hostel'>
-      <li class="nav-item">
-        <a href="#" class="nav-link" id="addhostel">
-          <i class="fa fa-plus nav-icon"></i>
-          <p>Add A New Hostel</p>
-        </a>
-      </li>
-      <li class="nav-item" >
-        <a href="#" class="nav-link" id="viewHostels">
-          <i class="fa fa-list nav-icon"></i>
-          <p>View All Hostels</p>
-        </a>
-      </li>
-    </ul>
-  </li>
+<body id="wrapper" onload="fetchCalendarEvents()">
+  
     <script >
+      function fetchCalendarEvents(){
+  fetch('loadKevin.php')
+  .then(response => response.json())
+  .then(html =>{
+    let eventsArr = [];
+    for(e in html){
+      eventsArr.push(html[e]);
+    }
+    console.log(eventsArr)
+  });
+}
+
+console.log()
 
 let arr = ['c','d','g','a'];
        // use object literal to find fruits in color

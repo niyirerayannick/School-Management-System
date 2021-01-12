@@ -112,7 +112,6 @@ session_start();
               <div class="card-header border-0">
                 <div class="d-flex justify-content-between">
                 <h3 class="card-title">Latest Class Attendance</h3>
-                  <a href="javascript:void(0);"  id="feesReport">View Full Report</a>
                 </div>
               </div>
               <div class="card-body"  style ="min-height:410px;">
@@ -120,13 +119,17 @@ session_start();
                 <thead>
               <?php
   // Attempt select query execution
-  $sql = "SELECT * FROM feescollection limit 0,9";
+  $sql = "SELECT subject_name,Date,COUNT(attended) as number_of_attendance,FullName FROM
+  classattendance ,subjects,students
+   WHERE 
+  subjects.id = classattendance.subject_id and students.id = classattendance.student_id AND classattendance.attended = 1 AND students.parent_id = '$user_id'
+   GROUP BY subject_name,Date order by Date limit 0,7";
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";
                 echo "<th>Student Name</th>";
                // echo "<th>Class</th>";
-                echo "<th>Paid Amount</th>";
+                echo "<th>Subject Name</th>";
                 echo "<th>Date</th>";
 
                 
@@ -134,9 +137,9 @@ session_start();
         while($row = mysqli_fetch_array($result)){
             echo "<tr>                   <tbody>
             ";
-                echo "<td>" . $row['Student'] . "</td>";
+                echo "<td>" . $row['FullName'] . "</td>";
                // echo "<td> " . $row[''] . "</td>";
-                echo "<td> " . $row['PaidAmount'] . "</td>";
+                echo "<td> " . $row['subject_name'] . "</td>";
                 echo "<td> " . $row['Date'] . "</td>";
             echo "</tr><tbody>";
         }

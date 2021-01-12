@@ -475,8 +475,10 @@ WHERE
                     </div> 
                   <?php
 include("../config.php");
-$sql = "SELECT * FROM fees_collection,students where fees_collection.student_id = students.id AND students.id = '$id'
-";
+$sql = "SELECT FullName,amount_paid,Year,Term,bank_name,fees_collection.id,payment_date
+ FROM fees_collection,students,sessions,banks
+WHERE fees_collection.student_id = students.id AND sessions.status = 'active' AND banks.id = fees_collection.bank_id
+AND students.id = '$id'";
 
      if($res = mysqli_query($con,$sql)){
        if(mysqli_num_rows($res) > 0){
@@ -484,7 +486,6 @@ $sql = "SELECT * FROM fees_collection,students where fees_collection.student_id 
             <table class='table table-hover table-bordered'>
             <thead>
               <tr>
-                <th style='width: 10px'>#</th>
                 <th>Bank</th>
                 <th>Amount Paid</th>
                 <th >Amount Left To Pay</th>
@@ -498,14 +499,15 @@ $sql = "SELECT * FROM fees_collection,students where fees_collection.student_id 
             <tbody>
               <tr>
                 <td>1.</td>
-                <td><?php echo $row["id"];  ?></td>
+                <td><?php echo $row["bank_name"];  ?></td>
                 <td>
                 <?php echo $row["amount_paid"]; ?></td>
                 </td>
+
                 <td>
-                <?php echo '3242'; ?></td>
-                <td>
-                <?php echo $row["session_id"]; ?></td>
+                <?php echo $row["Year"]; ?> : Term
+
+                <?php echo $row["Term"]; ?></td>
                 <td>
                 <?php echo $row["payment_date"]; ?></td>
               </tr>

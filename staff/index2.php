@@ -49,7 +49,7 @@ session_start();
               <div class="icon">
                 <i class="fas fa-building"></i>
               </div>
-              <a href="#" class="small-box-footer">
+              <a href="#" class="small-box-footer" id="viewClassesHome">
                 More info <i class="fas fa-arrow-circle-right"></i>
               </a>
             </div>
@@ -75,7 +75,7 @@ $teacher_id = $_SESSION["user_id"];
               <div class="icon">
                 <i class="fas fa-book-open"></i>
               </div>
-              <a href="#" class="small-box-footer">
+              <a href="#" class="small-box-footer" id="viewSubjectsHome"> 
                 More info <i class="fas fa-arrow-circle-right"></i>
               </a>
             </div>
@@ -103,7 +103,7 @@ $teacher_id = $_SESSION["user_id"];
                 <i class="fas fa-calendar"></i>
               </div>
               <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
+                 <i class="fas fa-calendar"></i>
               </a>
             </div>
           </div>
@@ -115,7 +115,7 @@ $teacher_id = $_SESSION["user_id"];
                 <h3>       <?php
 // Attempt select query execution
    $teacher_name = $_SESSION["username"];
-  $sql = "SELECT * FROM hr WHERE  employee_name = '$teacher_name' limit 0,9";
+  $sql = "SELECT * FROM hr WHERE  employee_name = '$teacher_name' AND  status = 'requested' limit 0,9";
       if($result = mysqli_query($con, $sql)){
            echo mysqli_num_rows($result);
       }
@@ -127,7 +127,7 @@ $teacher_id = $_SESSION["user_id"];
                 <i class="fas fa-chart-pie"></i>
               </div>
               <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
+              <i class="fas fa-briefcase"></i>
               </a>
             </div>
           </div>
@@ -158,7 +158,7 @@ $teacher_id = $_SESSION["user_id"];
   FROM fees_collection,students,classes,streams streams LEFT JOIN options on options.id = streams.option_id,sessions 
   WHERE
    fees_collection.student_id = students.id AND students.stream_id = streams.id AND streams.class_id = classes.id
-   ORDER BY class_name limit 0,9";
+   ORDER BY class_name limit 0,7";
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";
@@ -219,7 +219,7 @@ $teacher_id = $_SESSION["user_id"];
   LEFT JOIN options on options.id = streams.option_id 
   WHERE
    students.hostel_id = hostels.id and students.parent_id = parents.id AND students.stream_id = streams.id AND streams.class_id = classes.id 
-   and students.student_category = student_category.id AND sessions.status = 'active' limit 1,9";
+   and students.student_category = student_category.id AND sessions.status = 'active' limit 0,7";
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";
@@ -276,7 +276,7 @@ $teacher_id = $_SESSION["user_id"];
                 <thead>
                 <?php
 // Attempt select query execution
-  $sql = "SELECT * FROM calendar limit 0,9";
+  $sql = "SELECT * FROM calendar limit 0,7";
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";

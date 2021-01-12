@@ -41,10 +41,11 @@
                 <?php
                include '../config.php';
    // Attempt select query execution   
-   $sql = "SELECT students.FullName,class_name,option_name,stream_name,amount_paid,Year,Term,fees_collection.id,students.id as student_id
-   FROM fees_collection,students,classes,streams streams LEFT JOIN options on options.id = streams.option_id,sessions 
+   $sql = "SELECT FullName,class_name,option_name,stream_name,amount_paid,Year,Term,fees_collection.id,students.id as student_id,amount
+   FROM fees_collection,students,classes,streams LEFT JOIN options on options.id = streams.option_id,sessions,fees_structure
     WHERE
-   fees_collection.student_id = students.id AND students.stream_id = streams.id AND streams.class_id = classes.id AND sessions.status = 'active'
+   fees_collection.student_id = students.id AND students.stream_id = streams.id AND streams.class_id = classes.id 
+   AND fees_structure.class_id = streams.class_id AND sessions.status = 'active'
    ORDER BY class_name";      if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";
@@ -54,10 +55,12 @@
                 echo "<th>Combination</th>";
                 echo "<th>Stream</th>";
                 echo "<th>Paid Amount</th>";
+                echo "<th> Amount Left To  Pay</th>";
                 echo "<th>Year</th>";
                 echo "<th>Term</th>";
             echo "</tr> </thead>";
         while($row = mysqli_fetch_array($result)){
+          $debt = $row['amount'] - $row['amount_paid'] ;
             echo "<tr>                   <tbody>
             ";
                 echo "<td>" . $row['id'] . "</td>";
@@ -66,6 +69,7 @@
                 echo "<td>" . $row['option_name'] . "</td>";
                 echo "<td>" . $row['stream_name'] . "</td>";
                 echo "<td>" . $row['amount_paid'] . "</td>";  
+                echo "<td>" . $debt . "</td>";  
                 echo "<td>" . $row['Year'] . "</td>";
                 echo "<td>" . $row['Term'] . "</td>";
             echo "</tr><tbody>";
