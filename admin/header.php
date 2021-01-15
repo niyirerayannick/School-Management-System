@@ -193,7 +193,7 @@ include("config.php");
         <a href="#" class="nav-link">SMS</a>
       </li>
     </ul>
-    <!-- SEARCH FORM -->
+    <!-- SEARCH FORM 
     <form class="form-inline ml-3">
       <div class="input-group input-group-sm">
         <input class="form-control form-control-navbar" type="search" placeholder="Search Students,Teachers or Classes" aria-label="Search" id="seachForm">
@@ -204,7 +204,7 @@ include("config.php");
         </div>
       </div>
     </form>
-
+-->
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Messages Dropdown Menu -->
@@ -218,18 +218,28 @@ include("config.php");
           <span class="dropdown-item dropdown-header">Notifications</span>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new Leave Request
-            <span class="float-right text-muted text-sm">3 mins</span>
+            <i class="fas fa-users mr-2"></i> 
+            <?php 
+            $sql = "SELECT * FROM hr WHERE  status = 'requested'";
+             if($res = mysqli_query($con,$sql)){
+               echo mysqli_num_rows($res);
+             }
+            ?>
+            new Leave Request
           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 Parent Messages
-            <span class="float-right text-muted text-sm">12 hours</span>
+            <i class="fas fa-envelope mr-2"></i> 8 Parent Messages
           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 recent fee collection
-            <span class="float-right text-muted text-sm">2 days</span>
+            <i class="fas fa-file mr-2"></i>           
+              <?php 
+            $sql = "SELECT * FROM fees_collection limit 0,4";
+             if($res = mysqli_query($con,$sql)){
+               echo mysqli_num_rows($res);
+             }
+            ?> recent fee collection
           </a>
           <div class="dropdown-divider"></div>
           <a href="../logout.php" class="dropdown-item dropdown-footer"><i class="far fa-sign-out"> Sign Out </i></a>

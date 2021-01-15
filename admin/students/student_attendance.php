@@ -1,5 +1,9 @@
 <?php
-include("../config.php")
+/*There was a young man who was hard working and focus oriented but one day going home from the job he saw a bag on the door of his boss and he picked it up to give it to his boss
+who was going to his car but as soon as he picked it up, BOOM BOOM the boy exploded. Turns his boss was involved in some shaddy shit and his enemies were definetely thirsty for his 
+blood but the boy was the one who paid for his kindness. BEWARE
+*/
+include("../config.php");
     ?>
    
     <?php

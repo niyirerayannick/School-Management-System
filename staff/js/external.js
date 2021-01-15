@@ -28,7 +28,7 @@ let contentWrapper = document.querySelector('#content-wrapper'),
 
 navbar.addEventListener("click",function(e){
   let target = e.target.parentNode;
- //console.log(target)
+    console.log(target)
   switch (target.id) {
     case  'dashboard':  
     getContents("index2.php"); 
@@ -80,7 +80,10 @@ navbar.addEventListener("click",function(e){
       break; 
     case 'timeTable':
         getContents("viewAllTimeTables.php"); 
-      break;     
+      break;   
+      case 'calendar':
+       getCalendar();
+      break;
     default:
       break;
   }
@@ -152,22 +155,7 @@ contentWrapper.addEventListener('click', function(e) {
     else if(e.target.id == 'listStudents') {
 		viewAllStudents();
     }
-     //add student submit button
-     else if(e.target.id == 'addStudentBtn') {
-      addNewStudent();
-    }
-     //add new class from the view class
-     else if(e.target.id == 'newStudent') {
-      getAddStudent();
 
-    }
-     else if(e.target.id == 'updateStudent') {
-      
-    updateStudent(e.target.value,'selectUpdateStudent');
-    }
-   else if(e.target.id == 'deleteStudent') {
-    deleteStudent(e.target.value,'deleteStudentBtn');
-    }
     else if(e.target.id == 'listStudents2') {
       //document.querySelector("#loading").style.display = 'block';
       viewAllStudents();
@@ -188,15 +176,11 @@ contentWrapper.addEventListener('click', function(e) {
    else if(e.target.id == 'updateClass') {
    selectUpdateClass(e.target.value,'selectUpdateClass');
     }
-    else if(e.target.id == 'updateClassBtn') {
-    updateClass();
-    }
+
     else if(e.target.id == 'listClasses') {
       viewAllClasses();
     }
-    else if(e.target.id == 'deleteClass') {
-    deleteClass(e.target.value,'deleteClassBtn');
-    } 
+
     else if(e.target.id == 'viewClassesHome') {
       viewAllClasses();
       } 
@@ -204,9 +188,7 @@ contentWrapper.addEventListener('click', function(e) {
     else if(e.target.id == 'listTeachers') {
 		viewAllTeachers();
     }
-    else if(e.target.id == 'addNewTeacherBtn') {
-      addNewTeacher();
-     }
+
 
 
     else if(e.target.id == 'listbanks') {
@@ -220,125 +202,14 @@ contentWrapper.addEventListener('click', function(e) {
     else if(e.target.id == 'listHostels') {
       viewAllHostels();
     }
-    else if(e.target.id == 'newHostel') {
-      getAddHostel();
-    }
-    else if(e.target.id == 'addHostelBtn') {
-      addHostel();
-    }
-    else if(e.target.id == 'updateHostel') {
-      selectUpdateHostel(e.target.value,'selectUpdatehostel');
-    }
-    else if(e.target.id == 'deleteHostel') {
-      deleteHostel(e.target.value,'deletehostelBtn');
-    }
-    else if(e.target.id == 'updateHostelBtn') {
-      updateHostel();
-    }
-
     else if(e.target.id == 'feesReport') {
       //set timeout for refreshing
       setTimeout(viewFeesCollection)
     }
    
-    else if(e.target.id == 'addSubjectBtn') {
-      addSubject();
-    }
-    else if(e.target.id == 'newSubject') {
-      addNewSubject();
-    }
-    else if(e.target.id == 'updateSubject') {
-      selectUpdateSubject(e.target.value,'selectUpdateSubject');
-    }
-    else if(e.target.id == 'deleteSubject') {
-      deleteSubject(e.target.value,'deleteSubjectBtn');
-    }
-    else if(e.target.id == 'updateSubjectBtn') {
-      updateSubject();
-    }
 
-    
-    else if(e.target.id == 'addBankBtn') {
-      addBank();
-    }
-    else if(e.target.id == 'newBank') {
-      addNewBank();
-    }
-    else if(e.target.id == 'updateBank') {
-      selectUpdateBank(e.target.value,'selectUpdateBank');
-    }
-    else if(e.target.id == 'deleteBank') {
-      deleteBank(e.target.value,'deleteBankBtn');
-    }
-    else if(e.target.id == 'updateBankBtn') {
-      updateBank();
-    }
 
-    else if(e.target.id == 'addEmployeeBtn') {
-      addEmployee();
-    }
-    else if(e.target.id == 'newEmployee') {
-      addNewEmployee();
-    }
-    else if(e.target.id == 'updateEmployee') {
-      selectUpdateEmployee(e.target.value,'selectUpdateEmployee');
-    }
-    else if(e.target.id == 'deleteEmployee') {
-      deleteEmployee(e.target.value,'deleteEmployeeBtn');
-    }
-    else if(e.target.id == 'updateEmployeeBtn') {
-      updateEmployee();
-    }
-    else if(e.target.id == 'approveLeave'){
-      acceptLeave(e.target.value,'approveLeave');
-    }
-    else if(e.target.id == 'rejectLeave'){
-      rejectLeave(e.target.value,'rejectLeave');
-    }
 
-    else if(e.target.id == 'changeFeeStructure') {
-      getChangeFeeStructure();
-    }
-    else if(e.target.id == 'changeFeeStructureBtn') {
-      //console.log(e.target);
-      changeFeesStructure();
-    }
-    else if(e.target.id == 'newFees') {
-      addNewFees();
-    }
-    else if(e.target.id == 'newFeeStructure') {
-      addNewFees();
-    }
-    else if(e.target.id == 'updateFeeStructure') {
-      selectUpdateFees(e.target.value,'selectUpdateFees');
-    }
-    else if(e.target.id == 'deleteFeesStructure') {
-      deleteFeesStructure(e.target.value,'deleteFeesStructureBtn');
-    }
-    else if(e.target.id == 'updateFeeStructureBtn') {
-      updateFeesStructure();
-    }
-
-    
-    else if(e.target.id == 'lendNewBookBtn') {
-      lendNewBook();
-    }
-    else if(e.target.id == 'newBook') {
-      getlendNewBook();
-    }
-    else if(e.target.id == 'updateLibrary') {
-      selectUpdateLibrary(e.target.value,'selectUpdateBook');
-    }
-    else if(e.target.id == 'deleteLibrary') {
-      deleteLibrary(e.target.value,'deleteLibraryBtn');
-    }
-    else if(e.target.id == 'updateLibraryBtn') {
-      updateLibrary();
-    }
- 
-    else if(e.target.id == 'addTimeTable') {
-      addTimeTable();
-    }
     else if(e.target.id == 'viewTimeTables') {
       getViewTimeTables();
     }

@@ -24,7 +24,7 @@ if($_POST["formId"] == 'addNewStudent'){
   $pathInDatabase = '../dist/img/'.strtolower($final_image); 
   if(move_uploaded_file($tmp,$path)) 
    {
-  addNewStudent($_POST['fullName'],$_POST['studentClass'],$_POST['gender'],'1999-11-01',$_POST['academicYear'],$_POST['RegNo'],
+  addNewStudent($_POST['fullName'],$_POST['studentClass'],$_POST['gender'],$_POST['dob'],$_POST['academicYear'],$_POST['RegNo'],
   $_POST['studentStream'],$_POST['studentHostel'],$_POST['studentCategory'],$pathInDatabase,$_POST['sibling'],$_POST['parent']);
    }
   }
@@ -48,10 +48,11 @@ elseif ($_POST["formId"] == 'viewStudentDetailsBtn') {
 
 function addNewStudent($name,$class,$gender,$dob,$academicYear,$regno,$stream,$hostel,$category,$path,$sibling,$parent){
     include("../config.php");
+       $date = date('Y-m-d');
        $sql = "INSERT INTO
         `students` (`id`, `FullName`, `Gender`, `DOB`, `Photo`, `RegNo`, `class_id`, `stream_id`, `hostel_id`, `DOJ`,
          `student_category`, `AcademicYear`, `parent_id`,`sibling`) VALUES
-        (NULL,'$name','$gender','$dob', '$path', '$regno', '$class', '$stream','$hostel', 'current_timestamp()','$category','$academicYear', 
+        (NULL,'$name','$gender','$dob', '$path', '$regno', '$class', '$stream','$hostel', '$date','$category','$academicYear', 
           1,'$sibling');";
     
         if($res = mysqli_query($con,$sql)){
@@ -86,8 +87,8 @@ function deleteStudent($id){
 function viewStudentDetails($id){
   include("../config.php");
   $sql = "SELECT
-  students.id,FullName,DOB,DOJ,RegNo,Photo,class_name, hostel_name ,parent_name , category_name , Gender,
-  sessions.Year,option_name,stream_name
+  students.id,FullName,DOB,DOJ,RegNo,Photo,class_name, hostel_name ,parent_name , category_name , Gender,classes.id as class_id
+  ,options.id as option_id , sessions.Year,option_name,stream_name
   FROM 
   students,classes,sessions,student_category,hostels,parents,streams 
   LEFT JOIN options on options.id = streams.option_id 
@@ -96,7 +97,7 @@ function viewStudentDetails($id){
    and students.student_category = student_category.id and students.id ='$id'";
 
   if($res = mysqli_query($con,$sql)){
-    $row = mysqli_fetch_array($res);
+    $first_row = mysqli_fetch_array($res);
        ?>
  <div id='view'>
     
@@ -129,52 +130,52 @@ function viewStudentDetails($id){
             <div class="card card-primary card-outline">
               <div class="card-body box-profile">
                 <div class="text-center">
-                <img src="<?php echo htmlentities($row['Photo']) ?>" id='myImg'  alt="User profile picture" class ='profile-user-img img-fluid img-circle'>   
+                <img src="<?php echo htmlentities($first_row['Photo']) ?>" id='myImg'  alt="User profile picture" class ='profile-user-img img-fluid img-circle'>   
                 </div>
 
-                <h3 class="profile-username text-center"><?php echo $row["FullName"] ?></h3>
+                <h3 class="profile-username text-center"><?php echo $first_row["FullName"] ?></h3>
 
                 <p class="text-muted text-center">Student</p>
 
                 <ul class="list-group list-group-unbordered mb-3">
                   <li class="list-group-item">
                     <b>Student Name</b> <a class="float-right"><?php 
-                           echo $row["FullName"];
+                           echo $first_row["FullName"];
                     ?></a>
                   </li>
                   <li class="list-group-item">
                     <b>Gender </b> <a class="float-right"><?php 
-                           echo $row["Gender"];
+                           echo $first_row["Gender"];
                     ?></a></a>
                   </li>
                   <li class="list-group-item">
                     <b>Reg No Number</b> <a class="float-right"><?php 
-                           echo $row["RegNo"];
+                           echo $first_row["RegNo"];
                     ?></a></a>
                   </li>
                   <li class="list-group-item">
                     <b>Class</b> <a class="float-right"><?php 
-                           echo $row["class_name"];
+                           echo $first_row["class_name"];
                     ?></a></a>
                   </li>
                   <li class="list-group-item">
                     <b>Option</b> <a class="float-right"><?php 
-                           echo $row["option_name"];
+                           echo $first_row["option_name"];
                     ?></a></a>
                   </li>
                   <li class="list-group-item">
                     <b>Hostel</b> <a class="float-right"><?php 
-                           echo $row["hostel_name"];
+                           echo $first_row["hostel_name"];
                     ?></a></a>
                   </li>
                   <li class="list-group-item">
                     <b>DOB</b> <a class="float-right"><?php 
-                           echo $row["DOB"];
+                           echo $first_row["DOB"];
                     ?></a></a>
                   </li>
                   <li class="list-group-item">
                     <b>Parent</b> <a class="float-right"><?php 
-                           echo $row["parent_name"];
+                           echo $first_row["parent_name"];
                     ?></a></a>
                   </li>
                 </ul>
@@ -470,15 +471,18 @@ WHERE
 
                   <div class="tab-pane" id="settings" style="min-height:550px">
                   <div class="card-header">
-                           <button class="btn btn-outline-info card-title" id="newFeeCollectionStudent"> <i class="fa fa-plus"></i>
-                           Add New Fees Collection For This Student</button>
-                    </div> 
+                      <button class="btn btn-outline-info card-title" id="newFeeCollectionStudent"  value=<?php echo $id ?>>
+                           <i class="fa fa-plus"></i>
+                           Add New Fees Collection For This Student
+                       </button>
+                  </div> 
                   <?php
 include("../config.php");
-$sql = "SELECT FullName,amount_paid,Year,Term,bank_name,fees_collection.id,payment_date
- FROM fees_collection,students,sessions,banks
-WHERE fees_collection.student_id = students.id AND sessions.status = 'active' AND banks.id = fees_collection.bank_id
-AND students.id = '$id'";
+$sql = "SELECT FullName,amount_paid,Year,Term,bank_name,fees_collection.id,payment_date as p,
+(amount - (select sum(amount_paid) from fees_collection WHERE student_id = $id and payment_date <= p)) as debt 
+FROM fees_collection,students,sessions,banks,fees_structure WHERE fees_collection.student_id = students.id AND sessions.status = 'active' 
+AND banks.id = fees_collection.bank_id AND students.id = $id AND fees_structure.class_id = '$first_row[class_id]' 
+AND fees_structure.option_id = '$first_row[option_id]' GROUP BY id";
 
      if($res = mysqli_query($con,$sql)){
        if(mysqli_num_rows($res) > 0){
@@ -498,18 +502,35 @@ AND students.id = '$id'";
             ?>
             <tbody>
               <tr>
-                <td>1.</td>
                 <td><?php echo $row["bank_name"];  ?></td>
                 <td>
-                <?php echo $row["amount_paid"]; ?></td>
+                <?php echo "$row[amount_paid] Rwf"; ?>
                 </td>
-
+                <td>
+                <?php if($row["debt"] > 0){
+                  ?>
+                <span class=' badge badge-danger'>
+                <?php
+                  echo "$row[debt] Rwf";
+                 ?>
+                </span>
+                <?php
+                } 
+                
+                else{
+                  ?>
+                <span class=' badge badge-success' style = "font-size:12px">
+                       School Fees Paid
+                                    </span>
+                <?php
+                }?>
+                </td>
                 <td>
                 <?php echo $row["Year"]; ?> : Term
-
-                <?php echo $row["Term"]; ?></td>
+                <?php echo $row["Term"]; ?>
+              </td>
                 <td>
-                <?php echo $row["payment_date"]; ?></td>
+                <?php echo $row["p"]; ?></td>
               </tr>
               
             </tbody>

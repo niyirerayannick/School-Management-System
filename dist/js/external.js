@@ -83,7 +83,7 @@ navbar.addEventListener("click",function(e){
       getLibraryStatus();
     break;
     case 'calendar':
-      getContents("loadKevin.php");
+      getCalendar();
       break;
     case 'addTeacher':
       getContents("teachers/addTeacher.php");

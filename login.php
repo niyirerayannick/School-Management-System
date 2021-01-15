@@ -31,7 +31,7 @@ $sql = "SELECT * FROM users WHERE member_name = '$username' and password = '$pas
      }
 
      elseif ($res['type'] == 'staff') {
-      $sql2 = "SELECT teachers.id FROM users,teachers WHERE teachers.teacher_name = '$username' and users.member_name ='$username'";
+      $sql2 = "SELECT teachers.id FROM users,teachers WHERE teachers.teacher_name = '$username' AND  users.member_name ='$username' ";
       $result2 = mysqli_query($con, $sql2);
       $res2 = mysqli_fetch_array($result2);
       $_SESSION['user_id'] = $res2['id'];

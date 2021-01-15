@@ -47,10 +47,7 @@ function mergeSubjects(arr){
   for(let i =0 ; i < arr.length ; i++){
      subjects.push(arr[i][0])
    }
-
-   subjects = [...new Set(subjects)];
-
-    return subjects;
+    return [...new Set(subjects)];
   }
 
         function spreadArray(arr,spreadValue){
@@ -65,9 +62,8 @@ function mergeSubjects(arr){
 
           return result;
          }
-         const colors = ['#007bff', '#8e44ad', '#5421b9', '#e67e22', '#2ecc71','#eb3d0d','#343a40']
-         
 
+         const colors = ['#007bff', '#8e44ad', '#5421b9', '#e67e22', '#2ecc71','#eb3d0d','#343a40']
 function viewStudentDetails(value,studentId){
   $.post("students/student-dm.php", {
     value: value,
@@ -97,8 +93,9 @@ function viewStudentDetails(value,studentId){
         //loop through the label property to put zero where the student didn't attend
             for(let i = 0; i < labels.length ; i++){
                 if(!dates.includes(labels[i])){
-                  attendance.splice(i, 0, "0");                }
-            }
+                  attendance.splice(i, 0, "0");            
+                }
+              }
             let obj = {
               type: 'line',
               label:legendText[j],
@@ -240,107 +237,109 @@ function viewFeesCollection(){
 }
 
 //get calendar
-  
+   
 function getCalendar(){
-    /*  fetch('calendar_view.php')
-      .then(response => response.text())
-      .then(html =>{
-          let parser = new DOMParser();
-          let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
-          contentWrapper.innerHTML = doc.innerHTML;
-      })
-      */
-     contentWrapper.innerHTML = '';
-       var calendar = $('#content-wrapper').fullCalendar({
-        editable:true,
-        header:{
-         left:'prev,next today',
-         center:'title',
-         right:'month,agendaWeek,agendaDay'
-        },
-        events: 'loadKevin.php',
-        selectable:true,
-        selectHelper:true,
-    
-        select: function(start, end)
-        {
-         var title = prompt("Enter Event Title");
-         if(title)
-         {
-          var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
-          var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
-          $.ajax({
-           url:"insertKevin.php",
-           type:"POST",
-           data:{title:title, start:start, end:end},
-           success:function()
-           {
-            calendar.fullCalendar('refetchEvents');
-            alert("Added Successfully");
-           }
-          })
-         }
-        },
-        editable:true,
-        eventResize:function(event)
-        {
-         var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-         var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-         var title = event.title;
-         var id = event.id;
-         $.ajax({
-          url:"updateKevin.php",
-          type:"POST",
-          data:{title:title, start:start, end:end, id:id},
-          success:function(){
-           calendar.fullCalendar('refetchEvents');
-           alert('Event Update');
-          }
-         })
-        },
-    
-        eventDrop:function(event)
-        {
-         var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-         var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-         var title = event.title;
-         var id = event.id;
-         $.ajax({
-          url:"updateKevin.php",
-          type:"POST",
-          data:{title:title, start:start, end:end, id:id},
-          success:function()
-          {
-           calendar.fullCalendar('refetchEvents');
-           alert("Event Updated");
-          }
-         });
-        },
-    
-        eventClick:function(event)
-        {
-         if(confirm("Are you sure you want to remove it?"))
-         {
-          var id = event.id;
-          console.log(id)
-          $.ajax({
-           url:"deleteKevin.php",
-           type:"POST",
-           data: "&id=" + event.id,
-           success: function (response) {
-                            if(parseInt(response) > 0) {
-                                $('#calendar').fullCalendar('removeEvents', event.id);
-                                displayMessage("Deleted Successfully");
-                            }
-                        }
-          })
-         }
-        },
-    
-       });
-  }
+  fetch('calendar_view.php')
+  .then(response => response.text())
+  .then(html =>{
+      let parser = new DOMParser();
+      let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
+      contentWrapper.innerHTML = doc.innerHTML;
+
+  
+ //contentWrapper.innerHTML = '';
+ var date = new Date()
+ var d    = date.getDate(),
+     m    = date.getMonth(),
+     y    = date.getFullYear()
+
+ var Calendar = FullCalendar.Calendar;
+ var Draggable = FullCalendar.Draggable;
+
+ var calendarEl = document.getElementById('calendarEl');
+
+ // initialize the external events
+ // -----------------------------------------------------------------
+//our whole calendar
+ var calendar = new Calendar(calendarEl, {
+   headerToolbar: {
+     left  : 'prev,next today',
+     center: 'title',
+     right : 'dayGridMonth,timeGridWeek,timeGridDay'
+   },
+   themeSystem: 'bootstrap',
+   eventSources: [
+    // the file where the events will be fetched from
+       {
+      url: 'loadKevin.php',
+      backgroundColor: '#00c0ef', //Info (aqua)
+      borderColor    : '#00c0ef' ,//Info (aqua)
+      color: 'yellow',   // a non-ajax option
+      textColor: 'black' // a non-ajax option
+    }
+  ]  ,
+
+  showNonCurrentDates:false,
+  businessHours: {
+    // days of week. an array of zero-based day of week integers (0=Sunday)
+    daysOfWeek: [ 1, 2, 3, 4 ,5], // Monday - Friday
+    startTime: '07:00', // a start time (10am)
+    endTime: '18:00', // an end time (6pm )
+  },
+   
+      });
+
+ calendar.render();
+ // $('#calendar').fullCalendar()
+  })
+}
 
 
+
+  //get time table
+  function getTimeTable(){
+    
+    fetch('timetable.php')
+    .then(response => response.text())
+    .then(html =>{
+        let parser = new DOMParser();
+        let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
+        contentWrapper.innerHTML = doc.innerHTML;
+          //Initialize Select2 Elements
+  
+    })
+}
+ 
+function addTimeTable(){
+    $( '#form' )
+    .submit( function( e ) {
+      $.ajax( {
+        url: 'timetable-dm.php',
+        type: 'POST',
+        data: new FormData( this ),
+        processData: false,
+        contentType: false,
+        success:function(data){
+           // console.log(data)
+            var Toast = Swal.mixin({
+              toast: true,
+              position: 'top',
+              showConfirmButton: false,
+              timer: 3000
+            });
+                        Toast.fire({
+                icon: 'success',
+                title: 'New Time Table Added Successfully'
+            });
+            getViewTimeTables();          
+        },
+        error: function(r) {
+        console.log(r);
+        }
+      } );
+      e.preventDefault();
+    } );
+}
   //get time table
   function getTimeTable(){
     

@@ -23,9 +23,9 @@ include("../config.php");
   
   function addFeesCollection($student,$bank,$amount,$year){
     include("../config.php");
-
+    $date = date('Y-m-d');
        $sql = "INSERT INTO `fees_collection` (`id`, `student_id`, `bank_id`, `amount_paid`, `payment_date`, `session_id`)
-        VALUES (NULL, '$student', '$bank', '$amount', '2020-12-01', '$year');
+        VALUES (NULL, '$student', '$bank', '$amount', '$date', '$year');
        ;";
 
         if($res = mysqli_query($con,$sql)){
@@ -40,6 +40,7 @@ include("../config.php");
 
   function addNewFees($class,$option,$amount){
     include("../config.php");
+    
       if($option !== 'NULL'){
        $sql = "INSERT INTO `fees_structure` (`id`, `class_id`,`option_id`,`amount`) 
        VALUES (NULL, '$class',(SELECT option_id FROM streams WHERE id = '$option'),'$amount');";

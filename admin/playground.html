@@ -5,58 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body id="wrapper" onload="fetchCalendarEvents()">
+<body id="wrapper" >
   
     <script >
-      function fetchCalendarEvents(){
-  fetch('loadKevin.php')
-  .then(response => response.json())
-  .then(html =>{
-    let eventsArr = [];
-    for(e in html){
-      eventsArr.push(html[e]);
-    }
-    console.log(eventsArr)
-  });
-}
+        function spreadArray(arr,spreadValue){
+        let res1 = arr;
+             var result = res1.filter(function(v,i) {
+                 return v[0][0] === spreadValue;
+                  });
+             result.forEach(e => {
+                  e.shift();
+                  });
+             result = [].concat(...result);
 
-console.log()
-
-let arr = ['c','d','g','a'];
-       // use object literal to find fruits in color
-  const fruitColor = {
-  //  hostel: ['addHostel', 'viewhostels'],
-    hostel: {
-      addhostel: "hostels/addNewHostel.php", 
-      viewHostels:'i am going to view hostel'
-    },
-    library: {
-      libraryStatus:'i am library status',
-      lendNewBook:'i am lend new book',
-      viewBookSubmission:'i am view book submission'
-    },
-    exam: {
-      viewExamResult:'i am exam results',
-      viewExamCategories:'i am exam categories'
-    },
-
-    getColor:function(propertyValue,propertyValue1){
-       let El =fruitColor.hasOwnProperty(propertyValue), innerEl =fruitColor[propertyValue];
-       console.log(innerEl[propertyValue1])
-         return El ? innerEl.hasOwnProperty(propertyValue1)?printHello(innerEl[propertyValue1]):'not outer' :  'not inner';
-      }
-    };
-   
-   function printHello(location){
-    fetch(location)
-    .then(response =>  response.text())
-    .then(html => {
-        //contentWrapper.innerHTML = html
-        let parser = new DOMParser();
-        let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
-        document.getElementById("wrapper").innerHTML = doc.innerHTML;
-  })
-    }
+          return result;
+         }
+         console.log(spreadArray(arr,3))
 
 document.getElementById("wrapper").addEventListener("click",function (e) {
   let category = e.target.parentNode.parentNode.parentNode
@@ -95,48 +59,7 @@ console.log(fruitColor.getColor(`${category.id}`, `${e.target.parentNode.id}`));
         let category = e.target.parentNode.parentNode.parentNode
       console.log(ElementIds.fetchPage(`${category.id}`, `${e.target.parentNode.id}`));
       });
-var speedCanvas = document.getElementById("speedChart");
-
-Chart.defaults.global.defaultFontFamily = "Lato";
-Chart.defaults.global.defaultFontSize = 18;
-
-var dataFirst = {
-    label: "Car A - Speed (mph)",
-    data: [0, 59, 75, 20, 20, 55, 40],
-    lineTension: 0,
-    fill: false,
-    borderColor: 'red'
-  };
-
-var dataSecond = {
-    label: "Car B - Speed (mph)",
-    data: [20, 15, 60, 60, 65, 30, 70],
-    lineTension: 0,
-    fill: false,
-  borderColor: 'blue'
-  };
-
-var speedData = {
-  labels: ["0s", "10s", "20s", "30s", "40s", "50s", "60s"],
-  datasets: [dataFirst, dataSecond]
-};
-
-var chartOptions = {
-  legend: {
-    display: true,
-    position: 'top',
-    labels: {
-      boxWidth: 80,
-      fontColor: 'black'
-    }
-  }
-};
-
-var lineChart = new Chart(speedCanvas, {
-  type: 'line',
-  data: speedData,
-  options: chartOptions
-});*/
+*/
     </script>
 </body>
 </html>

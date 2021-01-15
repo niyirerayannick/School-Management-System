@@ -63,7 +63,8 @@ session_start();
                              <?php
 // Attempt select query execution
 $teacher_id = $_SESSION["user_id"];
-  $sql = "SELECT * FROM subjects,teacher_subjects,teachers WHERE subjects.id = teacher_subjects.subject_id AND teachers.id = teacher_subjects.teacher_id and teachers.id = $teacher_id";
+  $sql = "SELECT * FROM subjects,teacher_subjects,teachers WHERE subjects.id = teacher_subjects.subject_id 
+  AND teachers.id = teacher_subjects.teacher_id and teachers.id = $teacher_id";
       if($result = mysqli_query($con, $sql)){
            echo mysqli_num_rows($result);
       }
@@ -276,7 +277,7 @@ $teacher_id = $_SESSION["user_id"];
                 <thead>
                 <?php
 // Attempt select query execution
-  $sql = "SELECT * FROM calendar limit 0,7";
+  $sql = "SELECT * FROM calendar limit 0,5";
       if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
             echo "<tr>";

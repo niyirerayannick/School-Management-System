@@ -17,7 +17,7 @@
                                                                if($result = mysqli_query($con, $sql)){
                                                                   if(mysqli_num_rows($result) > 0){
                                                                       while($row = mysqli_fetch_array($result)){
-                                                                         echo "<option value=" . $row['id'] . " selected>" . $row["FullName"] . "</option>";
+                                                                         echo "<option value=" . $row['id'] . " selected>" . $row["FullName"] . "</option>";                                        
                                                                         }
                                                                    } else{
                                                                      echo "<option disabled> No Such Students </option>";     

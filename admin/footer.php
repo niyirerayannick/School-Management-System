@@ -90,11 +90,5 @@ $.widget.bridge('uibutton', $.ui.button);
 
   </script>
 <!-- Page specific script -->
-
-
-<script>
-
-
-</script>
 </body>
 </html>

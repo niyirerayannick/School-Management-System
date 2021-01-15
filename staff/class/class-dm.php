@@ -60,36 +60,7 @@ include("../config.php");
           </div>";
          }
   }
-    
-  function updateClass($var,$id){
-    include("../config.php");
 
-       $sql = "UPDATE classes SET Name = '$var' where id = '$id'";
-    
-        if($res = mysqli_query($con,$sql)){
-            echo "1";
-          }
-         else{
-            echo "<div class='alert alert-danger' role='alert'>
-            There are was a problem performing the operation!
-          </div>";
-         }
-  }
-   
-  function deleteClass($id){
-    include("../config.php");
- 
-       $sql = "DELETE  FROM classes where id = '$id'";
-    
-        if($res = mysqli_query($con,$sql)){
-            echo "1";
-          }
-         else{
-            echo "<div class='alert alert-danger' role='alert'>
-            There are was a problem performing the operation! 
-          </div>";
-         }
-  }
 
   function selectUpdateClass($var){
     include("../config.php");

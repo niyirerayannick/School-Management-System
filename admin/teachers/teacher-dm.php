@@ -63,8 +63,11 @@ function addNewTeacher($name,$phone,$email,$martial_status,$nationality,$qualifi
                        `teachers` (`id`, `teacher_name`, `DOB`, `phone`, `email`, `nationality`, `martial_status`, `entry_date`, `responsability`, `Gender`, `qualification`, `StaffNumber`)
                          VALUES 
         (NULL, '$name', '$dob', '$phone', '$email', '$nationality', '$martial_status', '2020-12-01', '$responsability ', '$gender', 'bachelors of education', '$staff');";
-    
-        if($res = mysqli_query($con,$sql)){
+      
+      $insertIntoUsers =  "INSERT INTO `users` (`id`, `member_name`, `email`, `type`, `password`)
+        VALUES  (NULL, '$name', '$email', 'staff', '$email');";  
+         
+        if($res = mysqli_query($con,$sql)  && mysqli_query($con,$insertIntoUsers)){
           $last_insertedTeacher_id = mysqli_insert_id($con);
           foreach ($subject as $value) {
              $insertTeacherSubject = "INSERT INTO teacher_subjects ( `teacher_id`,`subject_id`) VALUES ('$last_insertedTeacher_id','$value')";
@@ -77,7 +80,7 @@ function addNewTeacher($name,$phone,$email,$martial_status,$nationality,$qualifi
             There are was a problem performing the operation!
           </div>" ;
            echo "Error: " . $sql . "<br>" . mysqli_error($con);
- 
+
           }
   }
 

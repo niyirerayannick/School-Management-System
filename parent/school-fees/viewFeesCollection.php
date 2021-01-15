@@ -1,4 +1,7 @@
-<!-- Content Header (Page header) -->
+<!--
+  life itself is a chain of endless improvement and continous intergration. So if your life is really continuing to improve, do it else where not in my codes.
+
+   Content Header (Page header) -->
 <?php
 session_start();
 $id = $_SESSION['user_id'];
@@ -8,7 +11,7 @@ $id = $_SESSION['user_id'];
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Fees Collection</h1>
+            <h1>School Fees Payment</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -27,7 +30,7 @@ $id = $_SESSION['user_id'];
           <div class="col-12">
             <div class="card card-info card-outline">
               <div class="card-header">
-                <h3 class="card-title"> List Fees Collection</h3>
+                <h3 class="card-title"> List of Fees Payment</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
@@ -42,10 +45,13 @@ $id = $_SESSION['user_id'];
                 <?php
               include("../config.php");
 // Attempt select query execution
-  $sql = "SELECT students.FullName,class_name,option_name,stream_name,amount_paid,Year,Term,fees_collection.id,students.id AS student_id,payment_date,amount 
-  FROM fees_collection,students,classes, streams LEFT JOIN options ON options.id = streams.option_id,sessions,fees_structure
-   WHERE fees_collection.student_id = students.id AND students.stream_id = streams.id AND streams.class_id = classes.id and fees_structure.class_id = streams.class_id 
-   and students.parent_id = '$id' ORDER BY class_name
+  $sql = "SELECT students.id,FullName,class_name, hostel_name  , sessions.Year,option_name,stream_name, classes.id AS c,amount_paid,payment_date AS p,Term,
+   (amount - (SELECT sum(amount_paid) FROM fees_collection WHERE student_id =students.id AND payment_date <= p)) AS debt
+    FROM students,classes,sessions,student_category,hostels,fees_collection,banks,fees_structure,
+    streams LEFT JOIN options ON options.id = streams.option_id 
+    WHERE students.hostel_id = hostels.id AND students.parent_id = $id AND students.stream_id = streams.id AND streams.class_id = classes.id 
+    AND students.student_category = student_category.id AND fees_collection.student_id = students.id AND banks.id = fees_collection.bank_id 
+    AND fees_structure.class_id = classes.id AND fees_structure.option_id = options.id AND sessions.status = 'active' ORDER BY p DESC
 
   ";
       if($result = mysqli_query($con, $sql)){
@@ -69,16 +75,35 @@ $id = $_SESSION['user_id'];
                 <?php echo $row["Year"];echo"  Term:"; echo $row["Term"]; ?></td>
                 <?php
                 echo"</td>";
-                echo "<td>" . $row['amount_paid'] . "</td>";  
-                $balance = $row['amount'] -  $row['amount_paid'];
-                echo "<td>" . $balance . "</td>";
-                echo "<td>" . $row['payment_date'] . "</td>";
+                echo "<td>" . $row['amount_paid'] . "</td>";  ?>
+                <td>
+                <?php if($row["debt"] > 0){
+                  ?>
+                <span class=' badge badge-danger'>
+                <?php
+                  echo "$row[debt] Rwf";
+                 ?>
+                </span>
+                <?php
+                } 
+                
+                else{
+                  ?>
+                <span class=' badge badge-success' style = "font-size:12px">
+                       School Fees Paid
+                                    </span>
+                <?php
+                }?>
+                </td>     
+                <?php
+                 echo "<td>" . $row['p'] . "</td>";
             echo "</tr><tbody>";
         }
         echo "</table>";
         // Free result set
         mysqli_free_result($result);
     } else{
+      echo $_SESSION['username'];
         echo "<div class='alert alert-danger' role='alert'>
         No Fees Collection Historic Record Found in The database!
       </div>";

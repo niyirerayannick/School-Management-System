@@ -1,12 +1,3 @@
-const  signUpButton = document.getElementById("signUp");
-const  signInButton = document.getElementById("signIn");
-const  container = document.getElementById("container");
-signUpButton.addEventListener("click", () => 
-container.classList.add('right-panel-active'));
-
-signInButton.addEventListener("click", () => 
-container.classList.remove('right-panel-active'));
-
 // Responsive Nav
 $(function() {
   menu = $('nav ul');
@@ -52,7 +43,7 @@ $('.cf a').on('click', function(event) {
 });
 
 
-const textEl = document.getElementById('text')
+const textEl = document.getElementById('text');
 const text = 'Welcome To SMS!'
 let idx = 1
 let speed = 300 / 1

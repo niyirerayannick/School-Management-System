@@ -2,14 +2,16 @@
 //defining function for handling events
 //student handling methods
 function getAddStudent(){
-  fetch("students/addStudent.php")
+  fetch("students/addStudent1.php")
   .then(response =>  response.text())
   .then(html => {
       //contentWrapper.innerHTML = html
       let parser = new DOMParser();
       let doc = (parser.parseFromString(html, 'text/html')).querySelector('#view');
       contentWrapper.innerHTML = doc.innerHTML;
-      window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+        // BS-Stepper Init
+
+      window.stepper = new Stepper(document.querySelector('.bs-stepper'));
 
         //Initialize Select2 Elements
         $('.select2').select2()
@@ -79,7 +81,7 @@ function addNewStudent(){
             toast: true,
             position: 'top',
             showConfirmButton: false,
-            timer: 3000
+            timer: 2000
           });
                       Toast.fire({
               icon: 'success',
@@ -89,7 +91,7 @@ function addNewStudent(){
           viewAllStudents();
         }
         else{
-      console.log(data);
+     // console.log(data);
         }
       },
       error: function(r) {
@@ -126,6 +128,7 @@ function  viewHighperformingStudents(){
 
     function mergeSubjects(arr){
     let subjects = [];
+    console.log(arr)
     for(let i =0 ; i < arr.length ; i++){
        subjects.push(arr[i][0])
      }
@@ -150,64 +153,66 @@ function  viewHighperformingStudents(){
            const colors = ['#007bff', '#8e44ad', '#5421b9', '#e67e22', '#2ecc71','#eb3d0d','#343a40']
 
 
-function viewStudentDetails(value,studentId){
-  $.post("students/student-dm.php", {
-    value: value,
-    formId: studentId
-  },  function(data){
-    // Display the returned data in browser
-   if(data == 1){
-  //viewAllStudents();
-   }else {
-     contentWrapper.innerHTML = data;
-     let doc = document.querySelector('#myChart');
+function viewStudentDetails(value,studentId)
+    {
+      $.post("students/student-dm.php", {
+       value: value,
+       formId: studentId
+       },  function(data)
+         {
+           // Display the returned data in browser
+           if(data == 1){
+              //viewAllStudents();
+           }
+           else {
+             contentWrapper.innerHTML = data;
+             let doc = document.querySelector('#myChart');
 
-     let  labels = JSON.parse(document.querySelector('#spanLabel').innerHTML);
-     let  mainData = JSON.parse(document.querySelector('#spanData').innerHTML);
-     let  d = JSON.parse(document.querySelector('#checking').innerHTML);   
-     let legendText = JSON.parse(document.querySelector("#subjects").innerHTML);
-     let res = mergeSubjects(d)
-     let j;
-     let dataset =[]
-     for(j = 0; j < res.length ;j++){
-
-      let attendance = spreadArray(d,res[j]);
-      //get the dates for the subjects studied
-      let  dates = attendance.filter((v,i) => i % 2 !== 0)
-      //get the number of times the subject were studied at a certain date
-        attendance = attendance.filter((v,i) => i % 2 == 0)
-        //loop through the label property to put zero where the student didn't attend
-            for(let i = 0; i < labels.length ; i++){
-                if(!dates.includes(labels[i])){
-                  attendance.splice(i, 0, "0");                }
-            }
-            let obj = {
-              type: 'line',
-              label:legendText[j],
-              data: attendance,
-              backgroundColor: 'transparent',
-              borderColor: colors[j],
-              pointBorderColor: colors[j],
-              pointBackgroundColor: colors[j],
-              fill: false
-              // pointHoverBackgroundColor: '#007bff',
-              // pointHoverBorderColor    : '#007bff'
-            }
-            dataset.push(obj);
-    }
-/*
-     for(j = 0; j < res.length ;j++){
+             let  labels = JSON.parse(document.querySelector('#spanLabel').innerHTML);
+             let  mainData = JSON.parse(document.querySelector('#spanData').innerHTML);
+             let  d = JSON.parse(document.querySelector('#checking').innerHTML);   
+             let legendText = JSON.parse(document.querySelector("#subjects").innerHTML);
+            // console.log(d)
+             let res = mergeSubjects(d)
+             let dataset =[]
+             for(let j = 0; j < res.length ;j++){
+                let attendance = spreadArray(d,res[j]);
+                //get the dates for the subjects studied
+                let  dates = attendance.filter((v,i) => i % 2 !== 0)
+                //get the number of times the subject were studied at a certain date
+                attendance = attendance.filter((v,i) => i % 2 == 0)
+                //loop through the label property to put zero where the student didn't attend
+                for(let i = 0; i < labels.length ; i++){
+                  if(!dates.includes(labels[i])){
+                    attendance.splice(i, 0, "0");           
+                  }
+               }
+               let obj = {
+                 type: 'line',
+                 label:legendText[j],
+                 data: attendance,
+                 backgroundColor: 'transparent',
+                 borderColor: colors[j],
+                 pointBorderColor: colors[j],
+                 pointBackgroundColor: colors[j],
+                 fill: false
+                 // pointHoverBackgroundColor: '#007bff',
+                 // pointHoverBorderColor    : '#007bff'
+               }
+               dataset.push(obj);
+              }
+             /*
+             for(j = 0; j < res.length ;j++){
       
-     }
-*/
-     document.getElementById("studentAttendance").innerHTML = doc.innerHTML;
+             }
+             */
+              document.getElementById("studentAttendance").innerHTML = doc.innerHTML;
 
-     //console.log(mainData)
+              //console.log(mainData)
 
-     contentWrapper.innerHTML = data;
-     $(function () {
-       
-       var ticksStyle = {
+              contentWrapper.innerHTML = data;
+              $(function () {
+        var ticksStyle = {
          fontColor: '#495057',
          fontStyle: 'bold'
        }
@@ -294,7 +299,7 @@ function getAddNewTeacher(){
          // Display the returned data in browser
          //console.log(formValues);
         console.log(data)
-        if(data == 1111){
+        if(data.match(/1./)){
                
          var Toast = Swal.mixin({
            toast: true,
@@ -1121,14 +1126,6 @@ function updateFeesStructure(){
   })
   }
 
-function fetchCalendarEvents(){
-  fetch('calendar_view.php')
-  .then(response => response.text())
-  .then(html =>{
-      return html;
-  });
-}
-
 //get calendar
    
 function getCalendar(){
@@ -1165,6 +1162,8 @@ function getCalendar(){
     // the file where the events will be fetched from
        {
       url: 'loadKevin.php',
+      backgroundColor: '#00c0ef', //Info (aqua)
+      borderColor    : '#00c0ef' ,//Info (aqua)
       color: 'yellow',   // a non-ajax option
       textColor: 'black' // a non-ajax option
     }
@@ -1173,10 +1172,9 @@ function getCalendar(){
   showNonCurrentDates:false,
   businessHours: {
     // days of week. an array of zero-based day of week integers (0=Sunday)
-    daysOfWeek: [ 1, 2, 3, 4 ,5], // Monday - Thursday
-  
-    startTime: '07:00', // a start time (10am in this example)
-    endTime: '18:00', // an end time (6pm in this example)
+    daysOfWeek: [ 1, 2, 3, 4 ,5], // Monday - Friday
+    startTime: '07:00', // a start time (10am)
+    endTime: '18:00', // an end time (6pm )
   },
    selectable:true,
    editable  : true,
@@ -1210,23 +1208,10 @@ function getCalendar(){
    eventResize:function(e)
           {
           //  console.log(e.event.start);
-           var start = calendar.formatDate(e.event.start, {
-            year: 'numeric',
-            month: 'long',
-            day: '2-digit',
-            hour:'2-digit',
-            minute: '2-digit',
-            second:'2-digit'
-          });
-           console.log(start);
-           var end = calendar.formatDate(e.event.end, {
-            year: 'numeric',
-            month: 'long',
-            day: '2-digit',
-            hour:'2-digit',
-            minute: '2-digit',
-            second:'2-digit'
-          });
+           //console.log(start);
+           
+      var start = calendar.formatIso(e.event.start);
+      var end = calendar.formatIso(e.event.end);
            var title = e.event.title;
            var id = e.event.id;
            $.ajax({
@@ -1242,24 +1227,8 @@ function getCalendar(){
 
    eventDrop:function(e)
    {
-    //  console.log(e.event.start);
-     var start = calendar.formatDate(e.event.start, {
-      year: 'numeric',
-      month: 'long',
-      day: '2-digit',
-      hour:'2-digit',
-      minute: '2-digit',
-      second:'2-digit'
-    });
-     console.log(start);
-     var end = calendar.formatDate(e.event.end, {
-      year: 'numeric',
-      month: 'long',
-      day: '2-digit',
-      hour:'2-digit',
-      minute: '2-digit',
-      second:'2-digit'
-    });
+    var start = calendar.formatIso(e.event.start);
+    var end = calendar.formatIso(e.event.end);
      var title = e.event.title;
      var id = e.event.id;
      $.ajax({
@@ -1325,7 +1294,7 @@ function addTimeTable(){
         processData: false,
         contentType: false,
         success:function(data){
- console.log(data)
+           // console.log(data)
             var Toast = Swal.mixin({
               toast: true,
               position: 'top',
