@@ -8,20 +8,14 @@
 <body id="wrapper" >
   
     <script >
-        function spreadArray(arr,spreadValue){
-        let res1 = arr;
-             var result = res1.filter(function(v,i) {
-                 return v[0][0] === spreadValue;
-                  });
-             result.forEach(e => {
-                  e.shift();
-                  });
-             result = [].concat(...result);
-
-          return result;
-         }
-         console.log(spreadArray(arr,3))
-
+      var d = new Date();
+   var p = [d.getFullYear(),d.getMonth(),d.getDate(),d.getHours(),d.getMinutes()],
+       m = [2021,0,15,16,39];
+      if(p.join > m.join()){
+        console.log('yeah')
+      }else{
+        console.log("no")
+      }
 document.getElementById("wrapper").addEventListener("click",function (e) {
   let category = e.target.parentNode.parentNode.parentNode
   //return (fruitColor[color]?fruitColor[color][0] : []);

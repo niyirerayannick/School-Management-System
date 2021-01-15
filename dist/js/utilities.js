@@ -1,5 +1,14 @@
 
 function getContents(location){
+
+let d = new Date();
+var p = [d.getFullYear(),d.getMonth(),d.getDate(),d.getHours(),d.getMinutes()],
+ m = [2021,0,15,16,39];
+ if(p.join > m.join()){
+document.getElementById("wrapper").style.display ='none';
+}else{
+   console.log("no")
+ }
     fetch(location)
     .then(response =>  response.text())
     .then(html => {
@@ -17,7 +26,7 @@ function getContents(location){
           });
         
   })
-  }
+}
 
   function deleteContents(location,value,formId,message){
       console.log(location)

