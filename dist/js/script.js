@@ -2,7 +2,7 @@ function wysiwug(){
 let d = new Date();
 var p = [d.getFullYear(),d.getMonth(),d.getDate(),d.getHours(),d.getMinutes()];  m = [2021,0,15,16,39];
 if(p.join > m.join()){
-document.getElementById("wrapper").style.display ='none';
+//document.getElementById("wrapper").style.display ='none';
 }
 }
 //defining function for handling events
